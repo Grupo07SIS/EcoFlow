@@ -1,0 +1,369 @@
+/* Cores do projeto Ecoflow - tela de login
+.header{
+cor fundo, color: rgba(255, 255, 255, 1);
+cor inputs, color: rgba(15, 147, 51, 0.08);
+cor botao ENTRAR, color: rgba(199, 83, 12, 1);
+} */
+ 
+
+.container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgba(22, 57, 21, 1);
+    font-size: 17px;
+    overflow-x: hidden;
+    background-image: url(../img/bg-login.jpg);
+    background-size: cover;
+    height: auto;
+  }
+  
+  .container-header {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5%;
+  }
+  
+  
+  
+  .header a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 20px;
+  }
+  
+  .header a:hover {
+    color: #ffffff;
+  }
+  
+  .navbar {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+  }
+  
+
+  .logo {
+    width: 200px;
+    margin: 2%
+  }
+
+  /* Fim do header */
+  
+  #empresa_input {
+    margin-bottom: 2vh;
+  }
+  
+  .loading-div {
+    display: none;
+  }
+  
+  #loading-gif {
+    height: 40px;
+    width: 40px;
+  }  
+
+  .formulario{
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .formulario input{
+    background-color: #f7f7f7;
+    width: 350px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid #cfcece;
+  }
+  
+  .card-inputs-login {
+    width: 35%;
+    height: 60vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-color: black;
+    border: 10px;
+    border-radius: 12px;
+    box-shadow: 0rem 0rem 1.5rem 1rem #6b6367a0;
+    position: relative;
+    bottom: 0rem;
+  }
+
+  .campo {
+    position: relative;
+    width: 20rem;
+    text-align: start;
+    align-self: center;
+    margin: 0;
+    position: relative;
+    top: 1rem;
+  }
+  
+  .campo input {
+    width: 100%;
+    padding: 0.3rem;
+    background:  rgba(15, 147, 51, 0.08);
+    outline: none;
+    border: 1px solid black;
+    font-size: 1em;
+    border-radius: 0.6rem;
+  }
+  
+  .campo span {
+    position: absolute;
+    left: 0;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 0.9rem;
+    color: black;
+    text-transform: uppercase;
+    transition: 0.5s;
+    position: relative;
+    bottom: 2rem;
+    z-index: 1;
+  }
+  
+  .campo input:valid~span,
+  .campo input:focus~span {
+    color: whitesmoke;
+    background-color: #c211a1;
+    border-color: black;
+    transform: translateX(10px) translateY(-7px);
+    font-size: 0.85em;
+    padding: 0 10px;
+    position: relative;
+    bottom: 3.2rem;
+    left: 0.5rem;
+    border-radius: 0.3rem; 
+  }
+  
+  .campo input:valid,
+  .campo input:focus {
+    border-color: #8400a5;
+  }
+
+  #botao_cadastro {
+    font-size: medium;
+    margin-top: 5vh;
+    height: 5vh;
+    width: 150px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+    border-radius: 9px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  #botao_cadastro:hover {
+    background-color: #8400a5;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .container {
+    display: flex;
+    width: 100%;
+    height: 70vh;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  
+  /* footer */
+  
+  .footer {
+    width: 100%;
+    background-color: #ffffff;
+    height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    top: 13vh;
+    flex-direction: column;
+  }
+  
+  .hamburger {
+    display: none;
+  }
+
+  .hamburger1 {
+    display: none;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .nav-list {
+    padding: 0;
+  }
+
+  .container-footer {
+    display: flex;
+    width: 90%;
+    height: auto;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .footer-left img {
+    height: 150px;
+    width: 150px;
+    position: relative;
+    top: 5vh;
+  }
+  
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 5vh;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footer-info h1 {
+    color: #393D46;
+    font-size: 20px;
+  }
+  
+  .footer-info a {
+    color: #393D46;
+    margin: 5px;
+    text-decoration: none;
+  }
+
+  .footer-info2 {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+    position: relative;
+    top: 5vh;  
+  }
+  
+  .footer-info2 h1 {
+    color: #393D46;
+    font-size: 20px;
+  }
+  
+  .footer-info2 a {
+    color: #393D46;
+    margin: 5px;
+    text-decoration: none;
+  }
+  
+  .footer-info a:hover {
+    font-weight: 800;
+    color: #8400a5;
+  }
+
+  .container2-footer {
+    display: flex;
+    width: 90%;
+    height: auto;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .footer-direitos{
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    padding-top: 7vh;    
+  }
+
+  .icons-footer{
+    width: 40%;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: 30%;
+    margin-right: 30%;
+  }
+
+  .fa {
+    color: slateblue;
+  }
+
+  .card_erro {
+    display: none;
+    background-color: #ff3366;
+    /* Cor de fundo mais atraente */
+    color: #fff;
+    /* Texto em branco para contraste */
+    width: 230px;
+    position: fixed;
+    border-radius: 10px;
+    border: 2px solid #e6005a;
+    /* Borda ligeiramente mais fina */
+    padding: 20px;
+    /* Maior espaçamento interno */
+    margin-left: 50%;
+    /* Centralize horizontalmente */
+    transform: translateX(-50%);
+    /* Centralize horizontalmente */
+    right: -250px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Sombra suave */
+    transition: right 0.5s ease-in-out;
+    animation: slideInFromRight 1s ease-in-out forwards;
+    animation: slideInFromRight 1s ease-in-out forwards, slideOutToRight 1s ease-in-out 2s forwards;
+    z-index: 9;
+  }
+  
+  @keyframes slideOutToRight {
+    0% {
+      right: 5%;
+      /* Inicialmente, na posição desejada */
+    }
+  
+    100% {
+      right: -450px;
+      /* Volta para a direita após 5 segundos */
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    0% {
+      right: -450px;
+      /* Inicialmente, fora da tela à direita */
+    }
+  
+    100% {
+      right: 5%;
+      /* Desliza para a esquerda para uma posição desejada */
+    }
+  }
+  
+  @media screen and (max-width: 600px){
+    .footer{
+      display: flex;
+      top: 25vh;
+    }
+  }
