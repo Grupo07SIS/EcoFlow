@@ -3,8 +3,10 @@
 cor fundo, color: rgba(255, 255, 255, 1);
 cor inputs, color: rgba(15, 147, 51, 0.08);
 cor botao ENTRAR, color: rgba(199, 83, 12, 1);
+cor frase, color: rgba(22, 57, 21, 1);
 } */
  
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .container {
     display: flex;
@@ -75,6 +77,7 @@ cor botao ENTRAR, color: rgba(199, 83, 12, 1);
   }  
 
   .formulario{
+    background-color: #ffffff;
     width: 90%;
     height: auto;
     display: flex;
@@ -83,7 +86,6 @@ cor botao ENTRAR, color: rgba(199, 83, 12, 1);
     align-items: center;
   }
   .formulario input{
-    background-color: #f7f7f7;
     width: 350px;
     height: 28px;
     border-radius: 5px;
@@ -93,17 +95,18 @@ cor botao ENTRAR, color: rgba(199, 83, 12, 1);
   .card-inputs-login {
     width: 35%;
     height: 60vh;
-    background-color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-color: black;
-    border: 10px;
-    border-radius: 12px;
-    box-shadow: 0rem 0rem 1.5rem 1rem #6b6367a0;
     position: relative;
     bottom: 0rem;
+  }
+
+  .btn-entrar{
+    background-color: rgba(199, 83, 12, 1);
+    color: whitesmoke;
+    border-radius: 5px;
   }
 
   .campo {
