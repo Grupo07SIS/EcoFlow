@@ -17,10 +17,11 @@ body {
     padding-top: 40px;
 }
 
-.arrow_back{
- width: 95%;
- height: 33px;
-    i{
+.arrow_back {
+    width: 95%;
+    height: 33px;
+
+    i {
         font-size: 1.5rem;
         color: #163915;
     }
@@ -64,7 +65,7 @@ body {
     align-items: start;
     width: 80%;
 
-    h1{
+    h1 {
         margin-bottom: 0%;
     }
 }
@@ -77,43 +78,46 @@ body {
     align-items: center;
     font-size: 18px;
     padding-bottom: 8px;
+
     i {
         color: #163915;
         font-size: 25px;
         padding-right: 20px;
     }
-    p{
+
+    p {
         margin: 0%;
     }
 }
 
-.map_live{
+.map_live {
     border-radius: 4px 4px 4px 4px;
     background-color: #4f7e4e;
-    padding: 20% 20% 20% 20%;   
+    padding: 20% 20% 20% 20%;
 }
 
-.desc_event{
-    h2{
+.desc_event {
+    h2 {
         margin-bottom: 0%;
     }
-    p{
+
+    p {
         color: black;
         margin-top: 0%;
         font-size: 18px;
     }
 }
 
-.list_colaborador{
+.list_colaborador {
     width: 100%;
     padding: 0% 0% 4% 0%;
 
-    h2{
+    h2 {
         margin: 0%;
     }
 }
 
-.card_colaborador{
+.card_colaborador {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -123,32 +127,72 @@ body {
     width: 100%;
     border-radius: 4px 4px 4px 4px;
     box-shadow: -1px 10px 18px rgba(58, 58, 58, 0.378);
-    img{
+
+    img {
         width: 100px;
         height: 100px;
         padding-right: 8px;
     }
-    p{
+
+    p {
         padding-left: 2%;
     }
 }
 
-.info_colab{
+.info_colab {
     display: flex;
     flex-direction: column;
     width: 90%;
-    p{
+
+    p {
         margin: 0%;
         font-size: 16px;
         font-weight: bold;
     }
 }
 
-.info_display{
+.info_display {
     display: flex;
-    flex-direction:row;
-   
-    span{
+    flex-direction: row;
+
+    span {
         padding-left: 2%;
     }
+}
+
+/* MENU INFERIOR */
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+    z-index: 1030;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+
+.opcoes {
+    color: #000;
+    text-align: center;
+    flex: 1;
+
+    .h6,
+    h6 {
+        font-size: 0.82rem;
+        margin: 0;
+    }
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
 }
