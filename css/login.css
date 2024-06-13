@@ -1,0 +1,125 @@
+/* Cores do projeto Ecoflow - tela de login
+.header{
+cor fundo, color: rgba(255, 255, 255, 1);
+cor inputs, color: rgba(15, 147, 51, 0.08);
+cor botao ENTRAR, color: rgba(199, 83, 12, 1);
+cor frase, color: rgba(22, 57, 21, 1);
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  font-family: 'Poppins', 'san-serif';
+}
+
+body {
+  background-color: rgba(22, 57, 21, 1);
+  height: 100vh;
+  display: flex;
+  align-items: end;
+  width: 100%;
+}
+
+.foto{
+margin-top: 8vh;
+}
+
+.frase {
+  color: rgba(22, 57, 21, 1);
+  font-size: 22px;
+  display: flex;
+}
+
+.quadradoForms {
+  background-color: #ffffff;
+  border-radius: 35px;
+  display: flex;
+  width: 100%;
+  height: 780px;
+  align-items: center;
+  flex-direction: column;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+}
+
+.container-forms{
+display: flex;
+align-items: center;
+flex-direction: column;
+width: 100%;
+}
+
+.input {
+  background-color: rgba(15, 147, 51, 0.08);
+  border-radius: 5px;
+  width: 39vh;
+  border-color: rgba(22, 57, 21, 1);
+}
+
+.forms {
+  border-radius: 5px;
+  color: #000000;
+  text-decoration: dashed;
+  font-size: 18px;
+  height: 0px;
+}
+
+.forms1{
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+margin-top: 5vh;
+}
+
+.forms2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+/* .container-esqueci{
+
+} */
+
+.esqueci {
+  color: #000000;
+  font-size: 14px;
+  text-align: end;
+  margin-left: 22vh;
+  text-decoration: underline;
+}
+
+.btn-abaixar {
+  margin: 5px;
+  background-color: rgba(22, 57, 21, 0.62);
+  width: 10vh;
+  position: absolute;
+  background-position: center;
+  border-radius: 5px;
+  height: 9px;
+  border-color: rgba(22, 57, 21, 0.62);
+}
+
+.btn-entrar {
+  background-color: rgba(199, 83, 12, 1);
+  color: whitesmoke;
+  border-radius: 5px;
+  width: 17vh;
+  position: relative;
+  border-color: rgba(199, 83, 12, 1);
+  height: 4vh;
+  margin-top: 2vh;
+}
+
+.campo {
+  position: relative;
+  width: 20rem;
+  text-align: start;
+  align-self: center;
+  margin: 0;
+  position: relative;
+  top: 1rem;
+}
