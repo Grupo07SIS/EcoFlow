@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="icon" href="../assets/Logo.png" />
     <title>Ecoflow | Login</title>
 
     <!-- Link do bootstrap -->
@@ -17,7 +18,7 @@
 
 <body>
     <div class="quadradoForms">
-        <button class="btn-abaixar" onclick="passar()"></button>
+        <button class="btn-abaixar" href="loading.html" onclick="passar()"></button>
 
         <div class="foto">
             <img src="../assets/Mobile login via phone device.png"></img>
@@ -39,7 +40,7 @@
                 <div class="container-esqueci">
                     <h4 class="esqueci">Esqueci minha senha</h4>
                 </div>
-                <button class="btn-entrar" id="botao-cadastrar" onclick="entrar()">Entrar</button>
+                <button class="btn-entrar" href="index.html" onclick="entrar()">Entrar</button>
             </form>
         </div>
     </div>
@@ -134,7 +135,7 @@
 
                     // Levar o usuário para a tela de eventos
                     setTimeout(function () {
-                        window.location = "./";
+                        window.location = "index.html";
                     }, 1000); // apenas para exibir o loading
 
                 });
@@ -160,4 +161,7 @@
         cardErro.style.display = "none"
     }
 
+function passar(){
+    window.location = "loading.html"
+}
 </script>
