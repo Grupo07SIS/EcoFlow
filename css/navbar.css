@@ -1,0 +1,88 @@
+.sidenav {
+    height: 100%;
+    width: 230px;
+    margin-left: -230px;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: #163915;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    border-radius: 0px 40px 0px 40px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #bcbcbc;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+    font-size: 1.5rem;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.openBarMain {
+    width: 96%;
+    display: flex;
+    align-items: start;
+
+    .openBar {
+        color: black;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+}
+
+.user_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 8%;
+
+    i {
+        color: rgb(191, 191, 191);
+        font-size: 5rem;
+        font-weight: bold;
+    }
+    p{
+        margin: 0%;
+        color: #bcbcbc;
+    }
+
+    #userName{
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #nomeEmpresa{
+        font-size: 12px;
+    }
+}
