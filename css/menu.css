@@ -1,0 +1,36 @@
+/* MENU INFERIOR */
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    height: 8%;
+}
+
+.opcoes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: black;
+    p{
+        font-size: 14px;
+        margin: 0;
+    }
+    i{
+        font-size: 1.5rem;
+    }
+}
+.menu a {
+    text-decoration: none;
+}

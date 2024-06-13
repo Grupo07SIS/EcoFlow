@@ -14,7 +14,7 @@ body {
     margin: 0;
     color: white;
     height: auto;
-    padding-top: 40px;
+    padding-top: 20px;
 }
 
 .arrow_back {
@@ -66,7 +66,7 @@ body {
     width: 80%;
 
     h1 {
-        margin-bottom: 0%;
+        margin: 0%;
     }
 }
 
@@ -160,39 +160,3 @@ body {
     }
 }
 
-/* MENU INFERIOR */
-
-.menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e7e7e7;
-    z-index: 1030;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
-}
-
-.opcoes {
-    color: #000;
-    text-align: center;
-    flex: 1;
-
-    .h6,
-    h6 {
-        font-size: 0.82rem;
-        margin: 0;
-    }
-}
-
-.menu a {
-    text-decoration: none;
-}
-
-a:hover {
-    color: #000;
-}
