@@ -145,12 +145,3 @@
 .dataGame img {
     margin-right: 5px;
 }
-
-.arrow_back {
-    width: 95%;
-    height: 33px;
-    i {
-        font-size: 1.5rem;
-        color: #163915;
-    }
-}
