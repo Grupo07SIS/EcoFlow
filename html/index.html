@@ -14,177 +14,174 @@
 </head>
 
 <body>
-    <div class="container">
-
-        <div id="mySidenav" class="sidenav">
-            <!-- <a href="javascript:void(0)" </a> -->
-            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
-            <div class="user_info">
-                <i class="bi bi-person-circle"></i>
-                <p id="userName">Nome do Usuário</p>
-                <p id="nomeEmpresa">Nome da Empresa</p>
-            </div>
-            <a href="#">Meus eventos</a>
-            <a href="#">Participantes em espera</a>
-            <a href="#">Painel Gerencial</a>
-            <a href="#">Sair</a>
+    <div id="mySidenav" class="sidenav">
+        <!-- <a href="javascript:void(0)" </a> -->
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-    
-        <div class="openBarMain">
-            <i class="bi bi-list openBar" onclick="openNav()"></i>
-        </div>
+        <a href="#">Meus eventos</a>
+        <a href="#">Participantes em espera</a>
+        <a href="#">Painel Gerencial</a>
+        <a href="#">Sair</a>
+    </div>
 
-        <!-- Carrossel -->
-        <div class="carrossel">
-            <div id="carouselExampleIndicators" class="carousel slide content" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../assets/image 6.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption">
-                            <h5>CRIAR EVENTO</h5>
-                            <a href="">
-                                <img src="../assets/Plus.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/image 7.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption">
-                            <h5>CONSULTAR EVENTO</h5>
-                            <a href="">
-                                <img src="../assets/Eye.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/image 8.png" class="d-block w-100" alt="...">
-                        <div class="carousel-caption">
-                            <h5>ANALYTICS DO EVENTO</h5>
-                            <a href="">
-                                <img src="../assets/Graph.png" alt="">
-                            </a>
-                        </div>
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
+
+    <!-- Carrossel -->
+    <div class="carrossel">
+        <div id="carouselExampleIndicators" class="carousel slide content" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../assets/image 6.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>CRIAR EVENTO</h5>
+                        <a href="">
+                            <img src="../assets/Plus.png" alt="">
+                        </a>
                     </div>
                 </div>
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
+                <div class="carousel-item">
+                    <img src="../assets/image 7.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>CONSULTAR EVENTO</h5>
+                        <a href="">
+                            <img src="../assets/Eye.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../assets/image 8.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>ANALYTICS DO EVENTO</h5>
+                        <a href="">
+                            <img src="../assets/Graph.png" alt="">
+                        </a>
+                    </div>
+                </div>
             </div>
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
         </div>
+    </div>
 
-        <div class="nichos">
-            <div class="nicho">
-                <a href="">
-                    <img src="../assets/Property 1=Default.png" alt="">
-                    <h5>Moda</h5>
-                </a>
-            </div>
-            <div class="nicho">
-                <a href="">
-                    <img src="../assets/Property 1=Variant2.png" alt="">
-                    <h5>Comida</h5>
-                </a>
-            </div>
-            <div class="nicho">
-                <a href="">
-                    <img src="../assets/Property 1=Variant3.png" alt="">
-                    <h5>Animais</h5>
-                </a>
-            </div>
-            <div class="nicho">
-                <a href="">
-                    <img src="../assets/Property 1=Variant4.png" alt="">
-                    <h5>Beleza</h5>
-                </a>
-            </div>
-        </div>
-
-        <div class="cardEventos">
-            <h4>Próximos eventos:</h4>
+    <div class="nichos">
+        <div class="nicho">
             <a href="">
-                ver todos
-                <img src="../assets/Double Right.png" alt="">
+                <img src="../assets/Property 1=Default.png" alt="">
+                <h5>Moda</h5>
             </a>
         </div>
+        <div class="nicho">
+            <a href="">
+                <img src="../assets/Property 1=Variant2.png" alt="">
+                <h5>Comida</h5>
+            </a>
+        </div>
+        <div class="nicho">
+            <a href="">
+                <img src="../assets/Property 1=Variant3.png" alt="">
+                <h5>Animais</h5>
+            </a>
+        </div>
+        <div class="nicho">
+            <a href="">
+                <img src="../assets/Property 1=Variant4.png" alt="">
+                <h5>Beleza</h5>
+            </a>
+        </div>
+    </div>
 
-        <div class="cards">
-            <div class="cardItem">
-                <img class="img-background" src="../assets/Mask Group.png" alt="">
-                <div class="descricao">
-                    <p><strong>Nome do Jogo 2</strong></p>
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Location.png" alt=""> Localização 2
-                </div>
+    <div class="cardEventos">
+        <h4>Próximos eventos:</h4>
+        <a href="">
+            ver todos
+            <img src="../assets/Double Right.png" alt="">
+        </a>
+    </div>
+
+    <div class="cards">
+        <div class="cardItem">
+            <img class="img-background" src="../assets/Mask Group.png" alt="">
+            <div class="descricao">
+                <p><strong>Nome do Jogo 2</strong></p>
             </div>
-            <div class="cardItem">
-                <img class="img-background" src="../assets/Mask Group.png" alt="">
-                <div class="descricao">
-                    <p><strong>Nome do Jogo 2</strong></p>
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Location.png" alt=""> Localização 2
-                </div>
+            <div class="dataGame">
+                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
             </div>
-            <div class="cardItem">
-                <img class="img-background" src="../assets/Mask Group.png" alt="">
-                <div class="descricao">
-                    <p><strong>Nome do Jogo 2</strong></p>
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-                </div>
-                <div class="dataGame">
-                    <img src="../assets/Location.png" alt=""> Localização 2
-                </div>
+            <div class="dataGame">
+                <img src="../assets/Location.png" alt=""> Localização 2
             </div>
         </div>
-
-        <div class="colaboradores">
-            <button type="button" class="btn btn-secondary">Convidar</button>
-        </div>
-
-            <div class="menu">
-                <a href="" class="opcoes">
-                    <img src="../assets/Vector 3.png" alt="">
-                    <p>Inicio</p>
-                </a>
-                <a href="" class="opcoes">
-                    <img src="../assets/Calendar icon.png" alt="">
-                    <p>Eventos</p>
-                </a>
-                <a href="" class="opcoes">
-                    <img src="../assets/Group 2.png" alt="">
-                    <p>Criar Evento</p>
-                </a>
-                <a href="" class="opcoes">
-                    <img src="../assets/Group 4.png" alt="">
-                    <p>Convites</p>
-                </a>
-                <a href="" class="opcoes">
-                    <img src="../assets/Group 3.png" alt="">
-                    <p>Perfil</p>
-                </a>
+        <div class="cardItem">
+            <img class="img-background" src="../assets/Mask Group.png" alt="">
+            <div class="descricao">
+                <p><strong>Nome do Jogo 2</strong></p>
+            </div>
+            <div class="dataGame">
+                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
+            </div>
+            <div class="dataGame">
+                <img src="../assets/Location.png" alt=""> Localização 2
             </div>
         </div>
+        <div class="cardItem">
+            <img class="img-background" src="../assets/Mask Group.png" alt="">
+            <div class="descricao">
+                <p><strong>Nome do Jogo 2</strong></p>
+            </div>
+            <div class="dataGame">
+                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
+            </div>
+            <div class="dataGame">
+                <img src="../assets/Location.png" alt=""> Localização 2
+            </div>
+        </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
+    <div class="colaboradores">
+        <button type="button" class="btn btn-secondary">Convidar</button>
+    </div>
+
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3.png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2.png" alt="">
+            <p>Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

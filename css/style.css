@@ -4,6 +4,10 @@
     font-family: 'Poppins', 'san-serif';
 }
 
+body {
+    padding: 20px;
+}
+
 .carousel-indicators {
     position: static;
     margin-top: 10px;
@@ -144,4 +148,10 @@
 
 .dataGame img {
     margin-right: 5px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #fff;
+    color: #C7530C;
+    border: solid 1px #C7530C;
 }

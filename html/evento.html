@@ -1,51 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload de Imagens</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .upload-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .upload-container h2 {
-            margin-bottom: 20px;
-        }
-        .upload-container input[type="file"] {
-            display: none;
-        }
-        .upload-container label {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .preview-container {
-            margin-top: 20px;
-        }
-        .preview-container img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evento.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
+
 <body>
-    <div class="upload-container">
-        <h2>Upload de Imagens</h2>
+    <div class="titulo"><h4>CRIAR EVENTO</h4></div>
+    <h5>SOBRE O EVENTO</h5>
+    <div class="upload-container" id="uploadContainer">
+        <img src="../assets/Upload to the Cloud.png" alt="">
+        <h5>Upload de Imagens</h5>
         <form id="uploadForm">
             <input type="file" id="fileInput" accept="image/*" multiple>
             <label for="fileInput">Escolher Imagem</label>
@@ -53,12 +25,107 @@
         <div class="preview-container" id="previewContainer"></div>
     </div>
 
-    <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const files = event.target.files;
-            const previewContainer = document.getElementById('previewContainer');
-            previewContainer.innerHTML = ''; // Clear any previous previews
+    <form>
+        <div class="form-group">
+            <label>Nome do Evento:</label>
+            <input type="text" class="form-control" id="exampleInputNome">
+        </div>
+        <div class="form-group">
+            <label>Tema do Evento:</label>
+            <input type="text" class="form-control" id="exampleInputTema">
+        </div>
 
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" id="dateInput" class="form-control" maxlength="10">
+        </div>
+
+        <div class="form-group">
+            <label>Capacidade Máxima do Local:</label>
+            <input type="text" class="form-control" id="exampleInputCapacidade">
+        </div>
+
+        <div class="form-group">
+            <label>Descrição:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </form>
+
+    <h5>LOCAL DO EVENTO</h5>
+    <form>
+        <div class="form-group">
+            <label>Logradouro:</label>
+            <input type="text" class="form-control" id="inputAddress">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Número:</label>
+                <input type="number" class="form-control" id="validationCustom04">
+            </div>
+            <div class="form-group col-md-2">
+                <label>CEP</label>
+                <input type="text" class="form-control" id="inputCEP">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Complemento:</label>
+            <input type="text" class="form-control" id="inputComplemento">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Cidade:</label>
+              <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label>UF:</label>
+                <input type="text" class="form-control" id="inputUF">
+              </div>
+          </div>
+    </form>
+
+    <div class="proximo">
+        <button type="button" class="btn btn-secondary">
+            <a href="../html/valores.html">Proximo</a>
+        </button>
+    </div>
+
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2 (1).png" alt="">
+            <p>Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+    </div>
+
+    
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+
+        fileInput.addEventListener('change', handleFiles);
+
+        function handleFiles(event) {
+            const files = event.target.files;
+            previewFiles(files);
+        }
+
+        function previewFiles(files) {
+            previewContainer.innerHTML = ''; // Limpa qualquer pré-visualização anterior
             for (const file of files) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -68,7 +135,12 @@
                 };
                 reader.readAsDataURL(file);
             }
-        });
+        }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
 </html>
