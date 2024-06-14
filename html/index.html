@@ -8,26 +8,31 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <script src="../js/navbar.js"></script>
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body>
     <div class="container">
 
-        <!-- NavBar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(Página atual)</span></a>
-                    <a class="nav-item nav-link" href="#">Destaques</a>
-                    <a class="nav-item nav-link" href="#">Preços</a>
-                    <a class="nav-item nav-link disabled" href="#">Desativado</a>
-                </div>
+        <div id="mySidenav" class="sidenav">
+            <!-- <a href="javascript:void(0)" </a> -->
+            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+            <div class="user_info">
+                <i class="bi bi-person-circle"></i>
+                <p id="userName">Nome do Usuário</p>
+                <p id="nomeEmpresa">Nome da Empresa</p>
             </div>
-        </nav>
+            <a href="#">Meus eventos</a>
+            <a href="#">Participantes em espera</a>
+            <a href="#">Painel Gerencial</a>
+            <a href="#">Sair</a>
+        </div>
+    
+        <div class="openBarMain">
+            <i class="bi bi-list openBar" onclick="openNav()"></i>
+        </div>
 
         <!-- Carrossel -->
         <div class="carrossel">
@@ -96,50 +101,90 @@
             </div>
         </div>
 
-        <div class="events">
-
-        </div>
-
-        <div class="menu">
-            <a href="" class="opcoes">
-                <img src="../assets/Vector 3.png" alt="">
-                <h6>Inicio</h6>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Calendar icon.png" alt="">
-                <h6>Eventos</h6>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Group 2.png" alt="">
-                <h6>Criar Evento</h6>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Group 4.png" alt="">
-                <h6>Convites</h6>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Group 3.png" alt="">
-                <h6>Perfil</h6>
+        <div class="cardEventos">
+            <h4>Próximos eventos:</h4>
+            <a href="">
+                ver todos
+                <img src="../assets/Double Right.png" alt="">
             </a>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $('.navbar-toggler').click(function () {
-                $('.navbar').toggleClass('navbar-collapsed');
-            });
-        });
-    </script>
+        <div class="cards">
+            <div class="cardItem">
+                <img class="img-background" src="../assets/Mask Group.png" alt="">
+                <div class="descricao">
+                    <p><strong>Nome do Jogo 2</strong></p>
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Location.png" alt=""> Localização 2
+                </div>
+            </div>
+            <div class="cardItem">
+                <img class="img-background" src="../assets/Mask Group.png" alt="">
+                <div class="descricao">
+                    <p><strong>Nome do Jogo 2</strong></p>
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Location.png" alt=""> Localização 2
+                </div>
+            </div>
+            <div class="cardItem">
+                <img class="img-background" src="../assets/Mask Group.png" alt="">
+                <div class="descricao">
+                    <p><strong>Nome do Jogo 2</strong></p>
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Schedule.png" alt=""> 21/04 22:00
+                </div>
+                <div class="dataGame">
+                    <img src="../assets/Location.png" alt=""> Localização 2
+                </div>
+            </div>
+        </div>
+
+        <div class="colaboradores">
+            <button type="button" class="btn btn-secondary">Convidar</button>
+        </div>
+
+            <div class="menu">
+                <a href="" class="opcoes">
+                    <img src="../assets/Vector 3.png" alt="">
+                    <p>Inicio</p>
+                </a>
+                <a href="" class="opcoes">
+                    <img src="../assets/Calendar icon.png" alt="">
+                    <p>Eventos</p>
+                </a>
+                <a href="" class="opcoes">
+                    <img src="../assets/Group 2.png" alt="">
+                    <p>Criar Evento</p>
+                </a>
+                <a href="" class="opcoes">
+                    <img src="../assets/Group 4.png" alt="">
+                    <p>Convites</p>
+                </a>
+                <a href="" class="opcoes">
+                    <img src="../assets/Group 3.png" alt="">
+                    <p>Perfil</p>
+                </a>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

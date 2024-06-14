@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="../assets/Logo.png" />
+    <title>Ecoflow | Login</title>
+
+    <!-- Link do bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/login.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+<body>
+    <div class="quadradoForms">
+        <button class="btn-abaixar" href="loading.html" onclick="passar()"></button>
+
+        <div class="foto">
+            <img src="../assets/Mobile login via phone device.png"></img>
+        </div>
+
+        <div class="container-forms">
+            <b>
+                <p class="frase">Entrar na sua conta</p>
+            </b>
+            <form class="forms2">
+                <div class="forms1">
+                    <label class="forms">Email:</label><br>
+                    <input class="input" type="text" id="email">
+
+                    <label class="forms">Senha:</label><br>
+                    <input class="input" type="password" id="senha">
+                </div>
+
+                <div class="container-esqueci">
+                    <h4 class="esqueci">Esqueci minha senha</h4>
+                </div>
+                <button class="btn-entrar" href="index.html" onclick="entrar()">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('.navbar-toggler').click(function () {
+                $('.navbar').toggleClass('navbar-collapsed');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+
+
+<script>
+    const hamburger = document.querySelector(".hamburger")
+    const nav = document.querySelector(".nav")
+    const hamburger1 = document.querySelector(".hamburger1")
+    const nav1 = document.querySelector(".nav1")
+
+    hamburger.addEventListener("click", () =>
+        nav.classList.toggle("active"))
+
+    hamburger1.addEventListener("click", () =>
+        nav1.classList.toggle("active"))
+</script>
+
+<script>
+
+
+    function entrar() {
+        aguardar();
+
+        var emailVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "Preencha todos os campos!";
+
+            setTimeout(function () {
+                cardErro.style.display = 'none'
+            }, 3000)
+
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+
+                    sessionStorage.ID_USUARIO = json.idFuncionario;
+                    sessionStorage.NOME_USUARIO = json.Nome;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.FK_EMPRESA = json.fkEmpresa;
+
+
+                    // Levar o usuário para a tela de eventos
+                    setTimeout(function () {
+                        window.location = "index.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+function passar(){
+    window.location = "loading.html"
+}
+</script>
