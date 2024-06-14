@@ -11,7 +11,6 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dash_gerencial.css">
-    <link rel="stylesheet" href="../css/style.css">
     <script src="../js/dash_gerencial.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -66,7 +65,32 @@
                 <div class="offcanvas-body small">
                     <h4>Categorias</h4>
                     <div class="filtrar_categorias">
-                        <span>fotinhas com links</span>
+                        <div class="nichos">
+                            <div class="nicho">
+                                <a href="">
+                                    <img src="../assets/Property 1=Default.png" alt="">
+                                    <h5>Moda</h5>
+                                </a>
+                            </div>
+                            <div class="nicho">
+                                <a href="">
+                                    <img src="../assets/Property 1=Variant2.png" alt="">
+                                    <h5>Comida</h5>
+                                </a>
+                            </div>
+                            <div class="nicho">
+                                <a href="">
+                                    <img src="../assets/Property 1=Variant3.png" alt="">
+                                    <h5>Animais</h5>
+                                </a>
+                            </div>
+                            <div class="nicho">
+                                <a href="">
+                                    <img src="../assets/Property 1=Variant4.png" alt="">
+                                    <h5>Beleza</h5>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <h4>Tema do Evento</h4>
                     <div class="filtrar_tema">
@@ -79,13 +103,19 @@
                     </div>
                     <h4>Horário e Data</h4>
                     <div class="filtrar_date">
-                        <div class="filtrar_dt_inicio">
-                            <h6>Inicio</h6>
-                            <input type="date">
-                        </div>
-                        <div class="filtrar_dt_fim">
-                            <h6>Fim</h6>
-                            <input type="date">
+                        <div class="bloco_filtros">
+                            <div class="filtrar_dt_inicio">
+                                <span>Inicio</span>
+                                <div class="input-group flex-nowrap">
+                                    <input type="date" class="form-control">
+                                  </div>
+                            </div>
+                            <div class="filtrar_dt_fim">
+                                <span>Fim</span>
+                                <div class="input-group flex-nowrap">
+                                    <input type="date" class="form-control">
+                                  </div>
+                            </div>
                         </div>
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                             <button type="button" class="btn btn-outline-primary">Essa semana</button>
@@ -103,6 +133,7 @@
                 <h4>Lucro do Evento</h4>
             </div>
             <div class="grafico_linha">
+                <div class="lucro_alcancado"></div>
             </div>
             <div class="descricao_linha">
                 <h6>Alcançado</h6>
@@ -179,7 +210,25 @@
             <div class="subtitulo">
                 <h4>Nichos Presentes</h4>
             </div>
-            <div class="bolotas">
+            <div class="bolhas">
+                <div class="content_bolha">
+                    <div class="bolha_geral_1">
+                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                    </div>
+                    <div class="bolha_titulo" id="titulo_bolha"></div>
+                </div>
+                <div class="content_bolha">
+                    <div class="bolha_geral_2">
+                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                    </div>
+                    <div class="bolha_titulo" id="titulo_bolha"></div>
+                </div>
+                <div class="content_bolha">
+                    <div class="bolha_geral_3">
+                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                    </div>
+                    <div class="bolha_titulo" id="titulo_bolha"></div>
+                </div>
 
             </div>
          </div>
