@@ -28,26 +28,26 @@
     <form>
         <div class="form-group">
             <label>Nome do Evento:</label>
-            <input type="text" class="form-control" id="exampleInputNome">
+            <input type="text" class="form-control" id="nome">
         </div>
         <div class="form-group">
             <label>Tema do Evento:</label>
-            <input type="text" class="form-control" id="exampleInputTema">
+            <input type="text" class="form-control" id="tema">
         </div>
 
         <div class="form-group">
             <label>Data:</label>
-            <input type="date" id="dateInput" class="form-control" maxlength="10">
+            <input type="date" id="data" class="form-control" maxlength="10">
         </div>
 
         <div class="form-group">
             <label>Capacidade Máxima do Local:</label>
-            <input type="text" class="form-control" id="exampleInputCapacidade">
+            <input type="text" class="form-control" id="capacidadeMax">
         </div>
 
         <div class="form-group">
             <label>Descrição:</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="desc" rows="3"></textarea>
         </div>
     </form>
 
@@ -55,36 +55,36 @@
     <form>
         <div class="form-group">
             <label>Logradouro:</label>
-            <input type="text" class="form-control" id="inputAddress">
+            <input type="text" class="form-control" id="logradouro">
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Número:</label>
-                <input type="number" class="form-control" id="validationCustom04">
+                <input type="number" class="form-control" id="numero">
             </div>
             <div class="form-group col-md-2">
                 <label>CEP</label>
-                <input type="text" class="form-control" id="inputCEP">
+                <input type="text" class="form-control" id="cep">
             </div>
         </div>
         <div class="form-group">
             <label>Complemento:</label>
-            <input type="text" class="form-control" id="inputComplemento">
+            <input type="text" class="form-control" id="complemento">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
               <label>Cidade:</label>
-              <input type="text" class="form-control" id="inputCity">
+              <input type="text" class="form-control" id="cidade">
             </div>
             <div class="form-group col-md-6">
                 <label>UF:</label>
-                <input type="text" class="form-control" id="inputUF">
+                <input type="text" class="form-control" id="UF">
               </div>
           </div>
     </form>
 
     <div class="proximo">
-        <button type="button" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary", onclick="salvarDadosPag1()">
             <a href="../html/valores.html">Proximo</a>
         </button>
     </div>
@@ -135,6 +135,23 @@
                 };
                 reader.readAsDataURL(file);
             }
+        }
+
+        function salvarDadosPag1(){
+            const dados = {
+                nomeEvento: document.getElementById('nome').value,
+                temaEvento: document.getElementById('tema').value,
+                dataEvento: document.getElementById('data').value,
+                capacidadeMax: document.getElementById('capacidadeMax').value,
+                descricaoEvento: document.getElementById('desc').value,
+                logradouro: document.getElementById('logradouro').value,
+                numero: document.getElementById('numero').value,
+                cep: document.getElementById('cep').value,
+                complemento: document.getElementById('complemento').value,
+                cidade: document.getElementById('cidade').value,
+                estado: document.getElementById('UF').value,
+            };
+            sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
         }
     </script>
 

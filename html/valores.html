@@ -26,7 +26,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="orcamentoInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="orcamento" placeholder="0,00">
         </div>
 
         <label>Meta de Lucro:</label>
@@ -34,7 +34,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="lucroInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="meta" placeholder="0,00">
         </div>
 
         <label>Aluguel do Local:</label>
@@ -42,7 +42,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="aluguelInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="aluguel" placeholder="0,00">
         </div>
 
         <label>Valor Infraestrutura:</label>
@@ -50,7 +50,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="infraestruturaInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="infra" placeholder="0,00">
         </div>
 
         <label>Valor Inscrição:</label>
@@ -58,7 +58,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="inscricaoInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="inscricao" placeholder="0,00">
         </div>
 
         <label>Valor Funcionários:</label>
@@ -66,12 +66,12 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">R$</span>
             </div>
-            <input type="text" class="form-control form-control-currency" id="funcionariosInput" placeholder="0,00">
+            <input type="text" class="form-control form-control-currency" id="func" placeholder="0,00">
         </div>
 
         <div class="form-group">
             <label>Quantidade Máxima de Colabores:</label>
-            <input type="text" class="form-control" id="inputQtdColaboradores">
+            <input type="text" class="form-control" id="qtdColab">
         </div>
     </form>
 
@@ -79,7 +79,7 @@
         <button type="button" class="btn btn-outline-secondary">
             <a href="../html/evento.html">Voltar</a>
         </button>
-        <button type="button" class="btn btn-secondary">
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
             <a href="../html/atracao.html">Proximo</a>
         </button>
     </div>
@@ -132,6 +132,22 @@
                 formatCurrencyInput(this);
             });
         });
+
+        function limparValor(valor) {
+            return valor.replace(/[R$\s]/g, '');
+        }
+
+        function salvarDadosPag2(){
+            const dados = JSON.parse(sessionStorage.getItem('dadosEvento')) || {};
+            dados.orcamentoTotal = limparValor(document.getElementById('orcamento').value);
+            dados.metaLucro = limparValor(document.getElementById('meta').value);
+            dados.aluguelLocal = limparValor(document.getElementById('aluguel').value);
+            dados.valorInfra = limparValor(document.getElementById('infra').value);
+            dados.valorInscricao = limparValor(document.getElementById('inscricao').value);
+            dados.valorFuncionarios = limparValor(document.getElementById('func').value);
+            dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
+            sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
+        }
     </script>
 </body>
 
