@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
+    <script src="../js/buscarEventos.js"></script>
 </head>
 
 <body>
@@ -25,8 +26,8 @@
         </div>
         <a href="#">Meus eventos</a>
         <a href="#">Participantes em espera</a>
-        <a href="#">Painel Gerencial</a>
-        <a href="#">Sair</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
     </div>
 
     <div class="openBarMain">
@@ -108,41 +109,24 @@
         </a>
     </div>
 
-    <div class="cards">
+    <div class="cards" id="cards_eventos">
         <div class="cardItem">
+            <div class="dataCalendarioEvento">
+                <span>
+                    Junho 10
+                </span>
+            </div>
             <img class="img-background" src="../assets/Mask Group.png" alt="">
-            <div class="descricao">
-                <p><strong>Nome do Jogo 2</strong></p>
+            <div class="titulo">
+                <span>Dia das Mães</span>
             </div>
-            <div class="dataGame">
-                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-            </div>
-            <div class="dataGame">
-                <img src="../assets/Location.png" alt=""> Localização 2
-            </div>
-        </div>
-        <div class="cardItem">
-            <img class="img-background" src="../assets/Mask Group.png" alt="">
-            <div class="descricao">
-                <p><strong>Nome do Jogo 2</strong></p>
-            </div>
-            <div class="dataGame">
-                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-            </div>
-            <div class="dataGame">
-                <img src="../assets/Location.png" alt=""> Localização 2
-            </div>
-        </div>
-        <div class="cardItem">
-            <img class="img-background" src="../assets/Mask Group.png" alt="">
-            <div class="descricao">
-                <p><strong>Nome do Jogo 2</strong></p>
-            </div>
-            <div class="dataGame">
-                <img src="../assets/Schedule.png" alt=""> 21/04 22:00
-            </div>
-            <div class="dataGame">
-                <img src="../assets/Location.png" alt=""> Localização 2
+            <div class="organizedDtas">
+                <div class="dataEvento">
+                    <img src="../assets/Schedule.png" alt=""> <span>21/04 22:00</span>
+                </div>
+                <div class="dataLocal">
+                    <img src="../assets/Location.png" alt=""> <span>Localização 2</span>
+                </div>
             </div>
         </div>
     </div>

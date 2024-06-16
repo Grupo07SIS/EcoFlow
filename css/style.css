@@ -113,13 +113,12 @@ body {
 .cards {
     display: flex;
     overflow-x: auto;
-    padding: 20px;
+    padding: 20px 0px 20px 0px;
     white-space: nowrap;
 }
 
 .cardItem {
     display: inline-block;
-    margin-right: 20px;
     flex: 0 0 auto;
     background-color: #f8f9fa;
     border: 1px solid #e7e7e7;
@@ -127,6 +126,7 @@ body {
     padding: 15px;
     min-width: 200px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
 }
 
 .cardItem img.img-background {
@@ -134,24 +134,61 @@ body {
     border-radius: 5px;
 }
 
-.descricao {
-    margin-top: 10px;
-    font-size: 1.2em;
+.titulo {
+    color: #163915;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0%;
 }
 
-.dataGame {
+.organizedDtas{
     display: flex;
-    align-items: center;
-    margin-top: 10px;
-    font-size: 0.9em;
+    flex-direction: column;
 }
 
-.dataGame img {
-    margin-right: 5px;
+.dataEvento{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    font-size: 16px;
+    img{
+        padding-right: 4%;
+    }
+}
+
+.dataLocal{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 30px;
+    font-size: 16px;
+    img{
+        padding-right: 4%;
+    }
 }
 
 .btn-outline-secondary:hover {
     background-color: #fff;
     color: #C7530C;
     border: solid 1px #C7530C;
+}
+
+.dataCalendarioEvento{
+    padding: 9px;
+    background-color: #ffffffba;
+    position: absolute;
+    margin: 2%;
+    border-radius: 4px 4px 4px 4px;
+    color: #163915;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.organizedDtas{
+    font-size: 16px;
+}
+.card-link {
+    text-decoration: none;
+    color: black;
 }
