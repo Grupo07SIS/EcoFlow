@@ -80,7 +80,7 @@
             <a href="../html/evento.html">Voltar</a>
         </button>
         <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="../html/atracao.html">Proximo</a>
+            <a href="../html/atracao-update.html">Proximo</a>
         </button>
     </div>
 
@@ -108,6 +108,8 @@
     </div>
 
     <script>
+        window.onload = valorPadrao()
+
         // Função para formatar o valor monetário enquanto o usuário digita
         function formatCurrencyInput(input) {
             // Remove todos os caracteres que não sejam dígitos
@@ -126,6 +128,22 @@
             input.value = formattedValue;
         }
 
+        // Função para formatar valor monetário ao carregar a página
+        function formatarMoeda(valor) {
+            if (typeof valor === 'string') {
+                // Verifica se o valor termina com ",00"
+                if (valor.endsWith(',00')) {
+                    // Remove a vírgula, substitui por ponto e converte para float
+                    valor = parseFloat(valor.replace(',', '.'));
+                }
+            }
+            if (!isNaN(valor)) {
+                // Formata o valor para exibição
+                return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            }
+            return '';
+        }
+
         // Eventos para formatar valor enquanto digita
         document.querySelectorAll('.form-control-currency').forEach(input => {
             input.addEventListener('input', function(e) {
@@ -134,19 +152,34 @@
         });
 
         function limparValor(valor) {
-            return valor.replace(/[R$\s]/g, '');
+            // Remove o símbolo de moeda, espaços em branco e pontos de milhar
+            return valor.replace(/[R$\s.]/g, '').replace(',', '.');
+        }
+
+
+        function valorPadrao(){
+            const dadosJSON = sessionStorage.getItem('dadosGetEvento')
+            const dados = JSON.parse(dadosJSON)
+            console.log(dados)
+            document.getElementById('orcamento').value = formatarMoeda(dados.fkFinanceiro.orcamentoTotal) || '';
+            document.getElementById('meta').value = formatarMoeda(dados.fkFinanceiro.ticketMedio) || '';
+            document.getElementById('aluguel').value = formatarMoeda(dados.fkFinanceiro.aluguelLocal) || '';
+            document.getElementById('infra').value = formatarMoeda(dados.fkFinanceiro.valorInfra) || '';
+            document.getElementById('inscricao').value = formatarMoeda(dados.fkFinanceiro.valorInscricao) || '';
+            document.getElementById('func').value = formatarMoeda(dados.fkFinanceiro.valorFuncionario) || '';
+            document.getElementById('qtdColab').value = dados.fkFinanceiro.qtdMaxColaboradores || '';
         }
 
         function salvarDadosPag2(){
-            const dados = JSON.parse(sessionStorage.getItem('dadosEvento')) || {};
-            dados.orcamentoTotal = limparValor(document.getElementById('orcamento').value);
-            dados.metaLucro = limparValor(document.getElementById('meta').value);
-            dados.aluguelLocal = limparValor(document.getElementById('aluguel').value);
-            dados.valorInfra = limparValor(document.getElementById('infra').value);
-            dados.valorInscricao = limparValor(document.getElementById('inscricao').value);
-            dados.valorFuncionarios = limparValor(document.getElementById('func').value);
+            const dados = JSON.parse(sessionStorage.getItem('dadosEventoUpdate')) || {};
+            dados.orcamentoTotal = parseFloat(limparValor(document.getElementById('orcamento').value));
+            dados.metaLucro = parseFloat(limparValor(document.getElementById('meta').value));
+            dados.aluguelLocal = parseFloat(limparValor(document.getElementById('aluguel').value));
+            dados.valorInfra = parseFloat(limparValor(document.getElementById('infra').value));
+            dados.valorInscricao = parseFloat(limparValor(document.getElementById('inscricao').value));
+            dados.valorFuncionarios = parseFloat(limparValor(document.getElementById('func').value));
             dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
-            sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
+            sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dados));
         }
     </script>
 </body>
