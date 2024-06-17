@@ -55,6 +55,7 @@ width: 100%;
   border-radius: 5px;
   width: 39vh;
   border-color: rgba(22, 57, 21, 1);
+  padding: 2%;
 }
 
 .forms {
@@ -69,7 +70,7 @@ width: 100%;
 display: flex;
 justify-content: space-between;
 flex-direction: column;
-margin-top: 5vh;
+padding: 20px;
 }
 
 .forms2 {

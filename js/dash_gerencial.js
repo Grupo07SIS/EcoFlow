@@ -7,6 +7,13 @@ async function gerarGrafico() {
   // const respostaDados = await resposta.json();
   // console.log(respostaDados)
 
+  const resposta = await fetch ("http://localhost:8080/dashboard/grafico-inscritos?startDate=2000-01-01&endDate=2024-06-13")
+  const respostaDados = await resposta.json()
+  console.log("Resposta:", respostaDados)
+
+  const inscritos = respostaDados.inscritos
+  const vagasAbertas = respostaDados.vagasAbertas
+
   const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
@@ -15,7 +22,7 @@ async function gerarGrafico() {
       labels: ['Vagas Abertas', 'Vagas Preenchidas'],
       datasets: [{
         label: ['Vagas Abertas', 'Vagas Preenchidas'],
-        data: [12, 5],
+        data: [vagasAbertas,inscritos],
         borderWidth: 1,
         backgroundColor: [
           'rgba(22, 57, 21, 1)',

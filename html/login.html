@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="../css/login.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="../js/entrar.js"></script>
 
 <body>
     <div class="quadradoForms">
@@ -28,7 +29,6 @@
             <b>
                 <p class="frase">Entrar na sua conta</p>
             </b>
-            <form class="forms2">
                 <div class="forms1">
                     <label class="forms">Email:</label><br>
                     <input class="input" type="text" id="email">
@@ -40,8 +40,7 @@
                 <div class="container-esqueci">
                     <h4 class="esqueci">Esqueci minha senha</h4>
                 </div>
-                <button class="btn-entrar" href="index.html" onclick="entrar()">Entrar</button>
-            </form>
+                <button class="btn-entrar" href="index.html" id="loginButton" onclick="entrar()">Entrar</button>
         </div>
     </div>
 
@@ -68,7 +67,7 @@
 </html>
 
 
-<script>
+<!-- <script>
     const hamburger = document.querySelector(".hamburger")
     const nav = document.querySelector(".nav")
     const hamburger1 = document.querySelector(".hamburger1")
@@ -79,87 +78,9 @@
 
     hamburger1.addEventListener("click", () =>
         nav1.classList.toggle("active"))
-</script>
+</script> -->
 
 <script>
-
-
-    function entrar() {
-        aguardar();
-
-        var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "Preencha todos os campos!";
-
-            setTimeout(function () {
-                cardErro.style.display = 'none'
-            }, 3000)
-
-            finalizarAguardar();
-            return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
-
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
-            if (resposta.ok) {
-                console.log(resposta);
-
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-
-                    sessionStorage.ID_USUARIO = json.idFuncionario;
-                    sessionStorage.NOME_USUARIO = json.Nome;
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.FK_EMPRESA = json.fkEmpresa;
-
-
-                    // Levar o usuário para a tela de eventos
-                    setTimeout(function () {
-                        window.location = "index.html";
-                    }, 1000); // apenas para exibir o loading
-
-                });
-
-            } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
-                resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
-                });
-            }
-
-        }).catch(function (erro) {
-            console.log(erro);
-        })
-
-        return false;
-    }
-
-    function sumirMensagem() {
-        cardErro.style.display = "none"
-    }
 
 function passar(){
     window.location = "loading.html"

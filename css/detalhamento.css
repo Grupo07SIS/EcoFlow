@@ -93,7 +93,8 @@ body {
 .map_live {
     border-radius: 4px 4px 4px 4px;
     background-color: #4f7e4e;
-    padding: 20% 20% 20% 20%;
+    height: 200px;
+    width: 100%;
 }
 
 .desc_event {
@@ -110,7 +111,7 @@ body {
 
 .list_colaborador {
     width: 100%;
-    padding: 0% 0% 4% 0%;
+    padding: 0% 0% 25% 0%;
 
     h2 {
         margin: 0%;
