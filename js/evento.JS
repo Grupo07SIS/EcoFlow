@@ -150,3 +150,22 @@ async function alterarEvento(){
 
     if(respostaCadastro.status == 200){console.log("Alterado")}
 }
+
+
+async function deletarEvento(){
+    const existingHeaders = {"Content-type": "application/json; charset=UTF-8"};
+    const userAgent = "insomnia/8.6.1";
+    const headers = {
+    ...existingHeaders,
+    "User-Agent": userAgent
+    };
+    const deletar = await fetch("http://localhost:8080/eventos?id=1", {
+      method: "DELETE",
+      headers: headers
+    });
+    if(deletar.status == 204){
+      console.log("Evento excluído com sucesso!");
+    } else {
+      console.error("Erro ao excluir evento:", deletar.status);
+    }
+  }
