@@ -10,12 +10,33 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/evento.css">
     <link rel="stylesheet" href="../css/atracao.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="../js/evento.JS"></script>
 
 </head>
 
 <body>
+    <div id="mySidenav" class="sidenav">
+        <!-- <a href="javascript:void(0)" </a> -->
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
+        </div>
+        <a href="#">Meus eventos</a>
+        <a href="#">Participantes em espera</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
+    </div>
+
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
+
     <div class="titulo">
         <h4>CRIAR EVENTO</h4>
     </div>
@@ -161,6 +182,17 @@
                     formatCurrencyInput(this);
                 });
             });
+            window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        console.log("CHEGOU NESSA BCT")
+        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
+        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
         </script>
 </body>
 
