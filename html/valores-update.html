@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Monetário com Símbolo R$</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evento.css">
+    <link rel="stylesheet" href="../css/valores.css">
+    <link rel="stylesheet" href="../css/menu.css">
+
+</head>
+
+<body>
+    <div class="titulo">
+        <h4>CRIAR EVENTO</h4>
+    </div>
+    <h5>VALORES</h5>
+
+    <form>
+        <label>Orçamento Total:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="orcamento" placeholder="0,00">
+        </div>
+
+        <label>Meta de Lucro:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="meta" placeholder="0,00">
+        </div>
+
+        <label>Aluguel do Local:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="aluguel" placeholder="0,00">
+        </div>
+
+        <label>Valor Infraestrutura:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="infra" placeholder="0,00">
+        </div>
+
+        <label>Valor Inscrição:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="inscricao" placeholder="0,00">
+        </div>
+
+        <label>Valor Funcionários:</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">R$</span>
+            </div>
+            <input type="text" class="form-control form-control-currency" id="func" placeholder="0,00">
+        </div>
+
+        <div class="form-group">
+            <label>Quantidade Máxima de Colabores:</label>
+            <input type="text" class="form-control" id="qtdColab">
+        </div>
+    </form>
+
+    <div class="proximo-voltar">
+        <button type="button" class="btn btn-outline-secondary">
+            <a href="../html/evento.html">Voltar</a>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
+            <a href="../html/atracao-update.html">Proximo</a>
+        </button>
+    </div>
+
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2 (1).png" alt="">
+            <p>Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+    </div>
+
+    <script>
+        window.onload = valorPadrao()
+
+        // Função para formatar o valor monetário enquanto o usuário digita
+        function formatCurrencyInput(input) {
+            // Remove todos os caracteres que não sejam dígitos
+            let value = input.value.replace(/\D/g, '');
+
+            // Se o valor estiver vazio, retorna
+            if (value === '') {
+                input.value = '';
+                return;
+            }
+
+            // Adiciona o símbolo de moeda e formata para duas casas decimais
+            let formattedValue = 'R$ ' + (parseFloat(value) / 100).toFixed(2);
+
+            // Seta o valor formatado no campo
+            input.value = formattedValue;
+        }
+
+        // Função para formatar valor monetário ao carregar a página
+        function formatarMoeda(valor) {
+            if (typeof valor === 'string') {
+                // Verifica se o valor termina com ",00"
+                if (valor.endsWith(',00')) {
+                    // Remove a vírgula, substitui por ponto e converte para float
+                    valor = parseFloat(valor.replace(',', '.'));
+                }
+            }
+            if (!isNaN(valor)) {
+                // Formata o valor para exibição
+                return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            }
+            return '';
+        }
+
+        // Eventos para formatar valor enquanto digita
+        document.querySelectorAll('.form-control-currency').forEach(input => {
+            input.addEventListener('input', function(e) {
+                formatCurrencyInput(this);
+            });
+        });
+
+        function limparValor(valor) {
+            // Remove o símbolo de moeda, espaços em branco e pontos de milhar
+            return valor.replace(/[R$\s.]/g, '').replace(',', '.');
+        }
+
+
+        function valorPadrao(){
+            const dadosJSON = sessionStorage.getItem('dadosGetEvento')
+            const dados = JSON.parse(dadosJSON)
+            console.log(dados)
+            document.getElementById('orcamento').value = formatarMoeda(dados.fkFinanceiro.orcamentoTotal) || '';
+            document.getElementById('meta').value = formatarMoeda(dados.fkFinanceiro.ticketMedio) || '';
+            document.getElementById('aluguel').value = formatarMoeda(dados.fkFinanceiro.aluguelLocal) || '';
+            document.getElementById('infra').value = formatarMoeda(dados.fkFinanceiro.valorInfra) || '';
+            document.getElementById('inscricao').value = formatarMoeda(dados.fkFinanceiro.valorInscricao) || '';
+            document.getElementById('func').value = formatarMoeda(dados.fkFinanceiro.valorFuncionario) || '';
+            document.getElementById('qtdColab').value = dados.fkFinanceiro.qtdMaxColaboradores || '';
+        }
+
+        function salvarDadosPag2(){
+            const dados = JSON.parse(sessionStorage.getItem('dadosEventoUpdate')) || {};
+            dados.orcamentoTotal = parseFloat(limparValor(document.getElementById('orcamento').value));
+            dados.metaLucro = parseFloat(limparValor(document.getElementById('meta').value));
+            dados.aluguelLocal = parseFloat(limparValor(document.getElementById('aluguel').value));
+            dados.valorInfra = parseFloat(limparValor(document.getElementById('infra').value));
+            dados.valorInscricao = parseFloat(limparValor(document.getElementById('inscricao').value));
+            dados.valorFuncionarios = parseFloat(limparValor(document.getElementById('func').value));
+            dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
+            sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dados));
+        }
+    </script>
+</body>
+
+</html>

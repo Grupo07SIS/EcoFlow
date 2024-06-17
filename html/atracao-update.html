@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Monetário com Símbolo R$</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evento.css">
+    <link rel="stylesheet" href="../css/atracao.css">
+    <link rel="stylesheet" href="../css/menu.css">
+    <script src="../js/evento.JS"></script>
+
+</head>
+
+<body>
+    <div class="titulo">
+        <h4>CRIAR EVENTO</h4>
+    </div>
+    <h5>OPICIONAL</h5>
+    <h6>Adicionar uma atração</h6>
+
+        <div class="background-box">
+            <div class="group-box">
+                
+                <div class="form-group">
+                    <label>Tipo de atração:</label>
+                    <input type="text" class="form-control" id="inputQtdColaboradores">
+                </div>
+                <div class="input-group">
+                    <label>Valor atração:</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
+                        placeholder="0,00">
+                </div>
+            </div>
+            <div class="proximo">
+                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
+            </div>
+        </div>
+
+        <div class="background-box">
+            <div class="group-box">
+                
+                <div class="form-group">
+                    <label>Tipo de atração:</label>
+                    <input type="text" class="form-control" id="inputQtdColaboradores">
+                </div>
+                <div class="input-group">
+                    <label>Valor atração:</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
+                        placeholder="0,00">
+                </div>
+            </div>
+            <div class="proximo">
+                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
+            </div>
+        </div>
+
+        <div class="background-box">
+            <div class="group-box">
+                
+                <div class="form-group">
+                    <label>Tipo de atração:</label>
+                    <input type="text" class="form-control" id="inputQtdColaboradores">
+                </div>
+                <div class="input-group">
+                    <label>Valor atração:</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
+                        placeholder="0,00">
+                </div>
+            </div>
+            <div class="proximo">
+                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
+            </div>
+        </div>
+
+        <div class="background-box">
+            <div class="group-box">
+                
+                <div class="form-group">
+                    <label>Tipo de atração:</label>
+                    <input type="text" class="form-control" id="inputQtdColaboradores">
+                </div>
+                <div class="input-group">
+                    <label>Valor atração:</label>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                    </div>
+                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
+                        placeholder="0,00">
+                </div>
+            </div>
+            <div class="proximo">
+                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
+            </div>
+        </div>
+
+        <div class="proximo-voltar">
+            <button type="button" class="btn btn-outline-secondary">
+                <a href="../html/valores.html">Voltar</a>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="alterarEvento()">Salvar</button>
+        </div>
+
+        <div class="menu">
+            <a href="../html/index.html" class="opcoes">
+                <img src="../assets/Vector 3 (1).png" alt="">
+                <p>Inicio</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Calendar icon.png" alt="">
+                <p>Eventos</p>
+            </a>
+            <a href="../html/evento.html" class="opcoes">
+                <img src="../assets/Group 2 (1).png" alt="">
+                <p>Criar Evento</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Group 4.png" alt="">
+                <p>Convites</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Group 3.png" alt="">
+                <p>Perfil</p>
+            </a>
+        </div>
+
+        <script>
+            // Função para formatar o valor monetário enquanto o usuário digita
+            function formatCurrencyInput(input) {
+                // Remove todos os caracteres que não sejam dígitos
+                let value = input.value.replace(/\D/g, '');
+
+                // Se o valor estiver vazio, retorna
+                if (value === '') {
+                    input.value = '';
+                    return;
+                }
+
+                // Adiciona o símbolo de moeda e formata para duas casas decimais
+                let formattedValue = 'R$ ' + (parseFloat(value) / 100).toFixed(2);
+
+                // Seta o valor formatado no campo
+                input.value = formattedValue;
+            }
+
+            // Eventos para formatar valor enquanto digita
+            document.querySelectorAll('.form-control-currency').forEach(input => {
+                input.addEventListener('input', function (e) {
+                    formatCurrencyInput(this);
+                });
+            });
+        </script>
+</body>
+
+</html>

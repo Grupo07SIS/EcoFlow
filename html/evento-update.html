@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Imagens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/evento.css">
+    <link rel="stylesheet" href="../css/menu.css">
+</head>
+
+<body>
+    <div class="titulo"><h4>CRIAR EVENTO</h4></div>
+    <h5>SOBRE O EVENTO</h5>
+    <div class="upload-container" id="uploadContainer">
+        <img src="../assets/Upload to the Cloud.png" alt="">
+        <h5>Upload de Imagens</h5>
+        <form id="uploadForm">
+            <input type="file" id="fileInput" accept="image/*" multiple>
+            <label for="fileInput">Escolher Imagem</label>
+        </form>
+        <div class="preview-container" id="previewContainer"></div>
+    </div>
+
+    <form>
+        <div class="form-group">
+            <label>Nome do Evento:</label>
+            <input type="text" class="form-control" id="nome">
+        </div>
+        <div class="form-group">
+            <label>Tema do Evento:</label>
+            <input type="text" class="form-control" id="tema">
+        </div>
+
+        <div class="form-group">
+            <label>Data:</label>
+            <input type="date" id="data" class="form-control" maxlength="10">
+        </div>
+
+        <div class="form-group">
+            <label>Capacidade Máxima do Local:</label>
+            <input type="text" class="form-control" id="capacidadeMax">
+        </div>
+
+        <div class="form-group">
+            <label>Descrição:</label>
+            <textarea class="form-control" id="desc" rows="3"></textarea>
+        </div>
+    </form>
+
+    <h5>LOCAL DO EVENTO</h5>
+    <form>
+        <div class="form-group">
+            <label>Logradouro:</label>
+            <input type="text" class="form-control" id="logradouro">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Número:</label>
+                <input type="number" class="form-control" id="numero">
+            </div>
+            <div class="form-group col-md-2">
+                <label>CEP</label>
+                <input type="text" class="form-control" id="cep">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Complemento:</label>
+            <input type="text" class="form-control" id="complemento">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Cidade:</label>
+              <input type="text" class="form-control" id="cidade">
+            </div>
+            <div class="form-group col-md-6">
+                <label>UF:</label>
+                <input type="text" class="form-control" id="UF">
+              </div>
+          </div>
+    </form>
+
+    <div class="proximo">
+        <button type="button" class="btn btn-secondary", onclick="salvarDadosPag1()">
+            <a href="../html/valores-update.html">Proximo</a>
+        </button>
+    </div>
+
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2 (1).png" alt="">
+            <p>Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+    </div>
+
+    
+    <script>
+        window.onload = valorPadrao()
+
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+
+        fileInput.addEventListener('change', handleFiles);
+
+        function handleFiles(event) {
+            const files = event.target.files;
+            previewFiles(files);
+        }
+
+        function previewFiles(files) {
+            previewContainer.innerHTML = ''; // Limpa qualquer pré-visualização anterior
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function valorPadrao(){
+            const dadosJSON = sessionStorage.getItem('dadosGetEvento')
+            const dados = JSON.parse(dadosJSON)
+            document.getElementById('nome').value = dados.nome || '';
+            document.getElementById('tema').value = dados.tema || '';
+            if (dados.data && dados.data.length === 3) {
+                const ano = dados.data[0];
+                const mes = ('0' + dados.data[1]).slice(-2);
+                const dia = ('0' + dados.data[2]).slice(-2);
+                const dataFormatada = `${ano}-${mes}-${dia}`;
+                document.getElementById('data').value = dataFormatada;
+            } else {
+                document.getElementById('data').value = '';
+            }
+            document.getElementById('capacidadeMax').value = dados.capacidadeMax || '';
+            document.getElementById('desc').value = dados.descricao || '';
+            document.getElementById('logradouro').value = dados.fkEndereco.logradouro || '';
+            document.getElementById('numero').value = dados.fkEndereco.numero || '';
+            document.getElementById('cep').value = dados.fkEndereco.cep || '';
+            document.getElementById('complemento').value = dados.fkEndereco.complemento || '';
+            document.getElementById('cidade').value = dados.fkEndereco.cidade || '';
+            document.getElementById('UF').value = dados.fkEndereco.estado || '';
+        }
+
+        function salvarDadosPag1(){
+            const dados = {
+                nomeEvento: document.getElementById('nome').value,
+                temaEvento: document.getElementById('tema').value,
+                dataEvento: document.getElementById('data').value,
+                capacidadeMax: document.getElementById('capacidadeMax').value,
+                descricaoEvento: document.getElementById('desc').value,
+                logradouro: document.getElementById('logradouro').value,
+                numero: document.getElementById('numero').value,
+                cep: document.getElementById('cep').value,
+                complemento: document.getElementById('complemento').value,
+                cidade: document.getElementById('cidade').value,
+                estado: document.getElementById('UF').value,
+            };
+            sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dados));
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
