@@ -159,7 +159,7 @@ async function deletarEvento(){
     ...existingHeaders,
     "User-Agent": userAgent
     };
-    const deletar = await fetch("http://localhost:8080/eventos?id=1", {
+    const deletar = await fetch("http://localhost:8080/eventos?id=12", {
       method: "DELETE",
       headers: headers
     });
