@@ -52,38 +52,36 @@ async function entrar() {
     var emailVar = document.getElementById('email').value;
     var senhaVar = document.getElementById('senha').value;
 
-    const loginData = {
-        login: emailVar,
-        senha: senhaVar
-    };
-
     try {
         const resposta = await fetch("http://localhost:8080/usuarios/login", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(loginData)
+            body: JSON.stringify({
+                login: emailVar,
+                senha: senhaVar
+            })
         });
 
         if (resposta.ok) {
-            const respostaTexto = await resposta.text();
+            const respostaTexto = resposta.text();
             console.log("Login bem-sucedido: ", respostaTexto);
-            window.location.href = 'index.html'; 
+            
+            window.location.href = 'index.html';
         } else if (resposta.status === 404) {
             console.log("Usuário não encontrado");
             alert("Usuário não encontrado. Verifique suas credenciais e tente novamente.");
         } else {
-            const respostaTexto = await resposta.text();
+            const respostaTexto = resposta.text();
             console.log("Erro de login: ", respostaTexto);
             alert("Erro ao tentar login: " + respostaTexto);
         }
     } catch (error) {
-        console.error("Erro ao tentar login: ", error);
+        console.log("Erro ao tentar login: ", error);
         alert("Erro ao tentar login. Por favor, tente novamente mais tarde.");
     }
 }
 
-entrar();
 
 
