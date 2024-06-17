@@ -13,25 +13,31 @@
     <link rel="stylesheet" href="../css/dash_gerencial.css">
     <script src="../js/dash_gerencial.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/navbar.css">
+    <script src="../js/navbar.js"></script>
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body onload="gerarGrafico()">
-    <div class="container">
-        <!-- NavBar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(Página atual)</span></a>
-                    <a class="nav-item nav-link" href="#">Destaques</a>
-                    <a class="nav-item nav-link" href="#">Preços</a>
-                    <a class="nav-item nav-link disabled" href="#">Desativado</a>
-                </div>
+    <div class="content">
+        <div id="mySidenav" class="sidenav">
+            <!-- <a href="javascript:void(0)" </a> -->
+            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+            <div class="user_info">
+                <i class="bi bi-person-circle"></i>
+                <p id="userName">Nome do Usuário</p>
+                <p id="nomeEmpresa">Nome da Empresa</p>
             </div>
-        </nav>
+            <a href="#">Meus eventos</a>
+            <a href="#">Participantes em espera</a>
+            <a href="dash_gerencial.html">Painel Gerencial</a>
+            <a href="login.html">Sair</a>
+        </div>
+
+        <div class="openBarMain">
+            <i class="bi bi-list openBar" onclick="openNav()"></i>
+        </div>
 
         <!-- titulo da tela -->
         <div class="titulo">
@@ -55,7 +61,7 @@
         <div class="bloco_filtros">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                 aria-controls="offcanvasBottom"> <img src="../assets/filter.png" alt=""> Filtrar</button>
-            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            <div style="height: 70%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                 aria-labelledby="offcanvasBottomLabel">
                 <div class="offcanvas-header">
                     <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
@@ -99,28 +105,44 @@
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
-                          </select>
+                        </select>
                     </div>
-                    <h4>Horário e Data</h4>
+                    <h4 class="titulo_filtro">Horário e Data</h4>
                     <div class="filtrar_date">
                         <div class="bloco_filtros">
                             <div class="filtrar_dt_inicio">
                                 <span>Inicio</span>
                                 <div class="input-group flex-nowrap">
                                     <input type="date" class="form-control">
-                                  </div>
+                                </div>
                             </div>
                             <div class="filtrar_dt_fim">
                                 <span>Fim</span>
                                 <div class="input-group flex-nowrap">
                                     <input type="date" class="form-control">
-                                  </div>
+                                </div>
                             </div>
                         </div>
+                        <div style="padding-top:18px; width: 100%;">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                             <button type="button" class="btn btn-outline-primary">Essa semana</button>
                             <button type="button" class="btn btn-outline-primary">Esse mês</button>
                             <button type="button" class="btn btn-outline-primary">Esse ano</button>
+                        </div>
+                        </div>
+                        
+                        <div class="filtrar_local">
+                            <h4>Local</h4>
+                            <input type="text" placeholder="Digite o local aqui...">
+                        </div>
+
+                        <div class="grp_btn">
+                            <button class="secondary_btn">
+                                Limpar Filtro
+                            </button>
+                            <button class="primary_btn">
+                                Aplicar Filtro
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -170,35 +192,35 @@
 
         <!-- gráfico de numeros de inscrições -->
         <div class="grafico_pizza">
-            <div class="subtitulo">
+            <div class="subtitulo2">
                 <h4>Número de Inscritos no Evento</h4>
             </div>
             <div class="grafico_inscricoes">
                 <canvas id="myChart"></canvas>
             </div>
             <!-- KPIs -->
-            <div class="kpis">
-                <div class="kpi_geral">
-                    <div class="titulo_kpi">
-                        Número de Colaboradores
+            <div class="kpis1">
+                <div class="kpi_geral1">
+                    <div class="titulo_kpi1">
+                        <span>Número de Colaboradores</span>
                     </div>
-                    <div class="dado_kpi">
+                    <div class="dado_kpi1">
                         <span id="colaboradores"></span>
                     </div>
                 </div>
-                <div class="kpi_geral">
-                    <div class="titulo_kpi">
-                        Colaboradores Reprovados
+                <div class="kpi_geral1">
+                    <div class="titulo_kpi1">
+                        <span>Colaboradores Reprovados</span>
                     </div>
-                    <div class="dado_kpi">
+                    <div class="dado_kpi1">
                         <span id="colab_reprovados"></span>
                     </div>
                 </div>
-                <div class="kpi_geral">
-                    <div class="titulo_kpi">
-                        Média de Avaliações
+                <div class="kpi_geral1">
+                    <div class="titulo_kpi1">
+                        <span>Média de Avaliações</span>
                     </div>
-                    <div class="dado_kpi">
+                    <div class="dado_kpi1">
                         <span id="media_avaliacoes"></span>
                     </div>
                 </div>
@@ -206,32 +228,56 @@
         </div>
 
         <!-- Nichos Presentes -->
-         <div class="grafico_nichos">
-            <div class="subtitulo">
-                <h4>Nichos Presentes</h4>
-            </div>
-            <div class="bolhas">
-                <div class="content_bolha">
-                    <div class="bolha_geral_1">
-                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
-                    </div>
-                    <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
+        <div class="main_nichos">
+            <div class="grafico_nichos">
+                <div class="subtitulo">
+                    <h4>Nichos Presentes</h4>
                 </div>
-                <div class="content_bolha">
-                    <div class="bolha_geral_2">
-                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                <div class="bolhas">
+                    <div class="content_bolha">
+                        <div class="bolha_geral_1">
+                            <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                        </div>
+                        <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
                     </div>
-                    <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
-                </div>
-                <div class="content_bolha">
-                    <div class="bolha_geral_3">
-                        <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                    <div class="content_bolha">
+                        <div class="bolha_geral_2">
+                            <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                        </div>
+                        <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
                     </div>
-                    <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
-                </div>
+                    <div class="content_bolha">
+                        <div class="bolha_geral_3">
+                            <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                        </div>
+                        <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
+                    </div>
 
+                </div>
             </div>
-         </div>
+        </div>
+        <div class="menu">
+            <a href="index.html" class="opcoes">
+                <img src="../assets/Vector 3.png" alt="">
+                <p>Inicio</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Calendar icon.png" alt="">
+                <p>Eventos</p>
+            </a>
+            <a href="evento.html" class="opcoes">
+                <img src="../assets/Group 2.png" alt="">
+                <p>Criar Evento</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Group 4.png" alt="">
+                <p>Convites</p>
+            </a>
+            <a href="" class="opcoes">
+                <img src="../assets/Group 3.png" alt="">
+                <p>Perfil</p>
+            </a>
+        </div>
 
     </div>
 
