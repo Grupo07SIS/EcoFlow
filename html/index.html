@@ -170,3 +170,17 @@
 </body>
 
 </html>
+
+<script>
+    window.onload = valorPadrao()
+
+    async function valorPadrao(){
+        console.log("CHEGOU NESSA BCT")
+        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
+        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+</script>
