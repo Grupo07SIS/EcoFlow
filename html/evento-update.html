@@ -85,7 +85,7 @@
 
     <div class="proximo">
         <button type="button" class="btn btn-secondary", onclick="salvarDadosPag1()">
-            <a href="../html/valores.html">Proximo</a>
+            <a href="../html/valores-update.html">Proximo</a>
         </button>
     </div>
 
@@ -114,6 +114,8 @@
 
     
     <script>
+        window.onload = valorPadrao()
+
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
 
@@ -137,6 +139,30 @@
             }
         }
 
+        function valorPadrao(){
+            const dadosJSON = sessionStorage.getItem('dadosGetEvento')
+            const dados = JSON.parse(dadosJSON)
+            document.getElementById('nome').value = dados.nome || '';
+            document.getElementById('tema').value = dados.tema || '';
+            if (dados.data && dados.data.length === 3) {
+                const ano = dados.data[0];
+                const mes = ('0' + dados.data[1]).slice(-2);
+                const dia = ('0' + dados.data[2]).slice(-2);
+                const dataFormatada = `${ano}-${mes}-${dia}`;
+                document.getElementById('data').value = dataFormatada;
+            } else {
+                document.getElementById('data').value = '';
+            }
+            document.getElementById('capacidadeMax').value = dados.capacidadeMax || '';
+            document.getElementById('desc').value = dados.descricao || '';
+            document.getElementById('logradouro').value = dados.fkEndereco.logradouro || '';
+            document.getElementById('numero').value = dados.fkEndereco.numero || '';
+            document.getElementById('cep').value = dados.fkEndereco.cep || '';
+            document.getElementById('complemento').value = dados.fkEndereco.complemento || '';
+            document.getElementById('cidade').value = dados.fkEndereco.cidade || '';
+            document.getElementById('UF').value = dados.fkEndereco.estado || '';
+        }
+
         function salvarDadosPag1(){
             const dados = {
                 nomeEvento: document.getElementById('nome').value,
@@ -151,7 +177,7 @@
                 cidade: document.getElementById('cidade').value,
                 estado: document.getElementById('UF').value,
             };
-            sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
+            sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dados));
         }
     </script>
 
