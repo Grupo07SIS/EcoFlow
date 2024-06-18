@@ -7,7 +7,7 @@ async function gerarGrafico() {
   // const respostaDados = await resposta.json();
   // console.log(respostaDados)
 
-  const resposta = await fetch ("http://localhost:8080/dashboard/grafico-inscritos?startDate=2000-01-01&endDate=2024-06-13")
+  const resposta = await fetch ("http://localhost:8080/dashboard/grafico-inscritos?startDate=2000-01-01&endDate=2024-06-20")
   const respostaDados = await resposta.json()
   console.log("Resposta:", respostaDados)
 
@@ -39,7 +39,7 @@ async function gerarGrafico() {
     }
   })
 
-  document.getElementById("valor_gasto").innerHTML = "1000,00"
+  document.getElementById("valor_gasto").innerHTML = "000.00"
 }
 
 // Possivel cod para barra lucro de evento

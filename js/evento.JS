@@ -25,33 +25,33 @@ async function cadastrarEvento(){
     console.log(dadosEvento);
 
     const evento = {
-            "nome": nomeEvento,
-            "tema": temaEvento,
-            "descricao": descricaoEvento,
-            "capacidadeMax": capacidadeMax,
+            "nome": "nomeEvento",
+            "tema": "temaEvento",
+            "descricao": "descricaoEvento",
+            "capacidadeMax": 10,
             "fkFinanceiro": {
-                "idFinanceiro": 1,
-                "orcamentoTotal": orcamentoTotal,
-                "aluguelLocal": aluguelLocal,
-                "valorFuncionario": valorFuncionarios,
-                "valorInfra": valorInfra,
+                "idFinanceiro": 3,
+                "orcamentoTotal": 100,
+                "aluguelLocal": 100,
+                "valorFuncionario": 100,
+                "valorInfra": 100,
                 "ticketMedio": 100.0,
-                "valorInscricao": valorInscricao,
-                "qtdMaxColaboradores": qtdMaxColaboradores,
+                "valorInscricao": 100,
+                "qtdMaxColaboradores": 10,
                 "gastoTotal": 500.0
             },
             "fkEndereco": {
-                "idEnderecoEvento": 1,
-                "cep": cep,
-                "logradouro": logradouro,
-                "numero": numero,
-                "complemento": complemento,
-                "cidade": cidade,
-                "estado": estado
+                "idEnderecoEvento": 3,
+                "cep": "03132090",
+                "logradouro": "Rua Imbituba",
+                "numero": "140",
+                "complemento": "NA",
+                "cidade": "Sao Paulo",
+                "estado": "SP"
             },
             "data": dataEvento
         }
-    
+    console.log(evento)
     const respostaCadastro = await fetch("http://localhost:8080/eventos", {
         method: "POST",
         body: JSON.stringify(evento),
@@ -63,7 +63,7 @@ async function cadastrarEvento(){
 
 
 async function buscarDados(){
-    const busca = await fetch("http://localhost:8080/eventos/id?id=1")
+    const busca = await fetch("http://localhost:8080/eventos/id?id=3")
     const buscaDados = await busca.json()
     console.log("Resposta",buscaDados)
     const data = document.getElementById("db-info")
@@ -142,7 +142,7 @@ async function alterarEvento(){
             "data": dataEvento
         }
     
-    const respostaCadastro = await fetch("http://localhost:8080/eventos/update?id=1", {
+    const respostaCadastro = await fetch("http://localhost:8080/eventos/update?id=3", {
         method: "PATCH",
         body: JSON.stringify(evento),
         headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -159,7 +159,7 @@ async function deletarEvento(){
     ...existingHeaders,
     "User-Agent": userAgent
     };
-    const deletar = await fetch("http://localhost:8080/eventos?id=12", {
+    const deletar = await fetch("http://localhost:8080/eventos?id=3", {
       method: "DELETE",
       headers: headers
     });
