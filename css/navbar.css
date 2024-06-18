@@ -10,7 +10,7 @@
     overflow-x: hidden;
     padding-top: 60px;
     transition: 0.5s;
-    border-radius: 0px 40px 0px 40px;
+    border-radius: 0px 40px 40px 0px;
 }
 
 .sidenav a {

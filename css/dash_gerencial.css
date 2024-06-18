@@ -106,7 +106,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   height: 50px;
   padding: 5px;
   font-size: 16px;
-
+  margin-top: 13px;
 }
 
 .offcanvas,
@@ -230,6 +230,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   width: 100%;
   text-align: center;
   padding: 14px;
+  font-size: 14px;
 }
 
 .kpis1 {
@@ -260,6 +261,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   height: 60px;
   width: 100%;
   text-align: center;
+  font-size: 14px;
 }
 
 .dado_kpi1 {

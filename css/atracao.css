@@ -5,7 +5,7 @@
 .background-box {
     padding: 10px;
     border: solid 1px #163915;
-    height: 17vh;
+    height: auto;
     margin-bottom: 20px;
 }
 
@@ -31,14 +31,13 @@
     width: 50%;
 }
 
-.proximo {
+.proximo1 {
     display: flex;
     width: 100%;
     justify-content: end;
-    margin-bottom: 70px;
 
     button {
-        width: 47%;
+        width: 54%;
         background-color: #fff;
         color: #C7530C;
         border: solid 1px #C7530C;
