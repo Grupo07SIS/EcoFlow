@@ -30,23 +30,51 @@ async function buscarDetalhesEvento() {
             document.getElementById('collaborator_niche').textContent = collaborator.nicho;
         }
 
-        // Initialize the map
-        initMap(evento.fkEndereco.latitude, evento.fkEndereco.longitude);
+        geocode(fullAddress);
     } catch (error) {
         console.error('Erro ao buscar os detalhes do evento:', error);
     }
 }
 
-function initMap(lat, lng) {
-    const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
-    const map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: location
-    });
-    const marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
-}
+// function initMap(lat, lng) {
+//     const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
+//     const map = new google.maps.Map(document.getElementById('map'), {
+//         zoom: 15,
+//         center: location
+//     });
+//     const marker = new google.maps.Marker({
+//         position: location,
+//         map: map
+//     });
+// }
 
+function geocode(address) {
+    var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address);
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+
+                // Initialize Leaflet map
+                var map = L.map('map').setView([lat, lon], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Add a marker to the map
+                var marker = L.marker([lat, lon]).addTo(map);
+                marker.bindPopup("Localização encontrada: " + address).openPopup();
+            } else {
+                alert('Endereço não encontrado');
+            }
+        })
+        .catch(error => {
+            alert('Erro ao buscar o endereço');
+            console.error(error);
+        });
+}
 document.addEventListener('DOMContentLoaded', buscarDetalhesEvento);
