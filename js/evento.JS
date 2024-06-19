@@ -30,7 +30,7 @@ async function cadastrarEvento() {
         "descricao": descricaoEvento,
         "capacidadeMax": 10,
         "fkFinanceiro": {
-            "idFinanceiro": 1,
+            "idFinanceiro": 2,
             "orcamentoTotal": 100,
             "aluguelLocal": 100,
             "valorFuncionario": 100,
@@ -41,7 +41,7 @@ async function cadastrarEvento() {
             "gastoTotal": 500.0
         },
         "fkEndereco": {
-            "idEnderecoEvento": 1,
+            "idEnderecoEvento": 2,
             "cep": "03132090",
             "logradouro": "Rua Imbituba",
             "numero": "140",
