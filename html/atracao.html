@@ -37,168 +37,115 @@
     <div class="openBarMain">
         <i class="bi bi-list openBar" onclick="openNav()"></i>
     </div>
-    
+
     <div class="titulo">
         <h4>CRIAR EVENTO</h4>
     </div>
     <h5>OPICIONAL</h5>
-    <h6>Adicionar uma atração</h6>
+    <div class="adicionar_atracao">
+        <h6>Adicionar uma atração</h6>
+        <button id="addAttractionButton"><i class="bi bi-plus-circle-fill adicionar_atracao"></i></button>
+    </div>
 
-        <div class="background-box">
-            <div class="group-box">
-                
-                <div class="form-group">
-                    <label>Tipo de atração:</label>
-                    <input type="text" class="form-control" id="inputQtdColaboradores">
-                </div>
-                <div class="input-group">
-                    <label>Valor atração:</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">R$</span>
-                    </div>
-                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
-                        placeholder="0,00">
-                </div>
-            </div>
-            <div class="proximo1">
-                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
-            </div>
-        </div>
+    <div id="attractionContainer">
+        <!-- Attraction cards will be appended here -->
+    </div>
 
-        <div class="background-box">
-            <div class="group-box">
-                
-                <div class="form-group">
-                    <label>Tipo de atração:</label>
-                    <input type="text" class="form-control" id="inputQtdColaboradores">
-                </div>
-                <div class="input-group">
-                    <label>Valor atração:</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">R$</span>
-                    </div>
-                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
-                        placeholder="0,00">
-                </div>
-            </div>
-            <div class="proximo1">
-                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
-            </div>
-        </div>
+    <div class="proximo-voltar">
+        <button type="button" class="btn btn-outline-secondary">
+            <a href="../html/valores.html">Voltar</a>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="cadastrarEvento()">Salvar</button>
+    </div>
 
-        <div class="background-box">
-            <div class="group-box">
-                
-                <div class="form-group">
-                    <label>Tipo de atração:</label>
-                    <input type="text" class="form-control" id="inputQtdColaboradores">
-                </div>
-                <div class="input-group">
-                    <label>Valor atração:</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">R$</span>
-                    </div>
-                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
-                        placeholder="0,00">
-                </div>
-            </div>
-            <div class="proximo1">
-                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
-            </div>
-        </div>
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2 (1).png" alt="">
+            <p style="color: #C7530C;">Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+    </div>
 
-        <div class="background-box">
-            <div class="group-box">
-                
-                <div class="form-group">
-                    <label>Tipo de atração:</label>
-                    <input type="text" class="form-control" id="inputQtdColaboradores">
-                </div>
-                <div class="input-group">
-                    <label>Valor atração:</label>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">R$</span>
-                    </div>
-                    <input type="text" class="form-control form-control-currency" id="orcamentoInput"
-                        placeholder="0,00">
-                </div>
-            </div>
-            <div class="proximo1">
-                <button type="button" class="btn btn-outline-secondary">Excluir atração</button>
-            </div>
-        </div>
+    <div id="popup" class="popup">
+        <p id="popup-message"></p>
+    </div>
 
-        <div class="proximo-voltar">
-            <button type="button" class="btn btn-outline-secondary">
-                <a href="../html/valores.html">Voltar</a>
-            </button>
-            <button type="button" class="btn btn-secondary" onclick="cadastrarEvento()">Salvar</button>
-        </div>
-
-        <div class="menu">
-            <a href="../html/index.html" class="opcoes">
-                <img src="../assets/Vector 3 (1).png" alt="">
-                <p>Inicio</p>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Calendar icon.png" alt="">
-                <p>Eventos</p>
-            </a>
-            <a href="../html/evento.html" class="opcoes">
-                <img src="../assets/Group 2 (1).png" alt="">
-                <p style="color: #C7530C;">Criar Evento</p>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Group 4.png" alt="">
-                <p>Convites</p>
-            </a>
-            <a href="" class="opcoes">
-                <img src="../assets/Group 3.png" alt="">
-                <p>Perfil</p>
-            </a>
-        </div>
-
-        <div id="popup" class="popup">
-            <p id="popup-message"></p>
-        </div>
-
-        <script>
-            // Função para formatar o valor monetário enquanto o usuário digita
-            function formatCurrencyInput(input) {
-                // Remove todos os caracteres que não sejam dígitos
-                let value = input.value.replace(/\D/g, '');
-
-                // Se o valor estiver vazio, retorna
-                if (value === '') {
-                    input.value = '';
-                    return;
-                }
-
-                // Adiciona o símbolo de moeda e formata para duas casas decimais
-                let formattedValue = 'R$ ' + (parseFloat(value) / 100).toFixed(2);
-
-                // Seta o valor formatado no campo
-                input.value = formattedValue;
+    <script>
+        // Function to format the currency input
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value === '') {
+                input.value = '';
+                return;
             }
+            let formattedValue = 'R$ ' + (parseFloat(value) / 100).toFixed(2);
+            input.value = formattedValue;
+        }
 
-            // Eventos para formatar valor enquanto digita
-            document.querySelectorAll('.form-control-currency').forEach(input => {
-                input.addEventListener('input', function (e) {
-                    formatCurrencyInput(this);
-                });
+        // Function to add a new attraction card
+        function addAttractionCard() {
+            const container = document.getElementById('attractionContainer');
+            const newCard = document.createElement('div');
+            newCard.classList.add('background-box');
+
+            newCard.innerHTML = `
+                <div class="group-box">
+                    <div class="form-group">
+                        <label>Tipo de atração:</label>
+                        <input type="text" class="form-control" id="inputQtdColaboradores">
+                    </div>
+                    <div class="input-group">
+                        <label>Valor atração:</label>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">R$</span>
+                        </div>
+                        <input type="text" class="form-control form-control-currency" id="orcamentoInput" placeholder="0,00">
+                    </div>
+                </div>
+                <div class="proximo1">
+                    <button type="button" class="btn btn-outline-secondary" onclick="removeAttractionCard(this)">Excluir atração</button>
+                </div>
+            `;
+
+            container.appendChild(newCard);
+
+            // Add event listener to the new currency input field
+            newCard.querySelector('.form-control-currency').addEventListener('input', function () {
+                formatCurrencyInput(this);
             });
-    window.onload = valorPadrao()
+        }
 
-    async function valorPadrao() {
-        console.log("CHEGOU NESSA BCT")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
-        const nomeNavBar = document.getElementById('userName')
-        const emailNavBar = document.getElementById('nomeEmpresa')
-        nomeNavBar.innerHTML = nomeSS
-        emailNavBar.innerHTML = emailSS
-    }
-        </script>
+        // Function to remove an attraction card
+        function removeAttractionCard(button) {
+            button.closest('.background-box').remove();
+        }
+
+        // Add event listener to the add attraction button
+        document.getElementById('addAttractionButton').addEventListener('click', addAttractionCard);
+
+        // Load default user information from sessionStorage
+        window.onload = function () {
+            const nomeSS = sessionStorage.getItem('NOME_USUARIO');
+            const emailSS = sessionStorage.getItem('EMAIL_USUARIO');
+            document.getElementById('userName').innerHTML = nomeSS;
+            document.getElementById('nomeEmpresa').innerHTML = emailSS;
+        };
+    </script>
 </body>
 
 </html>
