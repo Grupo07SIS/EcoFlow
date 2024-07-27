@@ -1,0 +1,164 @@
+.downFilter {
+    width: 100%;
+    position: fixed;
+    margin-top: 800px;
+    z-index: 999;
+    top: 0;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+    transition: 0.5s;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.downFilter i {
+    font-size: 2.5rem;
+    padding-left: 88%;
+}
+
+.header_filtrer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header_filtrer h2 {
+    font-size: 24px;
+}
+
+.filtrar_categorias {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.filtrar_categorias h4 {
+    margin: 0%;
+    font-size: 20px;
+}
+
+.nichos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nicho {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nicho h5 {
+    font-size: 18px;
+}
+
+.main_separation_filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.tema_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.tema_main h4 {
+    margin: 0%;
+    font-size: 20px;
+}
+
+.filtrar_tema {
+    width: 100%;
+}
+
+.filtrar_tema select {
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+}
+
+.filtrar_date {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.filtrar_date h4 {
+    margin: 0%;
+    font-size: 20px;
+}
+
+.filtrar_date span {
+    font-size: 18px;
+}
+
+.filtrar_date input {
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+}
+
+.filtroDtsPronto {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 8px;
+}
+
+.filtroDtsPronto button {
+    padding: 8px;
+    background-color: transparent;
+    font-size: 18px;
+    border-radius: 6px;
+    color: rgb(23, 23, 23);
+    border: 2px solid #C7530C;
+}
+
+.filtroDtsPronto button.active {
+    background-color: #C7530C;
+    color: white;
+    border: 2px solid #C7530C;
+    padding: 8px;
+}
+
+.filtrar_local{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.filtrar_local h4{
+    margin: 0%;
+    font-size: 20px;
+}
+
+.filtrar_local input{
+    width: 100%;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.grp_btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 8px;
+}

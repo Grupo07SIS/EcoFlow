@@ -41,6 +41,7 @@ body{
     align-items: center;
     justify-content: center;
     width: 100%;
+    gap: 8px;
 }
 
 .participante_separation_div{
@@ -61,7 +62,7 @@ body{
     justify-content: space-evenly;
     width: 100%;
     align-items: center;
-    padding: 16px;
+    padding: 8px;
     p{
         margin: 0%;
         font-size: 16px;
@@ -86,9 +87,47 @@ body{
     flex-direction: column;
 }
 
+.grp_btn{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 2%;
+}
+
+.secondary_btn{
+  background-color: white;
+  border-radius: 4px 4px 4px 4px;
+  border: rgba(199, 83, 12, 1) 2px solid;
+  font-size: 18px;
+  padding: 8px;
+}
+
+.primary_btn{
+  background-color: rgba(199, 83, 12, 1);
+  border-radius: 4px 4px 4px 4px;
+  color: white;
+  padding: 8px;
+  font-size: 18px;
+  border: none;
+}
+
 .separation_btns{
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  padding:8px;
+}
+
+.btnOpenFilter{
+  padding-left: 65%;
+}
+
+.btnOpenFilter button{
+  background-color: rgba(199, 83, 12, 1);
+  border: 2px solid rgba(199, 83, 12, 1);
+  color: white;
+  padding: 6px;
+  border-radius: 4px;
 }
