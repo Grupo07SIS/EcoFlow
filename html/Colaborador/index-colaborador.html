@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../assets/Logo.png" />
+    <title>Ecoflow | Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/navbar.css">
+    <script src="../../js/navbar.js"></script>
+    <link rel="stylesheet" href="../../css/menu.css">
+    <script src="../../js/buscarEventos.js"></script>
+</head>
+
+<body>
+    <div id="mySidenav" class="sidenav">
+        <!-- <a href="javascript:void(0)" </a> -->
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
+        </div>
+        <a href="#">Meus eventos</a>
+        <a href="#">Participantes em espera</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
+    </div>
+
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
+
+    <!-- Carrossel -->
+    <div class="carrossel">
+        <div id="carouselExampleIndicators" class="carousel slide content" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../../assets/image 6.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>Novidades | Eventos</h5>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../../assets/image 7.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>CONSULTAR EVENTO</h5>
+                        <a href="">
+                            <img src="../../assets/Eye.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../../assets/image 8.png" class="d-block w-100" alt="...">
+                    <div class="carousel-caption">
+                        <h5>ANALYTICS DO EVENTO</h5>
+                        <a href="../dash_gerencial.html">
+                            <img src="../../assets/Graph.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="cardEventos">
+        <h4>Próximos eventos:</h4>
+        <a href="">
+            ver todos
+            <img src="../../assets/Double Right.png" alt="">
+        </a>
+    </div>
+
+    <div class="cards" id="cards_eventos">
+        <div class="cardItem">
+            <div class="dataCalendarioEvento">
+                <span>
+                    Junho 10
+                </span>
+            </div>
+            <img class="img-background" src="../../assets/Mask Group.png" alt="">
+            <div class="titulo">
+                <span>Dia das Mães</span>
+            </div>
+            <div class="organizedDtas">
+                <div class="dataEvento">
+                    <img src="../../assets/Schedule.png" alt=""> <span>21/04 22:00</span>
+                </div>
+                <div class="dataLocal">
+                    <img src="../../assets/Location.png" alt=""> <span>Localização 2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu">
+        <a href="index.html" class="opcoes">
+            <img src="../../assets/Vector 3.png" alt="">
+            <p style="color: #C7530C;">Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../../assets/Logout.png" alt="">
+            <p>Sair</p>
+        </a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+<script>
+    window.onload = valorPadrao()
+
+    async function valorPadrao(){
+        console.log("CHEGOU NESSA BCT")
+        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
+        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+</script>
