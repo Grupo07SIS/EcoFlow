@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Poppins", "san-serif";
+}
+
+.pic {
+  display: block;
+  margin: 0;
+  text-align: center;
+  margin-top: 4vh;
+}
+
+.names {
+  margin-top: 1vh;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.events0 {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: rgba(151, 151, 151, 0.36);
+  border-radius: 3vh;
+  height: 47.79px;
+}
+
+.events1 {
+  font-family: "Poppins";
+  display: flex;
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgba(199, 83, 12, 1);
+  color: #f8f9fa;
+  border-radius: 55px;
+  align-items: center;
+  width: 205px;
+  justify-content: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.events2 {
+  display: flex;
+  margin: 0;
+  text-align: center;
+  color: rgba(22, 57, 21, 1);
+  font-size: 17px;
+  align-items: center;
+  border-radius: 55px;
+}
+
+.allOrgs {
+  margin-top: -6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.photo0 {
+  margin-top: 7px;
+  margin-left: 6px;
+  width: 113px;
+  height: 113px;
+}
+
+.orgs {
+  box-shadow: 1px 1px 5px;
+  border-radius: 8px;
+  height: 14vh;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.allCards {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  margin-left: 9px;
+  margin-top: 16px;
+}
+
+.cards {
+  align-items: start;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+}
+
+.cards1 {
+  align-items: start;
+  display: flex;
+  font-size: 14px;
+  flex-direction: column;
+  color: rgba(22, 57, 21, 1);
+}
+
+.h3,
+h3 {
+  font-family: "Poppins";
+  font-size: 14px;
+}
+
+.h4,
+h4 {
+  font-family: "Poppins";
+  font-size: 20px;
+}
+
+.a,
+a {
+  font-size: 18px;
+}
+.h5,
+h5 {
+  font-weight: bold;
+}
+.menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e7e7e7;
+  z-index: 1030;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+.opcoes {
+  color: #000;
+  text-align: center;
+  flex: 1;
+  margin-top: 1vh;
+}
+
+.menu a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+}
+
+.h6,
+h6 {
+  font-size: 0.82rem;
+}
