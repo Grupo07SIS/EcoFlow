@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/evento-colaborador.css">
     <link rel="stylesheet" href="../../css/navbar.css">
     <script src="../../js/navbar.js"></script>
     <link rel="stylesheet" href="../../css/menu.css">
@@ -35,81 +36,72 @@
         <i class="bi bi-list openBar" onclick="openNav()"></i>
     </div>
 
-    <!-- Carrossel -->
-    <div class="carrossel">
-        <div id="carouselExampleIndicators" class="carousel slide content" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../../assets/image 6.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption">
-                        <h5>Novidades | Eventos</h5>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="../../assets/image 7.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption">
-                        <h5>CONSULTAR EVENTO</h5>
-                        <a href="">
-                            <img src="../../assets/Eye.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="../../assets/image 8.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption">
-                        <h5>ANALYTICS DO EVENTO</h5>
-                        <a href="../dash_gerencial.html">
-                            <img src="../../assets/Graph.png" alt="">
-                        </a>
-                    </div>
-                </div>
+    <div class="titulo">
+        <h4>EVENTOS</h4>
+    </div>
+
+    <div class="btnOpenFilter">
+        <button type="button" onclick="openFilter()">
+            <img src="../../assets/filter.png" alt="">
+            Filtros
+        </button>
+    </div>
+
+    <div class="cards-eventos">
+        <div class="eventos">
+            <img src="../../assets/Mask Group.png" alt="">
+            <div class="infos">
+                <span>Dias das mães</span>
+                <span>1 DE JUNHO 2024</span>
+                <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
             </div>
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
         </div>
-    </div>
 
-    <div class="cardEventos">
-        <h4>Próximos eventos:</h4>
-        <a href="">
-            ver todos
-            <img src="../../assets/Double Right.png" alt="">
-        </a>
-    </div>
+        <div class="eventos">
+            <img src="../../assets/Mask Group.png" alt="">
+            <div class="infos">
+                <span>Dias das mães</span>
+                <span>1 DE JUNHO 2024</span>
+                <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
+            </div>
+        </div>
 
-    <div class="cards" id="cards_eventos">
-        <div class="cardItem">
-            <div class="dataCalendarioEvento">
-                <span>
-                    Junho 10
-                </span>
+        <div class="eventos">
+            <img src="../../assets/Mask Group.png" alt="">
+            <div class="infos">
+                <span>Dias das mães</span>
+                <span>1 DE JUNHO 2024</span>
+                <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
             </div>
-            <img class="img-background" src="../../assets/Mask Group.png" alt="">
-            <div class="titulo">
-                <span>Dia das Mães</span>
+        </div>
+
+        <div class="eventos">
+            <img src="../../assets/Mask Group.png" alt="">
+            <div class="infos">
+                <span>Dias das mães</span>
+                <span>1 DE JUNHO 2024</span>
+                <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
             </div>
-            <div class="organizedDtas">
-                <div class="dataEvento">
-                    <img src="../../assets/Schedule.png" alt=""> <span>21/04 22:00</span>
-                </div>
-                <div class="dataLocal">
-                    <img src="../../assets/Location.png" alt=""> <span>Localização 2</span>
-                </div>
+        </div>
+
+        <div class="eventos">
+            <img src="../../assets/Mask Group.png" alt="">
+            <div class="infos">
+                <span>Dias das mães</span>
+                <span>1 DE JUNHO 2024</span>
+                <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
             </div>
         </div>
     </div>
 
     <div class="menu">
-        <a href="index.html" class="opcoes">
-            <img src="../../assets/Vector 3.png" alt="">
-            <p style="color: #C7530C;">Inicio</p>
+        <a href="index-colaborador.html" class="opcoes">
+            <img src="../../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
         </a>
-        <a href="" class="opcoes">
-            <img src="../../assets/Calendar icon.png" alt="">
-            <p>Eventos</p>
+        <a href="eventos-colaborador.html" class="opcoes">
+            <img src="../../assets/Calendar icon (1).png" alt="">
+            <p style="color: #C7530C;">Eventos</p>
         </a>
         <a href="" class="opcoes">
             <img src="../../assets/Group 3.png" alt="">
@@ -137,7 +129,7 @@
 <script>
     window.onload = valorPadrao()
 
-    async function valorPadrao(){
+    async function valorPadrao() {
         console.log("CHEGOU NESSA BCT")
         const nomeSS = sessionStorage.getItem('NOME_USUARIO')
         const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
