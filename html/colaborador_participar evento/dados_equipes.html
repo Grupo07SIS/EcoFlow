@@ -10,7 +10,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../css/colaboradorParticiparStyle/dados_gerais.css">
-    <link rel="stylesheet" href="../../css/evento.css">
+    <link rel="stylesheet" href="../../css/atracao.css">
 </head>
 
 <body>
@@ -19,32 +19,18 @@
     </div>
     <div class="main_info">
         <div class="dados_gerais">
-            <h5>DADOS GERAIS</h5>
-
-            <div class="info_form">
-                Nome da Empresa:
-                <input type="text">
-            </div>
-
-            <div class="info_form">
-                Nicho:
-                <select name="nichos" id="">
-                    <option value="1">Moda</option>
-                    <option value="2">Comida</option>
-                    <option value="3">Animais</option>
-                </select>
-            </div>
+            <h5>DADOS DA EQUIPE</h5>
         </div>
 
         <div class="dados_produtos">
             <div>
-                <h5>PRODUTOS</h5>
+                <h5>EQUIPE</h5>
                 <div class="adicionar_produto">
-                    <h6>Adicionar um produto</h6>
+                    <h6>Adicionar pessoas na equipe</h6>
                     <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
                 </div>
                 <div id="productMessage" class="alert alert-warning" role="alert" style="display: none;">
-                    Você precisa adicionar um produto.
+                    Você precisa adicionar membros.
                 </div>
             </div>
 
@@ -54,9 +40,12 @@
         </div>
     </div>
 
-    <div class="proximo">
-        <button type="button" class="btn btn-secondary" , onclick="salvarDadosPag1()">
-            <a href="dados_equipes.html">Proximo</a>
+    <div class="proximo-voltar">
+        <button type="button" class="btn btn-outline-secondary">
+            <a href="dados_gerais.html">Voltar</a>
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
+            <a href="stand.html">Proximo</a>
         </button>
     </div>
 </body>
@@ -87,7 +76,7 @@
         newCard.innerHTML = `
             <div class="info_form">
                 <div class="drop_down">
-                    <label>Nome do Produto:</label>
+                    <label>Nome da Pessoa:</label>
                     <div class="expandir_div" onclick="toggleIngredients(this)">
                         Expandir
                         <i class="bi bi-chevron-down"></i>
@@ -95,12 +84,15 @@
                 </div>
                 <input type="text">
                 <div class="ingredientes" style="display: none;">
-                    <span>Ingredientes:</span>
+                    <span>Telefone:</span>
+                    <input type="text">
+                
+                    <span>E-mail:</span>
                     <input type="text">
                 </div>
                 <div class="btn_delete">
                     <button onclick="removeProdutoCard(this)">
-                        Excluir Produto
+                        Excluir Membro
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
