@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Logo.png" />
+    <title>Ecoflow | Participar Evento</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../css/colaboradorParticiparStyle/dados_gerais.css">
+</head>
+
+<body>
+    <div class="titulo_pagina">
+        <h4>PARTICIPAR EVENTO</h4>
+    </div>
+    <div class="main_info">
+        <div class="dados_gerais">
+            <h5>DADOS GERAIS</h5>
+
+            <div class="info_form">
+                Nome da Empresa:
+                <input type="text">
+            </div>
+
+            <div class="info_form">
+                Nicho:
+                <select name="nichos" id="">
+                    <option value="1">Moda</option>
+                    <option value="2">Comida</option>
+                    <option value="3">Animais</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="dados_produtos">
+            <div>
+                <h5>PRODUTOS</h5>
+                <div class="adicionar_produto">
+                    <h6>Adicionar um produto</h6>
+                    <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
+                </div>
+                <div id="productMessage" class="alert alert-warning" role="alert" style="display: none;">
+                    Você precisa adicionar um produto.
+                </div>
+            </div>
+
+            <div id="productContainer">
+                <!-- Product cards will be appended here -->
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Function to toggle the visibility of ingredients and rotate the icon
+    function toggleIngredients(element) {
+        const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
+        const icon = element.querySelector('i');
+        if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
+            ingredientesDiv.style.display = "block";
+            icon.style.transform = "rotate(180deg)";
+        } else {
+            ingredientesDiv.style.display = "none";
+            icon.style.transform = "rotate(0deg)";
+        }
+    }
+
+    // Function to add a new product card
+    function addProdutoCard() {
+        const container = document.getElementById('productContainer');
+        const productMessage = document.getElementById('productMessage');
+        productMessage.style.display = 'none';
+
+        const newCard = document.createElement('div');
+        newCard.classList.add('info_card');
+
+        newCard.innerHTML = `
+            <div class="info_form">
+                <div class="drop_down">
+                    <label>Nome do Produto:</label>
+                    <div class="expandir_div" onclick="toggleIngredients(this)">
+                        Expandir
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <input type="text">
+                <div class="ingredientes" style="display: none;">
+                    <span>Ingredientes:</span>
+                    <input type="text">
+                </div>
+                <div class="btn_delete">
+                    <button onclick="removeProdutoCard(this)">
+                        Excluir Produto
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(newCard);
+    }
+
+    // Function to remove a product card
+    function removeProdutoCard(button) {
+        const container = document.getElementById('productContainer');
+        button.closest('.info_card').remove();
+
+        if (container.children.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+        }
+    }
+
+    // Add event listener to the add product button
+    document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
+
+    // Show the message if no products are added on page load
+    window.onload = function () {
+        const container = document.getElementById('productContainer');
+        if (container.children.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+        }
+    };
+</script>
+
+</html>

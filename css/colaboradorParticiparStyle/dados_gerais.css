@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', 'san-serif';
+}
+
+body{
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+h5{
+    margin: 0%;
+}
+
+.titulo_pagina{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.main_info{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info_form{
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+}
+
+.info_form input{
+    border-radius: 4px;
+    border: 1px solid #141414;
+    background-color: rgb(237, 255, 236);
+}
+
+.info_form select{
+    border-radius: 4px;
+    border: 1px solid #141414;
+    background-color: rgb(237, 255, 236);
+}
+
+.info_form option{
+    font-size: 14px;
+}
+
+.dados_gerais{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.adicionar_produto{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    button{
+        background-color: transparent;
+        border:none;
+        outline: none;
+    }
+
+    i{
+        font-size: 1.5rem;
+    }
+
+    h6{
+        margin: 0%;
+    }
+}
+
+.dados_produtos{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info_card{
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    border: 2px solid #141414;
+    border-radius: 6px;
+}
+
+.drop_down{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drop_down button{
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: rgba(26, 112, 26, 0.736);
+}
+
+.drop_down i{
+    font-size: 1.5rem;
+}
+
+.info_card label{
+    margin: 0%;
+}
+
+.btn_delete{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
+
+    button{
+        background-color: rgb(251, 219, 219);
+        border-radius: 6px;
+        color: rgb(65, 22, 22);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+#productContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    input{
+        width: 100%;
+    }
+}
+
+#productMessage{
+    margin-top: 8px;
+}
