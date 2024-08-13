@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de colaboradores | Organizador</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+  <link rel="stylesheet" href="../css/lista_colaboradores.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <script src="../js/navbar.js"></script>
+  <link rel="stylesheet" href="../css/menu.css">
+  <script src="../js/buscarEventos.js"></script>
+</head>
+
+<body>
+  <div id="mySidenav" class="sidenav">
+    <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+    <div class="user_info">
+      <i class="bi bi-person-circle"></i>
+      <p id="userName">Nome do Usuário</p>
+      <p id="nomeEmpresa">Nome da Empresa</p>
+    </div>
+
+    <a href="#">Meus eventos</a>
+    <a href="#">Participantes em espera</a>
+    <a href="dash_gerencial.html">Painel Gerencial</a>
+    <a href="login.html">Sair</a>
+  </div>
+  <div class="openBarMain">
+    <i class="bi bi-list openBar" onclick="openNav()"></i>
+  </div>
+
+  <div class="container">
+    <!-- Começo da tela -->
+    <div class="names">
+      <h4><b>COLABORADORES</b></h4>
+    </div>
+
+    <div class="events0">
+      <img src="../assets/Search (1).png" alt="">
+      <h4 class="events1">Pesquisar evento</h4>
+
+      <div class="btnOpenFilter">
+        <button type="button" onclick="openFilter()">
+          <img src="../assets/filter.png" alt="">
+          Filtros
+        </button>
+      </div>
+    </div>
+
+    <div class="allOrgs">
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div href="" class="orgs">
+        <img class="photo0" src="../assets/colaboradora.png" />
+        <div class="allCards">
+          <a>
+            <h4 class="cards"><b>Nome da Marca</b></h4>
+            <h3 class="cards1">
+              <b>Telefone:</b>(11)00000-0000 <br>
+              <b>Email:</b> email@gmail.com <br>
+              <b>Nicho:</b> Alimentos
+            </h3>
+          </a>
+        </div>
+        <a>
+          <h3 class="ver_mais" href="home.html">Ver mais >></h3>
+        </a>
+      </div>
+
+      <div class="menu">
+        <a href="index-colaborador.html" class="opcoes">
+          <img src="../assets/Vector 3 (1).png" alt="">
+          <p>Inicio</p>
+        </a>
+        <a href="eventos-colaborador.html" class="opcoes">
+          <img src="../assets/Calendar icon.png" alt="">
+          <p>Eventos</p>
+        </a>
+        <a href="" class="opcoes">
+          <img src="../assets/Bottom Nav bar icons (2).png" alt="">
+        
+        </a>
+        <a href="" class="opcoes">
+          <img src="../assets/Group 4.png" alt="">
+          <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+          <img src="../assets/Group 3.png" alt="">
+          <p>Perfil</p>
+        </a>
+      </div>
+
+      <script></script>
+</body>
+
+</html>

@@ -79,6 +79,7 @@ body {
     align-items: end;
     box-shadow: 0px 2px 19px 0px rgba(0, 0, 0, 0.308);
     border-radius: 8px;
+    background-position: center;
 
     button {
         width: 37%;

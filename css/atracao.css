@@ -1,5 +1,28 @@
 .h6, h6 {
     font-size: 1.25rem;
+    margin: 0;
+}
+
+h5{
+    margin: 0%;
+}
+
+.adicionar_atracao{
+    display: flex;
+    flex-direction: row;
+    gap: 4%;
+    align-items: center;
+    height: 50px;
+
+    button{
+        background-color: transparent;
+        border:none;
+        outline: none;
+    }
+
+    i{
+        font-size: 2rem;
+    }
 }
 
 .popup {

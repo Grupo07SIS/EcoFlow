@@ -1,0 +1,42 @@
+.nome_colaborador {
+font-size: 26px;
+
+}
+
+#imagem_marca {
+    width: 100%;
+    height: 150px;
+}
+
+#bloco_marca {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.bloco_dados {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 20px;
+
+    h4 {
+        font-weight: 800;
+    }
+    span {
+        padding: none;
+        font-size: 18px;
+        text-align: justify;
+    }
+}
+
+.bloco_maior_dados {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .bloco_dados {
+        width: 50%;
+    }
+}

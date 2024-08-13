@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Logo.png" />
+    <title>Ecoflow | Perfil</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <script src="../js/navbar.js"></script>
+    <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+</head>
+
+<body>
+    <div id="mySidenav" class="sidenav">
+        <!-- <a href="javascript:void(0)" </a> -->
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
+        </div>
+        <a href="#">Meus eventos</a>
+        <a href="#">Participantes em espera</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
+    </div>
+
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
+
+    <div class="main_info">
+        <div class="perfil">
+            <i class="bi bi-person-circle"></i>
+            <p id="nomeUsuario">Nome do Usuário</p>
+            <p id="nomeDaEmpresa">Nome da Empresa</p>
+        </div>
+
+        <div class="div_main_info">
+            <div class="div_info">
+                <p>CNPJ:</p>
+                <span>00.000.000/0001-00</span>
+            </div>
+
+            <div class="div_info">
+                <p>Telefone:</p>
+                <span>00.000.000/0001-00</span>
+            </div>
+
+            <div class="div_info">
+                <p>Razão social:</p>
+                <span>Texto aqui</span>
+            </div>
+
+            <div class="div_info">
+                <p>Próposito:</p>
+                <span>Texto aqui</span>
+            </div>
+        </div>
+
+        <div class="btns_navegation">
+            <button class="btn_editar">
+                <a href="">Editar Perfil</a>
+            </button>
+            <button class="btn_primary">
+                <a href="">Meus eventos</a>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="menu">
+        <a href="../html/index.html" class="opcoes">
+            <img src="../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="../html/evento.html" class="opcoes">
+            <img src="../assets/Group 2.png" alt="">
+            <p>Criar Evento</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/Group 4.png" alt="">
+            <p>Convites</p>
+        </a>
+        <a href="" class="opcoes">
+            <img src="../assets/perfil.png" alt="">
+            <p style="color: #C7530C;">Perfil</p>
+        </a>
+    </div>
+
+</body>
+
+</html>
