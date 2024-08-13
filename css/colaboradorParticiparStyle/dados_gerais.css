@@ -19,6 +19,9 @@ h5{
     justify-content: center;
     padding-top: 16px;
     padding-bottom: 16px;
+    h4 {
+        font-weight: bold;
+    }
 }
 
 .main_info{
