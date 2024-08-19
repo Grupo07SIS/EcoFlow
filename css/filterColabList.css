@@ -4,6 +4,7 @@
     margin-top: 800px;
     z-index: 999;
     top: 0;
+    left: 0;
     background-color: #ffffff;
     overflow-x: hidden;
     padding-left: 16px;
@@ -12,7 +13,8 @@
     transition: 0.5s;
     border-radius: 20px 20px 0px 0px;
 }
-.btnOpenFilter button{
+
+.btnOpenFilter button {
     background-color: rgba(199, 83, 12, 1);
     border: 2px solid rgba(199, 83, 12, 1);
     color: white;
@@ -23,7 +25,7 @@
     justify-content: center;
     align-items: center;
     gap: 4px;
-  }
+}
 
 .downFilter i {
     font-size: 2.5rem;
@@ -147,7 +149,7 @@
     padding: 8px;
 }
 
-.filtrar_local{
+.filtrar_local {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -156,21 +158,38 @@
     padding-bottom: 8px;
 }
 
-.filtrar_local h4{
+.filtrar_local h4 {
     margin: 0%;
     font-size: 20px;
 }
 
-.filtrar_local input{
+.filtrar_local input {
     width: 100%;
     border-radius: 4px;
     padding: 4px;
 }
 
-.grp_btn{
+.grp_btn {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
     padding-top: 8px;
+}
+
+.secondary_btn {
+    background-color: white;
+    border-radius: 4px 4px 4px 4px;
+    border: rgba(199, 83, 12, 1) 2px solid;
+    font-size: 18px;
+    padding: 8px;
+}
+
+.primary_btn {
+    background-color: rgba(199, 83, 12, 1);
+    border-radius: 4px 4px 4px 4px;
+    color: white;
+    padding: 8px;
+    font-size: 18px;
+    border: none;
 }

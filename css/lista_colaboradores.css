@@ -10,6 +10,12 @@ body {
   font-family: "Poppins", "san-serif";
 }
 
+.main_div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .pic {
   display: block;
   margin: 0;
@@ -18,22 +24,26 @@ body {
 }
 
 .names {
-  margin-top: 1vh;
   display: flex;
   text-align: center;
   flex-direction: column;
+
+  h4 {
+    margin: 0%;
+    font-weight: bolder;
+  }
 }
 
 .events0 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;  
+  width: 100%;
   gap: 12px;
   align-items: center;
 }
 
-.src_bar{
+.src_bar {
   display: flex;
   flex-direction: row;
   background-color: #0f933270;
@@ -46,12 +56,12 @@ body {
   width: 100%;
   height: 100%;
 
-  i{
+  i {
     color: rgba(22, 57, 21, 1);
     font-size: 1.5rem;
   }
 
-  p{
+  p {
     margin: 0%;
     font-size: 16px;
   }
@@ -68,14 +78,12 @@ body {
 }
 
 .allOrgs {
-  margin-top: -6px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
 .photo0 {
-  margin-top: 7px;
-  margin-left: 6px;
   width: 80px;
   height: 85px;
 }
@@ -83,46 +91,30 @@ body {
 .orgs {
   box-shadow: 1px 1px 5px;
   border-radius: 8px;
-  height: 11vh;
   display: flex;
   align-items: flex-start;
-  margin-top: 16px;
+  padding: 8px;
+  justify-content: space-between;
 }
 
 .allCards {
   display: flex;
   flex-direction: column;
   align-self: start;
-  margin-left: 9px;
-  margin-top: 16px;
-}
-
-.cards {
-  align-items: start;
-  display: flex;
-  font-size: 18px;
-  flex-direction: column;
-  margin-top: -14px;
 }
 
 .cards1 {
-  align-items: start;
-  /* display: flex; */
   font-size: 14px;
   flex-direction: column;
   color: rgba(22, 57, 21, 1);
-  margin-top: -26px;
-  white-space: nowrap;
+  display: flex;
 }
 
 
-.ver_mais{
-    display: flex;
-    margin-top: 9vh;
-    margin-left: -6px;
-    color: rgba(22, 57, 21, 1);
-    white-space: nowrap;
-    font-size: 0.75rem;
+.ver_mais {
+  display: flex;
+  align-items: end;
+  font-size: 0.75rem;
 }
 
 .titulo {
@@ -132,12 +124,12 @@ body {
   width: 100%;
 
   h4 {
-  font-weight: bolder;
+    font-weight: bolder;
   }
 
 }
 
-.cards-eventos{
+.cards-eventos {
   display: flex;
   height: 85vh;
   flex-direction: column;
@@ -156,12 +148,12 @@ body {
   height: 15vh;
 
   img {
-      width: 40%;
+    width: 40%;
   }
 
   .infos {
-      display: flex;
-      flex-direction: column;
-      margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
   }
 }
