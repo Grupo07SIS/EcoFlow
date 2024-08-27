@@ -2,10 +2,10 @@
 
 .menu {
     position: fixed;
-    bottom: 0;
+    bottom: -1px;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border-top: 1px solid #e7e7e7;
     z-index: 555;
     margin: 0;
@@ -15,6 +15,7 @@
     flex-direction: row;
     align-items: center;
     height: 8%;
+    box-shadow: 0px 2px 19px 0px rgba(0, 0, 0, 0.308);
 }
 
 .opcoes {
@@ -24,11 +25,8 @@
     align-items: center;
     color: black;
     p{
-        font-size: 14px;
+        font-size: 12px;
         margin: 0;
-    }
-    i{
-        font-size: 1.5rem;
     }
 }
 .menu a {

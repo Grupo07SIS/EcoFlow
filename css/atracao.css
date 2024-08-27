@@ -1,8 +1,6 @@
-.h6, h6 {
-    font-size: 1.25rem;
-    margin: 0;
+h6{
+    margin: 0%;
 }
-
 h5{
     margin: 0%;
     font-weight: bold;
@@ -11,9 +9,9 @@ h5{
 .adicionar_atracao{
     display: flex;
     flex-direction: row;
-    gap: 4%;
+    gap: 1.5%;
     align-items: center;
-    height: 50px;
+    padding-bottom: 3%;
 
     button{
         background-color: transparent;
@@ -22,7 +20,7 @@ h5{
     }
 
     i{
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 }
 

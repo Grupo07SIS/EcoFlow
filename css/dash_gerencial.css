@@ -6,16 +6,40 @@ cor botao ENTRAR, color: rgba(199, 83, 12, 1);
 cor frase, color: rgba(22, 57, 21, 1);
 } */
 
-.content{
-    display: flex;
-    flex-direction: column;
+.content {
+  display: flex;
+  flex-direction: column;
 }
 
-.main_nichos{
+.filtroDtsPronto {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.filtroDtsPronto button {
+  padding: 8px;
+  background-color: transparent;
+  font-size: 18px;
+  border-radius: 6px;
+  color: rgb(23, 23, 23);
+  border: 2px solid #C7530C;
+}
+
+.filtroDtsPronto button.active {
+  background-color: #C7530C;
+  color: white;
+  border: 2px solid #C7530C;
+  padding: 8px;
+}
+
+.main_nichos {
   padding-bottom: 20%;
 }
 
-.bi{
+.bi {
   height: auto;
   width: auto;
 }
@@ -100,13 +124,13 @@ cor frase, color: rgba(22, 57, 21, 1);
   border: 1rem;
 }
 
-.bloco_filtros {
+.bloco_filtro {
   display: flex;
   justify-content: flex-end;
   height: 50px;
-  padding: 5px;
   font-size: 16px;
-  margin-top: 13px;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .offcanvas,
@@ -161,7 +185,8 @@ cor frase, color: rgba(22, 57, 21, 1);
 .bloco_filtros {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  padding-top: 20px;
+  flex-direction: row-reverse;
 }
 
 .filtrar_date {
@@ -296,12 +321,12 @@ cor frase, color: rgba(22, 57, 21, 1);
 
 .grafico_nichos {
   display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 15vh;
-    align-items: center;
-    justify-content: center;
-    padding-top: 16px;
+  flex-direction: column;
+  width: 100%;
+  height: 15vh;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16px;
 }
 
 .bolhas {
@@ -377,18 +402,21 @@ cor frase, color: rgba(22, 57, 21, 1);
   width: 42vw;
 }
 
-.titulo_filtro{
+.titulo_filtro {
   padding-top: 16px;
 }
 
-.filtrar_local{
+.filtrar_local {
   width: 100%;
-  input{
-    width:100%;
-  };
+
+  input {
+    width: 100%;
+  }
+
+  ;
 }
 
-.grp_btn{
+.grp_btn {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -396,7 +424,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   padding-top: 2%;
 }
 
-.secondary_btn{
+.secondary_btn {
   background-color: white;
   border-radius: 4px 4px 4px 4px;
   border: rgba(199, 83, 12, 1) 2px solid;
@@ -404,7 +432,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   padding: 8px;
 }
 
-.primary_btn{
+.primary_btn {
   background-color: rgba(199, 83, 12, 1);
   border-radius: 4px 4px 4px 4px;
   color: white;
