@@ -147,6 +147,11 @@ h5{
     margin-top: 8px;
 }
 
+.escolher_stand{
+    margin-bottom: 80px;
+    margin-top: 10px;
+}
+
 .dados_stand {
     margin-bottom: 15px;
 }
@@ -155,15 +160,12 @@ h5{
     display: flex;
     align-items: center;
     gap: 8px;
-    margin: 10px;
 }
 
 .stand_lista{
     display: flex;
     justify-content: center;
     flex-direction: column;
-    position: relative;
-    top: 1rem;
 }
 
 .opcao_stand{

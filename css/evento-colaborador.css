@@ -26,21 +26,20 @@
 
 .cards-eventos{
     display: flex;
-    height: 85vh;
+    height: 100vh;
     flex-direction: column;
     justify-content: space-evenly;
+    margin-bottom: 50px;
 }
 
 .eventos {
     display: flex;
     background-color: #f8f9fa;
-    border: 1px solid #e7e7e7;
     border-radius: 5px;
     padding: 15px;
     min-width: 200px;
     box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
     color: black;
-    height: 15vh;
 
     img {
         width: 40%;
@@ -50,5 +49,12 @@
         display: flex;
         flex-direction: column;
         margin-left: 10px;
+        font-size: 14px;
+        color: #163915;
+
+        .spanTitulo{
+            color: black;
+            font-size: 18px;
+        }
     }
 }

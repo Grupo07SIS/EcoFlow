@@ -5,6 +5,7 @@
 
 h5{
     margin: 0%;
+    font-weight: bold;
 }
 
 .adicionar_atracao{
@@ -140,4 +141,8 @@ h5{
             color: #fff;
         }
     }
+}
+
+.stand {
+    margin-bottom: 20px;
 }
