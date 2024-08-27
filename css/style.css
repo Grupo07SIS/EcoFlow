@@ -5,6 +5,7 @@
 }
 
 body {
+    background-color: #f1f1f1;
     padding: 20px;
     padding-top: 0%;
     background-color: #f1f1f1;
@@ -39,15 +40,15 @@ body {
 } */
 
 .carousel-caption {
-    /* position: absolute;
-    right: 15%;
-    bottom: 70px;
-    left: 15%; */
     z-index: 10;
-    padding-top: 20px;
-    padding-bottom: 55px;
+    /* padding-top: 20px; */
+    padding-bottom: 75px;
     color: #fff;
     text-align: center;
+
+    .h5, h5 {
+        font-size: 22px;
+    }
 }
 
 .nichos {
@@ -118,10 +119,12 @@ body {
         text-decoration: none;
         color: #163915;
         font-weight: 700;
+        font-size: 14px;
     }
 
     h4 {
-        font-size: 20px;
+        font-size: 22px;
+
         font-weight: 600;
         margin: 0;
     }
