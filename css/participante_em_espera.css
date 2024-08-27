@@ -95,6 +95,13 @@ body{
   width: 100%;
   justify-content: space-between;
   padding-top: 2%;
+  
+}
+
+.bloco_filtros{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .secondary_btn{

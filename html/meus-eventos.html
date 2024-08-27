@@ -51,12 +51,12 @@
         <!-- botões iniciais -> Criar evento e Filtrar -->
         <div class="bloco_botoes">
             <!-- botão para criar novo evento -->
-            <button type="button" class="btn btn-primary">Criar novo Evento <img src="../assets/Plus.png" alt="sinal de mais"></button>
+            <button type="button" class="btn btn-primary">Criar novo Evento <i class="bi bi-plus-circle-fill"></i></button>
             <!-- botão de filtrar e suas filtragens -->
             <div class="bloco_filtros">
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                     aria-controls="offcanvasBottom"> <img src="../assets/filter.png" alt=""> Filtrar</button>
-                <div style="height: 95%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                <div style="height: 70%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                     aria-labelledby="offcanvasBottomLabel">
                     <div class="offcanvas-header">
                         <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
@@ -64,45 +64,16 @@
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body small">
-                        <h4>Categorias</h4>
-                        <div class="filtrar_categorias">
-                            <div class="nichos">
-                                <div class="nicho">
-                                    <a href="">
-                                        <img src="../assets/Property 1=Default.png" alt="">
-                                        <h5>Moda</h5>
-                                    </a>
-                                </div>
-                                <div class="nicho">
-                                    <a href="">
-                                        <img src="../assets/Property 1=Variant2.png" alt="">
-                                        <h5>Comida</h5>
-                                    </a>
-                                </div>
-                                <div class="nicho">
-                                    <a href="">
-                                        <img src="../assets/Property 1=Variant3.png" alt="">
-                                        <h5>Animais</h5>
-                                    </a>
-                                </div>
-                                <div class="nicho">
-                                    <a href="">
-                                        <img src="../assets/Property 1=Variant4.png" alt="">
-                                        <h5>Beleza</h5>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <h4>Tema do Evento</h4>
+                        <h4 class="title">Tema do Evento</h4>
                         <div class="filtrar_tema">
                             <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>Open this select menu</option>
+                                <option selected>Escolhe o evento</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
                         </div>
-                        <h4 class="titulo_filtro">Horário e Data</h4>
+                        <h4 class="titulo_filtro">Data</h4>
                         <div class="filtrar_date">
                             <div class="bloco_filtros">
                                 <div class="filtrar_dt_inicio">
@@ -119,26 +90,25 @@
                                 </div>
                             </div>
                             <div style="padding-top:18px; width: 100%;">
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                    <button type="button" class="btn btn-outline-primary">Essa semana</button>
-                                    <button type="button" class="btn btn-outline-primary">Esse mês</button>
-                                    <button type="button" class="btn btn-outline-primary">Esse ano</button>
+                                <div class="filtroDtsPronto">
+                                    <button>Essa semana</button>
+                                    <button>Esse mês</button>
+                                    <button>Esse ano</button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="filtrar_local">
+                            <h4>Local</h4>
+                            <input type="text" placeholder="Digite o local aqui...">
+                        </div>
 
-                            <div class="filtrar_local">
-                                <h4>Local</h4>
-                                <input type="text" placeholder="Digite o local aqui...">
-                            </div>
-
-                            <div class="grp_btn">
-                                <button class="secondary_btn">
-                                    Limpar Filtro
-                                </button>
-                                <button class="primary_btn">
-                                    Aplicar Filtro
-                                </button>
-                            </div>
+                        <div class="grp_btn">
+                            <button class="secondary_btn">
+                                Limpar Filtro
+                            </button>
+                            <button class="primary_btn">
+                                Aplicar Filtro
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -256,6 +226,19 @@
             emailNavBar.innerHTML = emailSS
         }
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+
+        filtroDtsProntoButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
