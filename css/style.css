@@ -6,6 +6,8 @@
 
 body {
     padding: 20px;
+    padding-top: 0%;
+    background-color: #f1f1f1;
 }
 
 .carousel-indicators {
@@ -16,6 +18,7 @@ body {
     padding-bottom: 10px;
     margin: 0;
 }
+
 
 .carousel-indicators li {
     width: 30px;
@@ -58,6 +61,11 @@ body {
     height: 15vh;
 }
 
+
+.nicho h5 {
+    font-size: 18px;
+}
+
 .nicho a {
     display: flex;
     flex-direction: column;
@@ -92,7 +100,7 @@ body {
     }
 
     button:hover {
-        background-color:#2f722d;
+        background-color: #2f722d;
         color: #ffffff;
         border: solid 1px #C7530C;
     }
@@ -112,11 +120,35 @@ body {
         font-weight: 700;
     }
 
-    .h4,
     h4 {
-        font-size: 1.5rem;
+        font-size: 20px;
         font-weight: 600;
         margin: 0;
+    }
+}
+
+.imgs_carousel {
+    i {
+        font-size: 23rem;
+        color: #C7530C;
+    }
+}
+
+.a_line {
+    text-decoration: none;
+    color: white;
+
+    i {
+        font-size: 2rem;
+        color: white; /* Ensures the icon is white by default */
+    }
+    
+    i::after {
+        color: #fff;
+    }
+
+    &:hover i {
+        color: white; /* Keeps the icon white on hover */
     }
 }
 
@@ -130,8 +162,7 @@ body {
 .cardItem {
     display: inline-block;
     flex: 0 0 auto;
-    background-color: #f8f9fa;
-    border: 1px solid #e7e7e7;
+    background-color: #ffffff;
     border-radius: 5px;
     padding: 15px;
     min-width: 200px;
@@ -151,29 +182,31 @@ body {
     margin: 0%;
 }
 
-.organizedDtas{
+.organizedDtas {
     display: flex;
     flex-direction: column;
 }
 
-.dataEvento{
+.dataEvento {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 30px;
     font-size: 16px;
-    img{
+
+    img {
         padding-right: 4%;
     }
 }
 
-.dataLocal{
+.dataLocal {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 30px;
     font-size: 16px;
-    img{
+
+    img {
         padding-right: 4%;
     }
 }
@@ -184,7 +217,7 @@ body {
     border: solid 1px #C7530C;
 }
 
-.dataCalendarioEvento{
+.dataCalendarioEvento {
     padding: 9px;
     background-color: #ffffffba;
     position: absolute;
@@ -195,9 +228,10 @@ body {
     font-weight: bold;
 }
 
-.organizedDtas{
+.organizedDtas {
     font-size: 16px;
 }
+
 .card-link {
     text-decoration: none;
     color: black;

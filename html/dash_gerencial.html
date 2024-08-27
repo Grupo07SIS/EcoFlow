@@ -65,7 +65,7 @@
         <div class="bloco_filtros">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                 aria-controls="offcanvasBottom"> <img src="../assets/filter.png" alt=""> Filtrar</button>
-            <div style="height: 95%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            <div style="height: 75%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                 aria-labelledby="offcanvasBottomLabel">
                 <div class="offcanvas-header">
                     <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
@@ -73,35 +73,6 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body small">
-                    <h4>Categorias</h4>
-                    <div class="filtrar_categorias">
-                        <div class="nichos">
-                            <div class="nicho">
-                                <a href="">
-                                    <img src="../assets/Property 1=Default.png" alt="">
-                                    <h5>Moda</h5>
-                                </a>
-                            </div>
-                            <div class="nicho">
-                                <a href="">
-                                    <img src="../assets/Property 1=Variant2.png" alt="">
-                                    <h5>Comida</h5>
-                                </a>
-                            </div>
-                            <div class="nicho">
-                                <a href="">
-                                    <img src="../assets/Property 1=Variant3.png" alt="">
-                                    <h5>Animais</h5>
-                                </a>
-                            </div>
-                            <div class="nicho">
-                                <a href="">
-                                    <img src="../assets/Property 1=Variant4.png" alt="">
-                                    <h5>Beleza</h5>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                     <h4>Tema do Evento</h4>
                     <div class="filtrar_tema">
                         <select class="form-select form-select-sm" aria-label="Small select example">
@@ -111,9 +82,9 @@
                             <option value="3">Three</option>
                         </select>
                     </div>
-                    <h4 class="titulo_filtro">Horário e Data</h4>
+                    <h4 class="titulo_filtro">Data</h4>
                     <div class="filtrar_date">
-                        <div class="bloco_filtros">
+                        <div class="bloco_filtro">
                             <div class="filtrar_dt_inicio">
                                 <span>Inicio</span>
                                 <div class="input-group flex-nowrap">
@@ -128,10 +99,10 @@
                             </div>
                         </div>
                         <div style="padding-top:18px; width: 100%;">
-                            <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                <button type="button" class="btn btn-outline-primary">Essa semana</button>
-                                <button type="button" class="btn btn-outline-primary">Esse mês</button>
-                                <button type="button" class="btn btn-outline-primary">Esse ano</button>
+                            <div class="filtroDtsPronto">
+                                <button>Essa semana</button>
+                                <button>Esse mês</button>
+                                <button>Esse ano</button>
                             </div>
                         </div>
 
@@ -265,7 +236,7 @@
                 <img src="../assets/Vector 3 (1).png" alt="">
                 <p>Inicio</p>
             </a>
-            <a href="" class="opcoes">
+            <a href="meus-eventos.html" class="opcoes">
                 <img src="../assets/Calendar icon.png" alt="">
                 <p>Eventos</p>
             </a>
@@ -273,11 +244,11 @@
                 <img src="../assets/Group 2.png" alt="">
                 <p>Criar Evento</p>
             </a>
-            <a href="" class="opcoes">
+            <a href="lista_de_espera.html" class="opcoes">
                 <img src="../assets/Group 4.png" alt="">
-                <p>Convites</p>
+                <p>Participantes</p>
             </a>
-            <a href="" class="opcoes">
+            <a href="perfil.html" class="opcoes">
                 <img src="../assets/Group 3.png" alt="">
                 <p>Perfil</p>
             </a>
@@ -314,6 +285,19 @@
             nomeNavBar.innerHTML = nomeSS
             emailNavBar.innerHTML = emailSS
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+
+            filtroDtsProntoButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+        });
     </script>
 </body>
 
