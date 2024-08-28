@@ -58,3 +58,12 @@
         }
     }
 }
+
+.bloco_botoes {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
