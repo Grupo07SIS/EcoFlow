@@ -15,7 +15,6 @@
   margin-top: 1vh;
   display: flex;
   text-align: center;
-  flex-direction: column;
 }
 
 .events0 {
@@ -25,20 +24,20 @@
   justify-content: space-evenly;
   background-color: rgba(151, 151, 151, 0.36);
   border-radius: 3vh;
-  height: 47.79px;
+  height: 40px;
 }
 
 .events1 {
   font-family: "Poppins";
   display: flex;
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   background-color: rgba(199, 83, 12, 1);
   color: #f8f9fa;
   border-radius: 55px;
   align-items: center;
-  width: 205px;
+  width: 190px;
   justify-content: center;
   margin-top: 3px;
   margin-bottom: 3px;
@@ -49,9 +48,38 @@
   margin: 0;
   text-align: center;
   color: rgba(22, 57, 21, 1);
-  font-size: 17px;
+  font-size: 16px;
   align-items: center;
   border-radius: 55px;
+  justify-content: center;
+  width: 50%;
+}
+
+.informacoes {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: 18px;
+}
+
+.informacoes1 {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.proximo-voltar {
+  width: 100%;
+  margin-bottom: 0;
+
+  .btn-outline-secondary {
+    width: 100%;
+    color: #C7530C;
+    border: solid 1px #C7530C;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 }
 
 .allOrgs {
@@ -115,10 +143,12 @@ h4 {
 a {
   font-size: 18px;
 }
+
 .h5,
 h5 {
   font-weight: bold;
 }
+
 .menu {
   position: fixed;
   bottom: 0;
