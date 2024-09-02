@@ -182,4 +182,15 @@
         nomeNavBar.innerHTML = nomeSS
         emailNavBar.innerHTML = emailSS
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+
+        filtroDtsProntoButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            });
+        });
+    });
 </script>
