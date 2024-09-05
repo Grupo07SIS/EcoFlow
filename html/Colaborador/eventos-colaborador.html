@@ -130,7 +130,7 @@
             <img src="../../assets/Mask Group.png" alt="">
             <div class="infos">
                 <span class="spanTitulo">Dias das mães</span>
-                <span>1 DE JUNHO 2024</span>
+                <span>1 DE FEVEREIRO 2024</span>
                 <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
             </div>
         </div>
@@ -171,26 +171,71 @@
 </html>
 
 <script>
-    window.onload = valorPadrao()
+   document.querySelector('.primary_btn').addEventListener('click', function () {
+    // Obtendo os valores dos filtros
+    const selectedTheme = document.querySelector('.form-select').value;
+    const startDate = document.querySelector('.filtrar_dt_inicio input').value;
+    const endDate = document.querySelector('.filtrar_dt_fim input').value;
+    const location = document.querySelector('.filtrar_local input').value.toLowerCase();
 
-    async function valorPadrao() {
-        console.log("CHEGOU NESSA BCT")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
-        const nomeNavBar = document.getElementById('userName')
-        const emailNavBar = document.getElementById('nomeEmpresa')
-        nomeNavBar.innerHTML = nomeSS
-        emailNavBar.innerHTML = emailSS
-    }
+    // Selecionar todos os eventos
+    const eventsContainer = document.querySelector('.cards-eventos');
+    const events = Array.from(eventsContainer.querySelectorAll('.eventos')); // Converter para um array para melhor manipulação
+    const filteredEvents = []; // Array para armazenar eventos que atendem aos critérios de filtro
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+    events.forEach(event => {
+        // Extraindo informações do evento
+        const eventTheme = event.querySelector('.spanTitulo').textContent.trim();
+        const eventDate = new Date(event.querySelector('.infos span:nth-child(2)').textContent.trim().replace(' DE ', ' '));
+        const eventLocation = event.querySelector('.infos span:nth-child(3)').textContent.toLowerCase().trim();
 
-        filtroDtsProntoButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-            });
-        });
+        // Verificar se o evento deve ser exibido
+        let showEvent = true;
+
+        if (selectedTheme !== 'Escolhe o evento' && eventTheme !== selectedTheme) {
+            showEvent = false;
+        }
+
+        if (startDate && eventDate < new Date(startDate)) {
+            showEvent = false;
+        }
+
+        if (endDate && eventDate > new Date(endDate)) {
+            showEvent = false;
+        }
+
+        if (location && !eventLocation.includes(location)) {
+            showEvent = false;
+        }
+
+        // Mostrar ou ocultar o evento e mover para o topo se necessário
+        if (showEvent) {
+            event.style.display = 'flex';
+            filteredEvents.push(event); // Adiciona o evento filtrado ao array
+        } else {
+            event.style.display = 'none';
+        }
     });
+
+    // Mover os eventos filtrados para o topo
+    filteredEvents.forEach(event => {
+        eventsContainer.prepend(event); // Adiciona cada evento filtrado ao início da div
+    });
+});
+
+// Limpar Filtros
+document.querySelector('.secondary_btn').addEventListener('click', function () {
+    // Resetando os valores dos filtros
+    document.querySelector('.form-select').value = 'Escolhe o evento';
+    document.querySelector('.filtrar_dt_inicio input').value = '';
+    document.querySelector('.filtrar_dt_fim input').value = '';
+    document.querySelector('.filtrar_local input').value = '';
+
+    // Mostrar todos os eventos
+    const events = document.querySelectorAll('.cards-eventos .eventos');
+    events.forEach(event => {
+        event.style.display = 'flex';
+    });
+});
+
 </script>
