@@ -86,7 +86,7 @@ body {
     align-items: end;
     box-shadow: 0px 2px 19px 0px rgba(0, 0, 0, 0.308);
     border-radius: 8px;
-    background-position: center;
+    background-position: unset;
 
     button {
         width: 37%;
@@ -156,9 +156,12 @@ body {
 
 .cards {
     display: flex;
-    overflow-x: auto;
+    overflow-x: auto; /* Scroll lateral */
     padding: 8px 0px 20px 0px;
-    white-space: nowrap;
+    /*white-space: nowrap;  Impede a quebra de linha entre os cards */
+    gap: 20px; /* Espaçamento entre os cards */
+    scroll-behavior: smooth; /* Scroll suave */
+    cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
 }
 
 .cardItem {
@@ -170,6 +173,10 @@ body {
     min-width: 200px;
     box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
     color: black;
+    position: relative; /* Mantém os elementos internos posicionados relativamente ao card */
+    transition: transform 0.2s;
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
 }
 
 .cardItem img.img-background {
@@ -178,23 +185,32 @@ body {
 }
 
 .titulo {
+    width: 200px;
     color: #163915;
     font-size: 18px;
     font-weight: bold;
     margin: 0%;
+    display: block; /* Faz com que os spans se comportem como blocos para quebra de linha */
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
 }
 
 .organizedDtas {
+    width: 200px;
     display: flex;
     flex-direction: column;
+    word-break: break-all;
 }
 
 .dataEvento {
+    width: 200px;
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 30px;
     font-size: 16px;
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
 
     img {
         padding-right: 4%;
@@ -207,6 +223,8 @@ body {
     align-items: center;
     height: 30px;
     font-size: 16px;
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
 
     img {
         padding-right: 4%;
@@ -222,15 +240,21 @@ body {
 .dataCalendarioEvento {
     padding: 9px;
     background-color: #ffffffba;
-    position: absolute;
-    margin: 2%;
-    border-radius: 4px 4px 4px 4px;
+    position: absolute; /* Permite que o calendário seja posicionado sobre a imagem */
+    top: 10px; /* Posiciona a data no topo do card */
+    left: 10px; /* Posiciona a data à esquerda */
+    border-radius: 4px;
     color: #163915;
     font-size: 18px;
     font-weight: bold;
+    z-index: 2; /* Garante que a data fique acima da imagem */
+    max-width: calc(100% - 20px); /* Garante que a data não ultrapasse o card */
 }
 
 .organizedDtas {
+    display: block; /* Faz com que os spans se comportem como blocos para quebra de linha */
+    word-wrap: break-word; /* Quebra de palavras longas */
+    overflow-wrap: break-word; /* Quebra de palavras longas */
     font-size: 16px;
 }
 

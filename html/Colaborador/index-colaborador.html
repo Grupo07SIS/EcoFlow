@@ -52,14 +52,33 @@
 
     <div class="cardEventos">
         <h4>Próximos eventos:</h4>
-        <a href="">
+        <a href="eventos-colaborador.html">
             ver todos
             <img src="../../assets/Double Right.png" alt="">
         </a>
     </div>
 
     <div class="cards" id="cards_eventos">
-        <div class="cardItem">
+        <div class="cardItem" data-url="detalhamento-evento.html">
+            <div class="dataCalendarioEvento">
+                <span>
+                    Junho 10
+                </span>
+            </div>
+            <img class="img-background" src="../../assets/Mask Group.png" alt="">
+            <div class="titulo">
+                <span>Dia das Mães</span>
+            </div>
+            <div class="organizedDtas">
+                <div class="dataEvento">
+                    <img src="../../assets/Schedule.png" alt=""> <span>21/04 22:00</span>
+                </div>
+                <div class="dataLocal">
+                    <img src="../../assets/Location.png" alt=""> <span>Localização 2</span>
+                </div>
+            </div>
+        </div>
+        <div class="cardItem" data-url="detalhamento-evento.html">
             <div class="dataCalendarioEvento">
                 <span>
                     Junho 10
@@ -124,4 +143,46 @@
         nomeNavBar.innerHTML = nomeSS
         emailNavBar.innerHTML = emailSS
     }
+</script>
+<script>
+    const cardsContainer = document.getElementById('cards_eventos');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+cardsContainer.addEventListener('mousedown', (e) => {
+    isDown = true;
+    cardsContainer.classList.add('active');
+    startX = e.pageX - cardsContainer.offsetLeft;
+    scrollLeft = cardsContainer.scrollLeft;
+});
+
+cardsContainer.addEventListener('mouseleave', () => {
+    isDown = false;
+    cardsContainer.classList.remove('active');
+});
+
+cardsContainer.addEventListener('mouseup', () => {
+    isDown = false;
+    cardsContainer.classList.remove('active');
+});
+
+cardsContainer.addEventListener('mousemove', (e) => {
+    if (!isDown) return; // parar a função se o mouse não estiver pressionado
+    e.preventDefault();
+    const x = e.pageX - cardsContainer.offsetLeft;
+    const walk = (x - startX) * 2; // quanto mais arrastar, mais longe vai
+    cardsContainer.scrollLeft = scrollLeft - walk;
+});
+
+</script>
+
+<script>
+    document.querySelectorAll('.cardItem').forEach(card => {
+    card.addEventListener('click', function() {
+        const url = this.getAttribute('data-url');
+        window.location.href = url; // Redireciona para a página definida no atributo data-url
+    });
+});
+
 </script>
