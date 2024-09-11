@@ -4,6 +4,10 @@
     font-family: 'Poppins', 'san-serif';
 }
 
+body {
+    padding: 20px;
+}
+
 .main_info{
     display: flex;
     flex-direction: column;
@@ -91,5 +95,39 @@
 .btn_editar a {
     text-decoration: none;
     color: black;
+}
+
+.proximo-voltar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 70px;
+
+    .btn-outline-secondary {
+        width: 40%;
+        color: #C7530C;
+        border: solid 1px #C7530C;
+        font-size: 1.2rem;
+        font-weight: 500;
+
+        a {
+            text-decoration: none;
+            color: #C7530C;
+        }
+    }
+
+    .btn-secondary {
+        width: 40%;
+        background-color: #C7530C;
+        color: #fff;
+        border: none;
+        font-size: 1.2rem;
+        font-weight: 500;
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+    }
 }
 

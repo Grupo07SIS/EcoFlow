@@ -6,9 +6,6 @@
 
 body {
   background-color: #EDEDED;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .content {

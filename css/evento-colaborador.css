@@ -26,20 +26,22 @@
 
 .cards-eventos{
     display: flex;
-    height: 100vh;
     flex-direction: column;
     justify-content: space-evenly;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    gap: 20px;
 }
 
 .eventos {
     display: flex;
     background-color: #f8f9fa;
     border-radius: 5px;
-    padding: 15px;
+    padding: 3%;
     min-width: 200px;
     box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
     color: black;
+    word-break: break-all;
 
     img {
         width: 40%;
@@ -48,7 +50,7 @@
     .infos {
         display: flex;
         flex-direction: column;
-        margin-left: 10px;
+        padding-left: 10px;
         font-size: 14px;
         color: #163915;
 
