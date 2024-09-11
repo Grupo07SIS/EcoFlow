@@ -3,7 +3,7 @@ async function buscarDetalhesEvento() {
     const eventId = urlParams.get('id');
 
     try {
-        const resposta = await fetch(`http://localhost:8080/eventos/id?id=${eventId}`);
+        const resposta = await fetch(`http://localhost:8080/eventos/${eventId}`);
         const evento = await resposta.json();
 
         console.log("Resposta: ", evento);
@@ -11,7 +11,7 @@ async function buscarDetalhesEvento() {
         // Extracting data
         const [year, month, day] = evento.data;
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
+        const formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
 
         const fullAddress = `${evento.fkEndereco.logradouro}, ${evento.fkEndereco.numero} - ${evento.fkEndereco.cidade}`;
 
@@ -35,18 +35,6 @@ async function buscarDetalhesEvento() {
         console.error('Erro ao buscar os detalhes do evento:', error);
     }
 }
-
-// function initMap(lat, lng) {
-//     const location = { lat: parseFloat(lat), lng: parseFloat(lng) };
-//     const map = new google.maps.Map(document.getElementById('map'), {
-//         zoom: 15,
-//         center: location
-//     });
-//     const marker = new google.maps.Marker({
-//         position: location,
-//         map: map
-//     });
-// }
 
 function geocode(address) {
     var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address);
@@ -77,4 +65,6 @@ function geocode(address) {
             console.error(error);
         });
 }
-document.addEventListener('DOMContentLoaded', buscarDetalhesEvento);
+
+
+window.onload = buscarDetalhesEvento;
