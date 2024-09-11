@@ -52,3 +52,5 @@ async function buscarEventos() {
 console.log("Antes de buscar");
 buscarEventos();
 console.log("Depois de buscar");
+
+

@@ -161,6 +161,7 @@
     <div id="popup" class="popup">
         <p id="popup-message"></p>
     </div>
+    <script src="../js/mockDados/mockDadosColaborador.js"></script>
 </body>
 
 </html>
@@ -171,3 +172,18 @@ function backpage(){
 }
 
 </script>
+
+<script>
+    function buscarDados() {
+      const collabId = localStorage.getItem('selectedCollaboratorId');
+      const collaborator = collaborators.find(collab => collab.id == collabId);
+  
+      if (collaborator) {
+        document.querySelector('#imagem_marca').src = collaborator.image;
+        document.querySelector('.nome_colaborador').innerText = `Dados de ${collaborator.name}`;
+        document.querySelector('#bloco_marca span').innerText = collaborator.name;
+      }
+    }
+  
+    window.onload = buscarDados;
+  </script>

@@ -107,54 +107,9 @@
       </div>
     </div>
 
-    <div class="allOrgs">
-      <div href="" class="orgs">
-        <img class="photo0" src="../assets/colaboradora.png" />
-        <div class="allCards">
-          <div class="cards1">
-            <span>
-              <b>Nome da Marca</b>
-            </span>
+    <div class="allOrgs" id="collaboratorContainer"></div>
 
-            <span>
-              <b>Telefone:</b>(11)00000-0000
-            </span>
 
-            <span>
-              <b>Email:</b> email@gmail.com
-            </span>
-
-            <span>
-              <b>Nicho:</b> Alimentos
-            </span>
-          </div>
-        </div>
-        <a class="ver_mais" href="dadosColaborador.html">Ver mais >></a>
-      </div>
-      <div href="" class="orgs">
-        <img class="photo0" src="../assets/colaboradora.png" />
-        <div class="allCards">
-          <div class="cards1">
-            <span>
-              <b>Nome da Marca</b>
-            </span>
-
-            <span>
-              <b>Telefone:</b>(11)00000-0000
-            </span>
-
-            <span>
-              <b>Email:</b> email@gmail.com
-            </span>
-
-            <span>
-              <b>Nicho:</b> Alimentos
-            </span>
-          </div>
-        </div>
-        <h3 class="ver_mais">Ver mais >></h3>
-      </div>
-    </div>
 
     <div class="menu">
       <a href="index.html" class="opcoes">
@@ -180,6 +135,37 @@
     </div>
 
   </div>
+  <script src="../js/mockDados/mockDadosColaborador.js"></script>
 </body>
 
 </html>
+
+<script>
+  function renderCollaborators() {
+    const container = document.getElementById("collaboratorContainer");
+    
+    collaborators.forEach(collab => {
+      const collabDiv = document.createElement("div");
+      collabDiv.className = "orgs";
+      collabDiv.innerHTML = `
+        <img class="photo0" src="${collab.image}" />
+        <div class="allCards">
+          <div class="cards1">
+            <span><b>Nome da Marca:</b> ${collab.name}</span>
+            <span><b>Telefone:</b> ${collab.phone}</span>
+            <span><b>Email:</b> ${collab.email}</span>
+            <span><b>Nicho:</b> ${collab.niche}</span>
+          </div>
+        </div>
+        <h3 class="ver_mais" onclick="viewDetails(${collab.id})">Ver mais >></h3>
+      `;
+      container.appendChild(collabDiv);
+    });
+  }
+  window.onload = renderCollaborators;
+
+  function viewDetails(id) {
+    localStorage.setItem('selectedCollaboratorId', id);
+    window.location.href = 'dadosColaborador.html';
+  }
+</script>
