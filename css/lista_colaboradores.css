@@ -110,6 +110,7 @@ body {
   align-items: flex-start;
   padding: 3%;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .titulo {
@@ -140,6 +141,7 @@ body {
   display: flex;
   align-items: end;
   font-size: 0.75rem;
+  width: 50%;
 }
 
 .titulo {
