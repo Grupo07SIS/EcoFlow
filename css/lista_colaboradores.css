@@ -138,10 +138,11 @@ body {
 
 .ver_mais {
   color: #000000;
-  display: flex;
+  display: inline-flex;
   align-items: end;
   font-size: 0.75rem;
-  width: 50%;
+  width: auto; 
+  white-space: nowrap; 
 }
 
 .titulo {
