@@ -17,7 +17,7 @@ async function buscarEventos() {
             return `
             <a href="detalhamentoEvento.html?id=${itemEvento.idEvento}" class="card-link" data-id="${itemEvento.idEvento}">
                 <div class="cardItem">
-                    <img class="img-background" src="../assets/Mask Group.png" alt="">
+                    <img class="img-background" src="../../assets/Mask Group.png" alt="">
                     <div class="titulo">
                         <span>${itemEvento.nome}</span>
                     </div>
