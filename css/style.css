@@ -195,40 +195,40 @@ body {
     overflow-wrap: break-word; /* Quebra de palavras longas */
 }
 
+.titulo span {
+    display: block; /* Faz o texto quebrar de linha */
+    font-size: 18px;
+    font-weight: bold;
+    color: #163915;
+    margin-bottom: 10px; /* Espaço abaixo do título */
+}
+
 .organizedDtas {
-    width: 200px;
     display: flex;
     flex-direction: column;
-    word-break: break-all;
+    width: 100%; /* Garante que o conteúdo se ajuste ao card */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 16px;
 }
 
-.dataEvento {
-    width: 200px;
+.dataEvento, .dataLocal {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    height: 30px;
-    font-size: 16px;
-    word-wrap: break-word; /* Quebra de palavras longas */
-    overflow-wrap: break-word; /* Quebra de palavras longas */
-
-    img {
-        padding-right: 4%;
-    }
+    margin-bottom: 10px; /* Espaço entre as linhas */
+    overflow: hidden; /* Impede o conteúdo de extrapolar */
+    text-overflow: ellipsis; /* Adiciona reticências se o texto for muito longo */
 }
 
-.dataLocal {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 30px;
-    font-size: 16px;
-    word-wrap: break-word; /* Quebra de palavras longas */
-    overflow-wrap: break-word; /* Quebra de palavras longas */
+.dataEvento img, .dataLocal img {
+    margin-right: 8px; /* Espaço entre o ícone e o texto */
+}
 
-    img {
-        padding-right: 4%;
-    }
+.dataEvento span, .dataLocal span {
+    display: block; /* Faz o texto quebrar de linha */
+    max-width: 100%; /* Garante que o texto não ultrapasse o contêiner */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .btn-outline-secondary:hover {
@@ -249,13 +249,6 @@ body {
     font-weight: bold;
     z-index: 2; /* Garante que a data fique acima da imagem */
     max-width: calc(100% - 20px); /* Garante que a data não ultrapasse o card */
-}
-
-.organizedDtas {
-    display: block; /* Faz com que os spans se comportem como blocos para quebra de linha */
-    word-wrap: break-word; /* Quebra de palavras longas */
-    overflow-wrap: break-word; /* Quebra de palavras longas */
-    font-size: 16px;
 }
 
 .card-link {

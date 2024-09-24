@@ -5,14 +5,14 @@ const participants = [
         phone: '(11) 00000-0000',
         niche: 'Alimentos',
         amountPaid: 'R$ 0000.00',
-        imgSrc: '../assets/Group 2.png'
+        imgSrc: '../assets/Ellipse 58.png'
     },
     {
         name: 'EcoCream',
         phone: '(11) 00000-0000',
         niche: 'Beleza',
         amountPaid: 'R$ 0000.00',
-        imgSrc: '../assets/Group 2.png'
+        imgSrc: '../assets/Ellipse 58.png'
     }
     // Adicione mais participantes conforme necessário
 ];
