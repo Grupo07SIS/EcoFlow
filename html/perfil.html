@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/perfil.css">
+    <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </head>
 
 <body>
@@ -26,31 +27,31 @@
         <div class="div_main_info">
             <div class="div_info">
                 <p>CNPJ:</p>
-                <span>00.000.000/0001-00</span>
+                <span id="cnpj">00.000.000/0001-00</span>
             </div>
 
             <div class="div_info">
                 <p>Telefone:</p>
-                <span>00.000.000/0001-00</span>
+                <span id="telefone">00.000.000/0001-00</span>
             </div>
 
             <div class="div_info">
                 <p>Razão social:</p>
-                <span>Texto aqui</span>
+                <span id="razaoSocial">Texto aqui</span>
             </div>
 
             <div class="div_info">
-                <p>Próposito:</p>
-                <span>Texto aqui</span>
+                <p>Propósito:</p>
+                <span id="proposito">Texto aqui</span>
             </div>
         </div>
 
         <div class="proximo-voltar">
             <button type="button" class="btn btn-outline-secondary">
-                <a href="../html/evento.html">Voltar</a>
+                <a href="../html/evento.html">Editar Info</a>
             </button>
-            <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-                <a href="../html/standEscolher.html">Proximo</a>
+            <button type="button" class="btn btn-secondary">
+                <a href="../html/meus-eventos.html">Meus Eventos</a>
             </button>
         </div>
 
