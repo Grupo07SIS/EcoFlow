@@ -21,7 +21,6 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
@@ -49,6 +48,7 @@
 
     <div id="attractionContainer">
         <!-- Attraction cards will be appended here -->
+        <p id="noAttractionsMessage" class="alert alert-warning" role="alert">Não tem atração adicionada</p>
     </div>
 
     <div class="proximo-voltar">
@@ -97,6 +97,17 @@
             input.value = formattedValue;
         }
 
+        // Function to show/hide the no attractions message
+        function toggleNoAttractionsMessage() {
+            const container = document.getElementById('attractionContainer');
+            const message = document.getElementById('noAttractionsMessage');
+            if (container.children.length === 1) { // Only the message is there (no attractions)
+                message.style.display = 'block';
+            } else {
+                message.style.display = 'none';
+            }
+        }
+
         // Function to add a new attraction card
         function addAttractionCard() {
             const container = document.getElementById('attractionContainer');
@@ -128,11 +139,14 @@
             newCard.querySelector('.form-control-currency').addEventListener('input', function () {
                 formatCurrencyInput(this);
             });
+
+            toggleNoAttractionsMessage();
         }
 
         // Function to remove an attraction card
         function removeAttractionCard(button) {
             button.closest('.background-box').remove();
+            toggleNoAttractionsMessage();
         }
 
         // Add event listener to the add attraction button
@@ -144,6 +158,9 @@
             const emailSS = sessionStorage.getItem('EMAIL_USUARIO');
             document.getElementById('userName').innerHTML = nomeSS;
             document.getElementById('nomeEmpresa').innerHTML = emailSS;
+
+            // Show no attractions message on load
+            toggleNoAttractionsMessage();
         };
     </script>
 </body>

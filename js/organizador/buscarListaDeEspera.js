@@ -23,7 +23,7 @@ async function buscarListaDeEspera() {
             // Participant info
             const participantName = fkUsuario?.nomeResp || "Nome não disponível";
             const participantPhone = fkDados?.telefone || "Telefone não disponível";
-            const participantNiche = fkDados?.proposito || "Nicho não informado";
+            const participantNiche = fkEvento?.nome || "Evento não informado";
             const participantAmountPaid = fkEvento?.fkFinanceiro?.valorInscricao || "Valor não disponível";
             const participantImgSrc = fkUsuario?.imagemLogo || "../assets/default-image.png";
 
@@ -36,8 +36,8 @@ async function buscarListaDeEspera() {
                     <div class="participante_info">
                         <span>${participantName}</span>
                         <p><b>Telefone:</b> ${participantPhone}</p>
-                        <p><b>Nicho:</b> ${participantNiche}</p>
-                        <p><b>Valor a pagar:</b> ${participantAmountPaid}</p>
+                        <p><b>Evento:</b> ${participantNiche}</p>
+                        <p><b>Valor a pagar:</b> R$ ${participantAmountPaid}</p>
                     </div>
                 </div>
                 <div class="separation_btns">

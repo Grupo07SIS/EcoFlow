@@ -47,14 +47,13 @@
         </div>
 
         <div class="proximo-voltar">
-            <button type="button" class="btn btn-outline-secondary">
-                <a href="../html/evento.html">Editar Info</a>
+            <button type="button" class="btn btn-outline-secondary" onclick="enableEditing()" id="editarInfoBtn">
+                Editar Info
             </button>
             <button type="button" class="btn btn-secondary">
                 <a href="../html/meus-eventos.html">Meus Eventos</a>
             </button>
         </div>
-
     </div>
 
     <div class="menu">
@@ -78,6 +77,10 @@
             <img src="../assets/perfil.png" alt="">
             <p style="color: #C7530C;">Perfil</p>
         </a>
+    </div>
+
+    <div id="popup" class="popup">
+        <span id="popup-message"></span>
     </div>
 
 </body>
