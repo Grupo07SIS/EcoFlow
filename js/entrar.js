@@ -18,20 +18,62 @@ async function entrar() {
             const jsonResponse = await resposta.json();
             console.log("Login bem-sucedido: ", jsonResponse);
 
-
             if (jsonResponse.length > 0) {
                 const userData = jsonResponse[0];
                 console.log("User Data: ", userData);
 
-   
+                // Store main user data
                 sessionStorage.setItem('ID_USUARIO', userData.idUsuario);
-                sessionStorage.setItem('NOME_USUARIO', userData.nomeResp);
                 sessionStorage.setItem('EMAIL_USUARIO', userData.email);
+                sessionStorage.setItem('NOME_RESPONSAVEL', userData.nomeResp);
+                sessionStorage.setItem('CNPJ_USUARIO', userData.cnpj);
+                sessionStorage.setItem('CPF_RESPONSAVEL', userData.cpfResp);
+                sessionStorage.setItem('IMAGEM_LOGO', userData.imagemLogo);
+                
+                // Store permission data
+                if (userData.fkPermissao) {
+                    sessionStorage.setItem('ID_PERMISSAO', userData.fkPermissao.idPermissao);
+                    sessionStorage.setItem('TIPO_USUARIO', userData.fkPermissao.tipoUsuario);
+                }
+                
+                // Store additional data
+                if (userData.fkDados) {
+                    const dados = userData.fkDados;
+                    sessionStorage.setItem('NOME_FANTASIA', dados.nomeFantasia);
+                    sessionStorage.setItem('RAZAO_SOCIAL', dados.razaoSocial);
+                    sessionStorage.setItem('TIPO_EMPRESA', dados.tipoEmpresa);
+                    sessionStorage.setItem('INSCRICAO_ESTADUAL', dados.inscricaoEstadual);
+                    sessionStorage.setItem('RG_RESPONSAVEL', dados.rgResp);
+                    sessionStorage.setItem('TELEFONE', dados.telefone);
+                    sessionStorage.setItem('WPP_COMERCIAL', dados.wppComercial);
+                    sessionStorage.setItem('PROPOSITO', dados.proposito);
 
-                console.log("ID_USUARIO:", sessionStorage.getItem('ID_USUARIO'));
-                console.log("NOME_USUARIO:", sessionStorage.getItem('NOME_USUARIO'));
-                console.log("EMAIL_USUARIO:", sessionStorage.getItem('EMAIL_USUARIO'));
+                    // Store address data
+                    if (dados.fkEnderecoUsuario) {
+                        const endereco = dados.fkEnderecoUsuario;
+                        sessionStorage.setItem('LOGRADOURO', endereco.logradouro);
+                        sessionStorage.setItem('NUMERO', endereco.numero);
+                        sessionStorage.setItem('COMPLEMENTO', endereco.complemento);
+                        sessionStorage.setItem('CIDADE', endereco.cidade);
+                        sessionStorage.setItem('ESTADO', endereco.estado);
+                        sessionStorage.setItem('CEP', endereco.cep);
+                    }
 
+                    // Store social media data
+                    if (dados.fkMidiasSociais) {
+                        const midias = dados.fkMidiasSociais;
+                        sessionStorage.setItem('INSTAGRAM', midias.instagram);
+                        sessionStorage.setItem('FACEBOOK', midias.facebook);
+                        sessionStorage.setItem('SITE', midias.site);
+                    }
+
+                    // Store production type
+                    if (dados.fkTipoProducao) {
+                        sessionStorage.setItem('TIPO_PRODUCAO', dados.fkTipoProducao.tipo);
+                    }
+                }
+
+                console.log("Dados do usuário armazenados na sessão.");
                 window.location.href = 'index.html';
             } else {
                 console.error("JSON response does not contain user data");

@@ -116,6 +116,11 @@ body {
         }
     }
 
+    .btn-outline-secondary:hover {
+        background-color: #efefef;
+        color: #C7530C;
+    }
+
     .btn-secondary {
         width: 50%;
         background-color: #C7530C;
