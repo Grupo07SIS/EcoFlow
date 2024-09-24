@@ -8,6 +8,7 @@ body {
     background-color: #f1f1f1;
     padding: 20px;
     background-color: #f1f1f1;
+    padding-top: 0px;
 }
 
 .carousel-indicators {
@@ -158,8 +159,6 @@ body {
     display: flex;
     overflow-x: auto; /* Scroll lateral */
     padding: 8px 0px 20px 0px;
-    /*white-space: nowrap;  Impede a quebra de linha entre os cards */
-    gap: 20px; /* Espaçamento entre os cards */
     scroll-behavior: smooth; /* Scroll suave */
     cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
 }
@@ -170,13 +169,14 @@ body {
     background-color: #ffffff;
     border-radius: 5px;
     padding: 15px;
-    min-width: 200px;
+    width: 280px;
     box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
     color: black;
     position: relative; /* Mantém os elementos internos posicionados relativamente ao card */
     transition: transform 0.2s;
     word-wrap: break-word; /* Quebra de palavras longas */
     overflow-wrap: break-word; /* Quebra de palavras longas */
+    height: 300px;
 }
 
 .cardItem img.img-background {

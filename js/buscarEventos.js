@@ -14,6 +14,9 @@ async function buscarEventos() {
 
             const fullAddress = `${itemEvento.fkEndereco.logradouro}, ${itemEvento.fkEndereco.numero} - ${itemEvento.fkEndereco.cidade}`;
 
+            // Truncate the address if it's too long
+            const truncatedAddress = truncateAddress(fullAddress, 40); // Set desired length here
+
             return `
             <a href="detalhamentoEvento.html?id=${itemEvento.idEvento}" class="card-link" data-id="${itemEvento.idEvento}">
                 <div class="cardItem">
@@ -26,7 +29,7 @@ async function buscarEventos() {
                             <img src="../assets/Schedule.png" alt=""> <span>${formattedDate}</span>
                         </div>
                         <div class="dataLocal">
-                            <img src="../assets/Location.png" alt=""> <span>${fullAddress}</span>
+                            <img src="../assets/Location.png" alt=""> <span>${truncatedAddress}</span>
                         </div>
                     </div>
                 </div>
@@ -49,8 +52,13 @@ async function buscarEventos() {
     }
 }
 
+function truncateAddress(address, maxLength) {
+    if (address.length > maxLength) {
+        return address.substring(0, maxLength) + '...'; 
+    }
+    return address; 
+}
+
 console.log("Antes de buscar");
 buscarEventos();
 console.log("Depois de buscar");
-
-

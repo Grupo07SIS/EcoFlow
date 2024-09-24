@@ -22,21 +22,19 @@ async function entrar() {
                 const userData = jsonResponse[0];
                 console.log("User Data: ", userData);
 
-                // Store main user data
                 sessionStorage.setItem('ID_USUARIO', userData.idUsuario);
                 sessionStorage.setItem('EMAIL_USUARIO', userData.email);
+                sessionStorage.setItem('SENHA_USUARIO', userData.senha);
                 sessionStorage.setItem('NOME_RESPONSAVEL', userData.nomeResp);
                 sessionStorage.setItem('CNPJ_USUARIO', userData.cnpj);
                 sessionStorage.setItem('CPF_RESPONSAVEL', userData.cpfResp);
                 sessionStorage.setItem('IMAGEM_LOGO', userData.imagemLogo);
                 
-                // Store permission data
                 if (userData.fkPermissao) {
                     sessionStorage.setItem('ID_PERMISSAO', userData.fkPermissao.idPermissao);
                     sessionStorage.setItem('TIPO_USUARIO', userData.fkPermissao.tipoUsuario);
                 }
                 
-                // Store additional data
                 if (userData.fkDados) {
                     const dados = userData.fkDados;
                     sessionStorage.setItem('NOME_FANTASIA', dados.nomeFantasia);
@@ -59,7 +57,6 @@ async function entrar() {
                         sessionStorage.setItem('CEP', endereco.cep);
                     }
 
-                    // Store social media data
                     if (dados.fkMidiasSociais) {
                         const midias = dados.fkMidiasSociais;
                         sessionStorage.setItem('INSTAGRAM', midias.instagram);
@@ -67,7 +64,6 @@ async function entrar() {
                         sessionStorage.setItem('SITE', midias.site);
                     }
 
-                    // Store production type
                     if (dados.fkTipoProducao) {
                         sessionStorage.setItem('TIPO_PRODUCAO', dados.fkTipoProducao.tipo);
                     }
