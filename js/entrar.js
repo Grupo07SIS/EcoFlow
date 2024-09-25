@@ -27,6 +27,7 @@ async function entrar() {
                 sessionStorage.setItem('SENHA_USUARIO', userData.senha);
                 sessionStorage.setItem('NOME_RESPONSAVEL', userData.nomeResp);
                 sessionStorage.setItem('CNPJ_USUARIO', userData.cnpj);
+                sessionStorage.setItem('CATEGORIA_USUARIO', userData.categoria);
                 sessionStorage.setItem('CPF_RESPONSAVEL', userData.cpfResp);
                 sessionStorage.setItem('IMAGEM_LOGO', userData.imagemLogo);
                 

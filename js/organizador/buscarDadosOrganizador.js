@@ -3,15 +3,17 @@ function obterDadosUsuario() {
         idUsuario: parseInt(sessionStorage.getItem('ID_USUARIO')),
         email: sessionStorage.getItem('EMAIL_USUARIO'),
         senha: sessionStorage.getItem('SENHA_USUARIO'),
-        nomeResponsavel: sessionStorage.getItem('NOME_RESPONSAVEL'),
         cnpj: sessionStorage.getItem('CNPJ_USUARIO'),
-        cpfResponsavel: sessionStorage.getItem('CPF_RESPONSAVEL'),
+        categoria: sessionStorage.getItem('CATEGORIA_USUARIO'),
+        nomeResp: sessionStorage.getItem('NOME_RESPONSAVEL'),
+        cpfResp: sessionStorage.getItem('CPF_RESPONSAVEL'), 
         imagemLogo: sessionStorage.getItem('IMAGEM_LOGO'),
         fkPermissao: {
-            idPermissao: sessionStorage.getItem('ID_PERMISSAO'),
+            idPermissao: parseInt(sessionStorage.getItem('ID_PERMISSAO')),
             tipoUsuario: sessionStorage.getItem('TIPO_USUARIO')
         },
         fkDados: {
+            idDadosComplementares: parseInt(sessionStorage.getItem('ID_DADOS_COMPLEMENTARES')), // Assuming you want this as well
             nomeFantasia: sessionStorage.getItem('NOME_FANTASIA'),
             razaoSocial: sessionStorage.getItem('RAZAO_SOCIAL'),
             tipoEmpresa: sessionStorage.getItem('TIPO_EMPRESA'),
@@ -20,20 +22,27 @@ function obterDadosUsuario() {
             telefone: sessionStorage.getItem('TELEFONE'),
             wppComercial: sessionStorage.getItem('WPP_COMERCIAL'),
             proposito: sessionStorage.getItem('PROPOSITO'),
+            fkPermissao: { // This might be redundant unless you are storing it differently
+                idPermissao: parseInt(sessionStorage.getItem('ID_PERMISSAO')),
+                tipoUsuario: sessionStorage.getItem('TIPO_USUARIO')
+            },
             fkEnderecoUsuario: {
+                idEnderecoUsuario: parseInt(sessionStorage.getItem('ID_ENDERECO_USUARIO')), // Assuming you want this too
                 logradouro: sessionStorage.getItem('LOGRADOURO'),
-                numero: sessionStorage.getItem('NUMERO'),
+                numero: parseInt(sessionStorage.getItem('NUMERO')),
                 complemento: sessionStorage.getItem('COMPLEMENTO'),
                 cidade: sessionStorage.getItem('CIDADE'),
                 estado: sessionStorage.getItem('ESTADO'),
                 cep: sessionStorage.getItem('CEP')
             },
             fkMidiasSociais: {
+                idMidiasSociais: parseInt(sessionStorage.getItem('ID_MIDIAS_SOCIAIS')), // Assuming you want this
                 instagram: sessionStorage.getItem('INSTAGRAM'),
                 facebook: sessionStorage.getItem('FACEBOOK'),
                 site: sessionStorage.getItem('SITE')
             },
             fkTipoProducao: {
+                idTipoProducao: parseInt(sessionStorage.getItem('ID_TIPO_PRODUCAO')), // Assuming you want this too
                 tipo: sessionStorage.getItem('TIPO_PRODUCAO')
             }
         }
@@ -109,17 +118,20 @@ async function saveChanges() {
     });
 
     const usuario = {
+        idUsuario: dadosUsuario.idUsuario,  // Ensure this is included if necessary
         email: dadosUsuario.email,
         senha: dadosUsuario.senha,
-        nomeResponsavel: dadosUsuario.nomeResponsavel,
         cnpj: updatedData.cnpj,
-        cpfResponsavel: dadosUsuario.cpfResponsavel,
+        categoria: dadosUsuario.categoria,
+        cpfResp: dadosUsuario.cpfResp, // Match the original naming
+        nomeResp: dadosUsuario.nomeResp,
         imagemLogo: dadosUsuario.imagemLogo,
         fkPermissao: {
             idPermissao: dadosUsuario.fkPermissao.idPermissao,
             tipoUsuario: dadosUsuario.fkPermissao.tipoUsuario
         },
         fkDados: {
+            idDadosComplementares: dadosUsuario.fkDados.idDadosComplementares || 0, // Optional if this ID is needed
             nomeFantasia: dadosUsuario.fkDados.nomeFantasia,
             razaoSocial: updatedData.razaoSocial,
             tipoEmpresa: dadosUsuario.fkDados.tipoEmpresa,
@@ -129,25 +141,28 @@ async function saveChanges() {
             wppComercial: dadosUsuario.fkDados.wppComercial,
             proposito: updatedData.proposito,
             fkEnderecoUsuario: {
-            logradouro: dadosUsuario.fkDados.fkEnderecoUsuario.logradouro,
-            numero: dadosUsuario.fkDados.fkEnderecoUsuario.numero,
-            complemento: dadosUsuario.fkDados.fkEnderecoUsuario.complemento,
-            cidade: dadosUsuario.fkDados.fkEnderecoUsuario.cidade,
-            estado: dadosUsuario.fkDados.fkEnderecoUsuario.estado,
-            cep: dadosUsuario.fkDados.fkEnderecoUsuario.cep
+                idEnderecoUsuario: dadosUsuario.fkDados.fkEnderecoUsuario.idEnderecoUsuario || 0, // Optional if this ID is needed
+                logradouro: dadosUsuario.fkDados.fkEnderecoUsuario.logradouro,
+                numero: dadosUsuario.fkDados.fkEnderecoUsuario.numero,
+                complemento: dadosUsuario.fkDados.fkEnderecoUsuario.complemento,
+                cidade: dadosUsuario.fkDados.fkEnderecoUsuario.cidade,
+                estado: dadosUsuario.fkDados.fkEnderecoUsuario.estado,
+                cep: dadosUsuario.fkDados.fkEnderecoUsuario.cep
             },
             fkMidiasSociais: {
-            instagram: dadosUsuario.fkDados.fkMidiasSociais.instagram,
-            facebook: dadosUsuario.fkDados.fkMidiasSociais.facebook,
-            site: dadosUsuario.fkDados.fkMidiasSociais.site
+                idMidiasSociais: dadosUsuario.fkDados.fkMidiasSociais.idMidiasSociais || 0, // Optional if this ID is needed
+                instagram: dadosUsuario.fkDados.fkMidiasSociais.instagram,
+                facebook: dadosUsuario.fkDados.fkMidiasSociais.facebook,
+                site: dadosUsuario.fkDados.fkMidiasSociais.site
             },
             fkTipoProducao: {
-            tipo: dadosUsuario.fkDados.fkTipoProducao.tipo
+                idTipoProducao: dadosUsuario.fkDados.fkTipoProducao.idTipoProducao || 0, // Optional if this ID is needed
+                tipo: dadosUsuario.fkDados.fkTipoProducao.tipo
             }
         }
     };
 
-    
+    console.log(JSON.stringify(usuario));
 
     try {
         const resposta = await fetch(`http://localhost:8080/usuarios?id=${dadosUsuario.idUsuario}`, {
@@ -156,8 +171,7 @@ async function saveChanges() {
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
-        });
-
+        });        
 
         const popup = document.getElementById('popup');
         const popupMessage = document.getElementById('popup-message');
@@ -168,14 +182,12 @@ async function saveChanges() {
             popupMessage.textContent = "Perfil atualizado com sucesso!";
             popup.style.backgroundColor = "green";
 
-            
             setTimeout(() => {
                 location.reload();
             }, 3000);
         } else {
-            
             const errorMessage = await resposta.text();
-            console.error('Erro ao atualizar perfil:', resposta.status, errorMessage);
+            console.error('Erro ao atualizar perfil:', resposta.status, errorMessage, usuario);
 
             popupMessage.textContent = "Erro ao atualizar perfil: " + errorMessage;
             popup.style.backgroundColor = "red";
@@ -188,7 +200,6 @@ async function saveChanges() {
 
     } catch (error) {
         console.error('Erro na requisição:', error);
-        
 
         const popup = document.getElementById('popup');
         const popupMessage = document.getElementById('popup-message');
