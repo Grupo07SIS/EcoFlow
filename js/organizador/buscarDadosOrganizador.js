@@ -165,7 +165,7 @@ async function saveChanges() {
     console.log(JSON.stringify(usuario));
 
     try {
-        const resposta = await fetch(`http://localhost:8080/usuarios?id=${dadosUsuario.idUsuario}`, {
+        const resposta = await fetch(`http://localhost:8080/organizador/id?id=${dadosUsuario.idUsuario}`, {
             method: 'PATCH',
             body: JSON.stringify(usuario),
             headers: {

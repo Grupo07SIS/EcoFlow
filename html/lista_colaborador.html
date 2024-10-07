@@ -15,8 +15,8 @@
   <script src="../js/navbar.js"></script>
   <link rel="stylesheet" href="../css/menu.css">
   <link rel="stylesheet" href="../css/filterColabList.css">
-  <script src="../js/buscarEventos.js"></script>
   <script src="../js/filterColabList.js"></script>
+  <script src="../js/organizador/listagemColaboradores.js"></script>
 </head>
 
 <body>
@@ -135,37 +135,6 @@
     </div>
 
   </div>
-  <script src="../js/mockDados/mockDadosColaborador.js"></script>
 </body>
 
 </html>
-
-<script>
-  function renderCollaborators() {
-    const container = document.getElementById("collaboratorContainer");
-    
-    collaborators.forEach(collab => {
-      const collabDiv = document.createElement("div");
-      collabDiv.className = "orgs";
-      collabDiv.innerHTML = `
-        <img class="photo0" src="${collab.image}" />
-        <div class="allCards">
-          <div class="cards1">
-            <span><b>Nome da Marca:</b> ${collab.name}</span>
-            <span><b>Telefone:</b> ${collab.phone}</span>
-            <span><b>Email:</b> ${collab.email}</span>
-            <span><b>Nicho:</b> ${collab.niche}</span>
-          </div>
-        </div>
-        <h3 class="ver_mais" onclick="viewDetails(${collab.id})">Ver mais >></h3>
-      `;
-      container.appendChild(collabDiv);
-    });
-  }
-  window.onload = renderCollaborators;
-
-  function viewDetails(id) {
-    localStorage.setItem('selectedCollaboratorId', id);
-    window.location.href = 'dadosColaborador.html';
-  }
-</script>

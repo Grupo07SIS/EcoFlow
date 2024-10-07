@@ -1,35 +1,44 @@
 async function buscarDetalhesEvento() {
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');
+    const eventId = sessionStorage.getItem('eventoID') || urlParams.get('id');
 
     try {
-        const resposta = await fetch(`http://localhost:8080/eventos/${eventId}`);
+        // Fetch the event details using the provided event ID
+        const resposta = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
         const evento = await resposta.json();
 
         console.log("Resposta: ", evento);
 
-        // Extracting data
-        const [year, month, day] = evento.data;
+        // Format the event date
+        const eventDate = new Date(evento.dataEvento); 
+        const day = eventDate.getDate();
+        const month = eventDate.getMonth();
+        const year = eventDate.getFullYear();
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
+        const formattedDate = `${day} de ${monthNames[month]} de ${year}`;
 
-        const fullAddress = `${evento.fkEndereco.logradouro}, ${evento.fkEndereco.numero} - ${evento.fkEndereco.cidade}`;
+        // Format start and end time
+        const horaInicio = new Date(evento.hora_inicio);
+        const horaFim = new Date(evento.hora_fim);
+        const formattedHoraInicio = horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const formattedHoraFim = horaFim.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Build the full address
+        const fullAddress = `${evento.enderecoEvento.logradouro}, ${evento.enderecoEvento.numero} - ${evento.enderecoEvento.cidade}`;
+
+        console.log("Endereço completo: ", fullAddress);
 
         // Updating DOM elements
         document.getElementById('event_name').textContent = evento.nome;
         document.getElementById('event_date').textContent = formattedDate;
         document.getElementById('event_location').textContent = fullAddress;
         document.getElementById('event_description').textContent = evento.descricao;
+        document.getElementById('event_time').textContent = `De ${formattedHoraInicio} até ${formattedHoraFim}`;
 
-        // Update collaborator info if available
-        if (evento.colaboradores && evento.colaboradores.length > 0) {
-            const collaborator = evento.colaboradores[0]; // Example, assuming you want to display the first collaborator
-            document.getElementById('collaborator_name').textContent = collaborator.nome;
-            document.getElementById('collaborator_phone').textContent = collaborator.telefone;
-            document.getElementById('collaborator_email').textContent = collaborator.email;
-            document.getElementById('collaborator_niche').textContent = collaborator.nicho;
-        }
+        // Handle event banner image
+        document.getElementById('event_image').src = evento.banner_evento || "../../assets/Rectangle 20.png"; 
 
+        // Geocode the address and display the map
         geocode(fullAddress);
     } catch (error) {
         console.error('Erro ao buscar os detalhes do evento:', error);
@@ -65,6 +74,5 @@ function geocode(address) {
             console.error(error);
         });
 }
-
 
 window.onload = buscarDetalhesEvento;

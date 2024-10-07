@@ -49,12 +49,17 @@
             <span>Meus Eventos</span>
         </div>
 
-        <!-- Botões iniciais -->
+        <!-- Search input with icon -->
+        <div class="filtrar_local">
+            <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
+            <i class="bi bi-search search-icon"></i> <!-- Bootstrap search icon -->
+        </div>
+
         <div class="bloco_botoes">
-            <!-- Botão para criar novo evento -->
-            <button type="button" class="btn btn-primary">Criar novo Evento <i
-                    class="bi bi-plus-circle-fill"></i></button>
-            <!-- Botão de filtrar e suas filtragens -->
+            <!-- Button to create a new event -->
+            <button type="button" class="btn btn-primary">Criar novo Evento <i class="bi bi-plus-circle-fill"></i></button>
+
+            <!-- Filter button with offcanvas -->
             <div class="bloco_filtros">
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
@@ -93,17 +98,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:18px; width: 100%;">
-                                <div class="filtroDtsPronto">
-                                    <button>Essa semana</button>
-                                    <button>Esse mês</button>
-                                    <button>Esse ano</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="filtrar_local">
-                            <h4>Local</h4>
-                            <input type="text" placeholder="Digite o local aqui...">
                         </div>
                         <div class="grp_btn">
                             <button class="secondary_btn">Limpar Filtro</button>
@@ -114,18 +108,17 @@
             </div>
         </div>
 
-        <!-- Filtro de próximos eventos e eventos passados -->
+        <!-- Filter for upcoming and past events -->
         <div class="filtrar">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1" onclick="filtrarEventos('upcoming')">Próximos
-                    eventos</label>
+                <label class="btn btn-outline-primary" for="btnradio1" onclick="filtrarEventos('upcoming')">Próximos eventos</label>
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2" onclick="filtrarEventos('past')">Eventos
-                    passados</label>
+                <label class="btn btn-outline-primary" for="btnradio2" onclick="filtrarEventos('past')">Eventos passados</label>
             </div>
-        </div>    
-        <!-- Listagem dos eventos -->
+        </div>
+
+        <!-- Event listing -->
         <div id="listagem_eventos" class="listagem_eventos"></div>
 
         <!-- Bottom menu -->
@@ -158,28 +151,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS -->
+    <!-- Custom JS for event search -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+        document.querySelector('.search-input').addEventListener('input', async function () {
+            const searchQuery = this.value;
 
-            filtroDtsProntoButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
+            try {
+                // Properly use backticks for the template literal URL
+                const response = await fetch(`http://localhost:8080/evento/searchBar?search=${encodeURIComponent(searchQuery)}`);
+                const searchResults = await response.json();
+
+                const listagem = document.getElementById("listagem_eventos"); // Correct ID here
+                listagem.innerHTML = ''; // Clear current events
+
+                listagem.innerHTML = searchResults.map((itemEvento) => {
+                    const [year, month, day] = itemEvento.dataEvento;
+                    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+                    const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
+
+                    const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
+                    const titulo = truncateText(itemEvento.nome, 15);
+                    const truncatedAddress = truncateText(fullAddress, 40);
+
+                    // Properly wrap the returned HTML inside backticks
+                    return `
+                    <a href="detalhamentoEvento.html?id=${itemEvento.id_evento}" style="text-decoration:none" class="card-link" data-id="${itemEvento.id_evento}">
+                        <div class="card_evento">
+                            <div class="imagem_evento">
+                                <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                            </div>
+                            <div class="desc_evento">
+                                <h5>${titulo}</h5>
+                                <span>${formattedDate}</span>
+                                <span>${truncatedAddress}</span>
+                            </div>
+                        </div>
+                    </a>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Erro ao buscar eventos:', error);
+            }
         });
 
-        window.onload = () => {
-            const valorPadrao = async () => {
-                console.log("CHEGOU, viva Jesus");
-                const nomeSS = sessionStorage.getItem('NOME_USUARIO');
-                const emailSS = sessionStorage.getItem('EMAIL_USUARIO');
-                document.getElementById('userName').innerHTML = nomeSS;
-                document.getElementById('nomeEmpresa').innerHTML = emailSS;
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
             }
-            valorPadrao();
+            return text;
         }
     </script>
 </body>

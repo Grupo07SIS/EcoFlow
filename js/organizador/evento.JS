@@ -52,7 +52,7 @@ async function cadastrarEvento() {
         "data": dataEvento
     }
     console.log(evento)
-    const respostaCadastro = await fetch("http://localhost:8080/eventos", {
+    const respostaCadastro = await fetch("http://localhost:8080/evento", {
         method: "POST",
         body: JSON.stringify(evento),
         headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -86,7 +86,7 @@ async function buscarDados() {
     const eventId = sessionStorage.getItem('currentEventId');
 
     try {
-        const resposta = await fetch(`http://localhost:8080/eventos/id?id=${eventId}`);
+        const resposta = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
         const evento = await resposta.json();
 
         console.log("Resposta: ", evento);

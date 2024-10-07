@@ -60,12 +60,39 @@
         }
     }
 }
+a.card-link {
+    text-decoration: none;
+    color: inherit; 
+}
 
-.bloco_botoes {
-    display: flex;
-    align-items: center;
-    justify-content: end;
+a.card-link:hover {
+    text-decoration: none; 
+    color: inherit; 
+}
+
+.buttons_search_filter{
     width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.proximo-voltar2 {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+
+    .btn-outline-secondary {
+        width: 100%;
+        color: #C7530C;
+        border: solid 1px #C7530C;
+        font-size: 1.2rem;
+        font-weight: 500;
+
+        a {
+            text-decoration: none;
+            color: #C7530C;
+        }
+    }
 }

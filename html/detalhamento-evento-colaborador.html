@@ -5,20 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Evento</title>
-    <link rel="stylesheet" href="../../css/detalhamento.css">
+    <link rel="stylesheet" href="../css/detalhamento.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../css/menu.css">
-    <script src="../../js/evento.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-    <!-- <script src="../js/buscarDetalhamentoEvento.js" defer></script> -->
-    <!-- Incluindo a biblioteca Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <!-- Incluindo a biblioteca Leaflet JS -->
+    <!-- Leaflet (for maps) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        window.onload = buscarDados()
-    </script>
+
+    <script src="../../js/colaborador/detalheEventoParticipar.js"></script>
 </head>
 
 <body>
@@ -26,45 +21,43 @@
         <i class="bi bi-arrow-left-circle" onclick="backpage()"></i>
     </div>
     <div class="picture_bg">
-        <img id="event_image" src="../../assets/Rectangle 20.png" alt="">
+        <img id="event_image" src="../../assets/Rectangle 20.png" alt="Event Image">
     </div>
     <div class="btn_Styles">
-        <a href="dados_gerais.html"><button class="main_Btns" onclick="deletarEvento()">Participar</button></a>
+        <button class="main_Btns" onclick="participarEvento()">Participar</button>
     </div>
     <div class="main_info" id="main_info" style="margin-bottom: 71px;">
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
             <i class="bi bi-calendar"></i>
-            <p id="event_date">Domingo, 6 Dec 2024</p>
+            <p id="event_date">Data do Evento</p>
         </div>
         <div class="style_info">
             <i class="bi bi-geo-alt"></i>
-            <p id="event_location">Rua Joaquim Távora, 605 Vila Mariana, São Paulo - SP</p>
+            <p id="event_location">Local do Evento</p>
         </div>
         <div id="map" class="map_live"></div>
         <div class="desc_event">
             <h2>Descrição do Evento</h2>
-            <p id="event_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi officiis, rem,
-                architecto porro expedita modi quisquam aperiam fugit adipisci eligendi, saepe iste dicta possimus quis
-                aspernatur quia ipsa officia. Neque!</p>
+            <p id="event_description">Descrição do evento aparecerá aqui.</p>
         </div>
     </div>
 
     <div class="menu">
         <a href="../Colaborador/index-colaborador.html" class="opcoes">
-            <img src="../../assets/Vector 3 (1).png" alt="">
+            <img src="../../assets/Vector 3 (1).png" alt="Inicio">
             <p>Inicio</p>
         </a>
         <a href="../Colaborador/eventos-colaborador.html" class="opcoes">
-            <img src="../../assets/Calendar icon.png" alt="">
+            <img src="../../assets/Calendar icon.png" alt="Eventos">
             <p>Eventos</p>
         </a>
         <a href="perfil-colaborador.html" class="opcoes">
-            <img src="../../assets/Group 3.png" alt="">
+            <img src="../../assets/Group 3.png" alt="Perfil">
             <p>Perfil</p>
         </a>
-        <a href="" class="opcoes">
-            <img src="../../assets/Logout.png" alt="">
+        <a href="login.html" class="opcoes">
+            <img src="../../assets/Logout.png" alt="Sair">
             <p>Sair</p>
         </a>
     </div>
@@ -77,8 +70,7 @@
 </html>
 
 <script>
-function backpage(){
-    window.location.href = 'index-colaborador.html';
-}
-
+    function backpage() {
+        window.history.back();
+    }
 </script>

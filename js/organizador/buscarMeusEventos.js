@@ -1,6 +1,6 @@
 async function fetchUpcomingEvents() {
     try {
-        const resposta = await fetch("http://localhost:8080/eventos/eventsAfter");
+        const resposta = await fetch("http://localhost:8080/evento");
         const respostaDadosEventos = await resposta.json();
         displayEvents(respostaDadosEventos);
     } catch (error) {

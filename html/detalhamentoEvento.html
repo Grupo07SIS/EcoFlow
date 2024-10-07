@@ -10,17 +10,13 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <script src="../js/organizador/evento.JS"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-    <!-- <script src="../js/buscarDetalhamentoEvento.js" defer></script> -->
-    <!-- Incluindo a biblioteca Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="../js/organizador/evento.js"></script>
 
-    <!-- Incluindo a biblioteca Leaflet JS -->
+    <!-- Leaflet (for maps) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        window.onload = buscarDados()
-    </script>
+
+    <script src="../js/organizador/buscarDetalhamentoEvento.js"></script>
 </head>
 
 <body>
@@ -44,13 +40,15 @@
     <div class="arrow_back">
         <i class="bi bi-arrow-left-circle" onclick="backpage()"></i>
     </div>
+
     <div class="picture_bg">
-        <img id="event_image" src="../assets/image 7.png" alt="">
+        <img id="event_image" src="../assets/image 7.png" alt="Event Image">
     </div>
     <div class="btns_Styles">
         <a href="../html/evento-update.html"><button class="main_Btns">Editar</button></a>
         <button class="main_Btns" onclick="deletarEvento()">Deletar</button>
     </div>
+
     <div class="main_info" id="main_info" style="margin-bottom: 71px;">
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
@@ -64,31 +62,29 @@
         <div id="map" class="map_live"></div>
         <div class="desc_event">
             <h2>Descrição do Evento</h2>
-            <p id="event_description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi officiis, rem,
-                architecto porro expedita modi quisquam aperiam fugit adipisci eligendi, saepe iste dicta possimus quis
-                aspernatur quia ipsa officia. Neque!</p>
+            <p id="event_description">Lorem ipsum dolor sit amet...</p>
         </div>
     </div>
 
     <div class="menu">
         <a href="index.html" class="opcoes">
-            <img src="../assets/Vector 3 (1).png" alt="">
+            <img src="../assets/Vector 3 (1).png" alt="Inicio">
             <p>Inicio</p>
         </a>
         <a href="meus-eventos.html" class="opcoes">
-            <img src="../assets/Calendar icon.png" alt="">
+            <img src="../assets/Calendar icon.png" alt="Eventos">
             <p>Eventos</p>
         </a>
         <a href="evento.html" class="opcoes">
-            <img src="../assets/Group 2.png" alt="">
+            <img src="../assets/Group 2.png" alt="Criar Evento">
             <p>Criar Evento</p>
         </a>
         <a href="lista_de_espera.html" class="opcoes">
-            <img src="../assets/Group 4.png" alt="">
+            <img src="../assets/Group 4.png" alt="Participantes">
             <p>Participantes</p>
         </a>
         <a href="perfil.html" class="opcoes">
-            <img src="../assets/Group 3.png" alt="">
+            <img src="../assets/Group 3.png" alt="Perfil">
             <p>Perfil</p>
         </a>
     </div>
@@ -101,7 +97,7 @@
 </html>
 
 <script>
-function backpage() {
-    window.history.back();
-}
+    function backpage() {
+        window.history.back();
+    }
 </script>

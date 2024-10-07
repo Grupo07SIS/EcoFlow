@@ -1,6 +1,6 @@
 async function buscarEventos() {
     try {
-        const resposta = await fetch("http://localhost:8080/eventos/eventsAfter");
+        const resposta = await fetch("http://localhost:8080/evento");
         const respostaDadosEventos = await resposta.json();
 
         console.log("Resposta: ", respostaDadosEventos);
@@ -8,21 +8,22 @@ async function buscarEventos() {
         const cards = document.getElementById("cards_eventos");
 
         cards.innerHTML = respostaDadosEventos.map((itemEvento) => {
-            const [year, month, day] = itemEvento.data;
+            const [year, month, day] = itemEvento.dataEvento; 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
 
-            const fullAddress = `${itemEvento.fkEndereco.logradouro}, ${itemEvento.fkEndereco.numero} - ${itemEvento.fkEndereco.cidade}`;
+            const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
 
-            // Truncate the address if it's too long
-            const truncatedAddress = truncateAddress(fullAddress, 40); // Set desired length here
+            const titulo = truncateText(itemEvento.nome, 15);
+
+            const truncatedAddress = truncateText(fullAddress, 40);
 
             return `
-            <a href="detalhamentoEvento.html?id=${itemEvento.idEvento}" class="card-link" data-id="${itemEvento.idEvento}">
+            <a href="detalhamentoEvento.html?id=${itemEvento.id_evento}" class="card-link" data-id="${itemEvento.id_evento}">
                 <div class="cardItem">
                     <img class="img-background" src="../assets/Mask Group.png" alt="">
                     <div class="titulo">
-                        <span>${itemEvento.nome}</span>
+                        <span>${titulo}</span>
                     </div>
                     <div class="organizedDtas">
                         <div class="dataEvento">
@@ -52,11 +53,11 @@ async function buscarEventos() {
     }
 }
 
-function truncateAddress(address, maxLength) {
-    if (address.length > maxLength) {
-        return address.substring(0, maxLength) + '...'; 
+function truncateText(description, maxLength) {
+    if (description.length > maxLength) {
+        return description.substring(0, maxLength) + '...'; 
     }
-    return address; 
+    return description; 
 }
 
 console.log("Antes de buscar");
