@@ -162,6 +162,14 @@ body {
     cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
 }
 
+.cardsColaborador {
+    display: flex;
+    overflow-x: auto; /* Scroll lateral */
+    padding: 8px 0px 50px 0px;
+    scroll-behavior: smooth; /* Scroll suave */
+    cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
+}
+
 .cardItem {
     display: inline-block;
     flex: 0 0 auto;

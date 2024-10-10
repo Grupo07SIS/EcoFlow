@@ -1,8 +1,22 @@
-async function fetchCollaborators() {
+window.onload = () => {
+    const nicho = getNichoFromUrl();
+    console.log("Nicho recebido: ", nicho);
+    if (nicho) {
+        fetchCollaboratorsByNiche(`/${nicho}/fila`);
+    } else {
+        console.error("Nenhum nicho foi encontrado na URL.");
+    }
+};
+
+function getNichoFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('nicho');
+}
+
+async function fetchCollaboratorsByNiche(endpoint) {
     try {
-        const response = await fetch("http://localhost:8080/usuarios/userPermission?permission=2");
+        const response = await fetch(`http://localhost:8080${endpoint}`);
         const collaboratorsData = await response.json();
-        console.log(collaboratorsData); 
         displayCollaborators(collaboratorsData);
     } catch (error) {
         console.error('Erro ao buscar colaboradores:', error);
@@ -17,26 +31,10 @@ function displayCollaborators(collaborators) {
     } else {
         container.innerHTML = collaborators.map((collab) => {
             const email = collab.email;
-            const image = collab.imagemLogo ? `data:image/png;base64,${collab.imagemLogo}` : '../assets/default-image.png';
-
-            // Check if fkDados exists before trying to access its properties
-            if (!collab.fkDados) {
-                return `
-                    <div class="orgs">
-                        <img class="photo0" src="${image}" />
-                        <div class="allCards">
-                            <div class="cards1">
-                                <span><b>Email:</b> ${email}</span>
-                                <span><b>Nicho:</b> Nicho não informado</span>
-                            </div>
-                        </div>
-                        <h3 class="ver_mais" onclick="viewDetails(${collab.idUsuario})">Ver mais >></h3>
-                    </div>
-                `;
-            }
-
-            const { nomeFantasia, telefone } = collab.fkDados;
-            const niche = collab.fkDados.fkTipoProducao ? collab.fkDados.fkTipoProducao.tipo : 'Nicho não informado';
+            const image = collab.bannerImg ? `data:image/png;base64,${collab.bannerImg}` : '../assets/default-image.png';
+            const niche = getNichoFromUrl();
+            const nomeFantasia = collab.nomeFantasia;
+            const telefone = collab.telefone;
 
             return `
                 <div class="orgs">
@@ -49,18 +47,9 @@ function displayCollaborators(collaborators) {
                             <span><b>Nicho:</b> ${niche}</span>
                         </div>
                     </div>
-                    <h3 class="ver_mais" onclick="viewDetails(${collab.idUsuario})">Ver mais >></h3>
+                    <a href="dadosColaborador.html?id=${collab.idColaborador}"> ver_mais </a>
                 </div>
             `;
         }).join('');
     }
 }
-
-function viewDetails(id) {
-    localStorage.setItem('selectedCollaboratorId', id);
-    window.location.href = 'dadosColaborador.html';
-}
-
-window.onload = () => {
-    fetchCollaborators(); 
-};

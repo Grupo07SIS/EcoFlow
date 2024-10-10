@@ -28,6 +28,7 @@
                     <option value="1">Moda</option>
                     <option value="2">Comida</option>
                     <option value="3">Animais</option>
+                    <option value="4">Beleza</option>
                 </select>
             </div>
         </div>
@@ -52,16 +53,16 @@
 
     <div class="proximo">
         <button type="button" class="btn btn-secondary" , onclick="salvarDadosPag1()">
-            <a href="dados_equipes.html">Proximo</a>
+            <a href="dados_equipes-colaborador.html">Proximo</a>
         </button>
     </div>
 
     <div class="menu">
-        <a href="../Colaborador/index-colaborador.html" class="opcoes">
+        <a href="index-colaborador.html" class="opcoes">
             <img src="../../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
-        <a href="../Colaborador/eventos-colaborador.html" class="opcoes">
+        <a href="eventos-colaborador.html" class="opcoes">
             <img src="../../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
@@ -77,20 +78,18 @@
 </body>
 
 <script>
-    // Function to toggle the visibility of ingredients and rotate the icon
     function toggleIngredients(element) {
         const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
         const icon = element.querySelector('i');
         if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
             ingredientesDiv.style.display = "block";
-            icon.style.transform = "rotate(180deg)";
+            icon.style.transform = "rotate(0deg)";
         } else {
             ingredientesDiv.style.display = "none";
-            icon.style.transform = "rotate(0deg)";
+            icon.style.transform = "rotate(180deg)";
         }
     }
 
-    // Function to add a new product card
     function addProdutoCard() {
         const container = document.getElementById('productContainer');
         const productMessage = document.getElementById('productMessage');
@@ -105,7 +104,7 @@
                     <label>Nome do Produto:</label>
                     <div class="expandir_div" onclick="toggleIngredients(this)">
                         Expandir
-                        <i class="bi bi-chevron-down"></i>
+                        <i class="i bi bi-chevron-down"></i>
                     </div>
                 </div>
                 <input type="text">

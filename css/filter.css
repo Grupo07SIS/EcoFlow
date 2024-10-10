@@ -94,6 +94,8 @@
     width: 100%;
     padding-top: 8px;
     padding-bottom: 8px;
+    gap: 8px;
+
 }
 
 .filtrar_date h4 {
@@ -117,6 +119,9 @@
     justify-content: space-between;
     width: 100%;
     padding-top: 8px;
+    gap: 8px;
+    white-space: normal;
+    flex-wrap: wrap; 
 }
 
 .filtroDtsPronto button {

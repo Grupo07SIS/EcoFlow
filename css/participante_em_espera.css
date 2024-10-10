@@ -30,6 +30,20 @@ body{
     }
 }
 
+.card-link+.card-link {
+    margin-left: 0%;
+}
+
+a.card-link {
+    text-decoration: none;
+    color: inherit; 
+  }
+  
+  a.card-link:hover {
+    text-decoration: none; 
+    color: inherit; 
+  }
+
 .sidenav .closebtn{
     top:1px;
 }

@@ -13,7 +13,6 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/evento-colaborador.css">
     <link rel="stylesheet" href="../css/meus-eventos.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/menu.css">
@@ -26,8 +25,7 @@
 </head>
 
 <body>
-    <div class="content">
-        <div id="mySidenav" class="sidenav">
+    <div id="mySidenav" class="sidenav">
             <i class="bi bi-list closebtn" onclick="closeNav()"></i>
             <div class="user_info">
                 <i class="bi bi-person-circle"></i>
@@ -35,7 +33,7 @@
                 <p id="nomeEmpresa">Nome da Empresa</p>
             </div>
             <a href="meus-eventos.html">Meus eventos</a>
-            <a href="#">Participantes em espera</a>
+            <a href="lista_de_espera.html">Participantes em espera</a>
             <a href="dash_gerencial.html">Painel Gerencial</a>
             <a href="login.html">Sair</a>
         </div>
@@ -43,10 +41,12 @@
         <div class="openBarMain">
             <i class="bi bi-list openBar" onclick="openNav()"></i>
         </div>
+    <div class="content">
+        
 
         <!-- Titulo da tela -->
         <div class="titulo">
-            <span>Meus Eventos</span>
+            <h4>Meus Eventos</h4>
         </div>
 
         <!-- Search input with icon -->
@@ -57,7 +57,8 @@
 
         <div class="bloco_botoes">
             <!-- Button to create a new event -->
-            <button type="button" class="btn btn-primary">Criar novo Evento <i class="bi bi-plus-circle-fill"></i></button>
+            <button type="button" class="btn btn-primary">Criar novo Evento <i
+                    class="bi bi-plus-circle-fill"></i></button>
 
             <!-- Filter button with offcanvas -->
             <div class="bloco_filtros">
@@ -65,43 +66,39 @@
                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                     <img src="../assets/filter.png" alt=""> Filtrar
                 </button>
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                <div style="height: 38%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                     aria-labelledby="offcanvasBottomLabel">
                     <div class="offcanvas-header">
-                        <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
+                        <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtro</h2>
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body small">
-                        <h4 class="title">Tema do Evento</h4>
-                        <div class="filtrar_tema">
-                            <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>Escolha o evento</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
                         <h4 class="titulo_filtro">Data</h4>
                         <div class="filtrar_date">
                             <div class="bloco_filtros">
                                 <div class="filtrar_dt_inicio">
                                     <span>Inicio</span>
                                     <div class="input-group flex-nowrap">
-                                        <input type="date" class="form-control">
+                                        <input id="dataInicio" type="date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="filtrar_dt_fim">
                                     <span>Fim</span>
                                     <div class="input-group flex-nowrap">
-                                        <input type="date" class="form-control">
+                                        <input id="dataFim" type="date" class="form-control">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="grp_btn">
-                            <button class="secondary_btn">Limpar Filtro</button>
-                            <button class="primary_btn">Aplicar Filtro</button>
+                            <button class="secondary_btn" onclick="clearFilters()">
+                                Limpar Filtro
+                            </button>
+                            <button class="primary_btn" onclick="applyFilters()">
+                                Aplicar Filtro
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -112,9 +109,11 @@
         <div class="filtrar">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1" onclick="filtrarEventos('upcoming')">Próximos eventos</label>
+                <label class="btn btn-outline-primary" for="btnradio1" onclick="filtrarEventos('upcoming')">Próximos
+                    eventos</label>
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2" onclick="filtrarEventos('past')">Eventos passados</label>
+                <label class="btn btn-outline-primary" for="btnradio2" onclick="filtrarEventos('past')">Eventos
+                    passados</label>
             </div>
         </div>
 

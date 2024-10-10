@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    font-family: 'Poppins', 'san-serif';
+}
+
 .titulo {
     display: flex;
     align-items: center;
@@ -5,17 +11,19 @@
     width: 100%;
 
     h4 {
-    font-weight: bolder;
+        font-weight: bolder;
     }
 
 }
 
-.btnOpenFilter{
+
+
+.btnOpenFilter {
     display: flex;
     padding-left: 70%;
 }
-  
-.btnOpenFilter button{
+
+.btnOpenFilter button {
     background-color: rgba(199, 83, 12, 1);
     border: 2px solid rgba(199, 83, 12, 1);
     color: white;
@@ -24,14 +32,95 @@
     border-radius: 6px;
 }
 
-.cards-eventos{
+.filtrar {
+    width: 100%;
+    height: 40px;
+  }
+  
+  .btn-group {
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(151, 151, 151, 0.36);
+    height: 37px;
+    width: 100%;
+    border-radius: 55px;
+  }
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+  color: white;
+  font-weight: bold;
+  background-color: rgba(199, 83, 12, 1);
+  border-color: rgba(199, 83, 12, 1);
+}
+
+.btn-group>.btn-group:not(:last-child)>.btn,
+.btn-group>.btn.dropdown-toggle-split:first-child,
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 55px;
+  margin: 0;
+}
+
+.btn-group>.btn-group:not(:first-child)>.btn,
+.btn-group>.btn:not(:first-child) {
+  border-radius: 55px;
+  margin: 0;
+}
+
+
+.filtrar {
+  display: flex;
+  justify-content: space-between;
+  height: 5vh;
+}
+
+.listagem_evento {
+    width: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    padding-bottom: 50px;
+    gap: 12px;
     padding-top: 20px;
-    gap: 20px;
-}
+    margin-bottom: 90px;
+  }
+
+  .bloco_filtros {
+    display: flex;
+    height: 50px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  
+  .card_evento {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
+    border-radius: 4px;
+    padding-left: 12px;
+    background-color: #ffffff;
+  }
+
+  .desc_evento {
+    width: 60%;
+    font-size: 18px;
+    padding: 1vh;
+  }
+  
+  .desc_evento h5 {
+    font-weight: 500;
+  }
+  
+  .desc_evento span {
+    font-size: 16px;
+  }
 
 .eventos {
     display: flex;
@@ -54,23 +143,44 @@
         font-size: 14px;
         color: #163915;
 
-        .spanTitulo{
+        .spanTitulo {
             color: black;
             font-size: 18px;
         }
     }
 }
+
+.btnsClicksGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 16px;
+}
+
+.btnClick {
+    width: 40%;
+    color: #C7530C;
+    border: solid 1px #C7530C;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.card-link+.card-link {
+    margin: 0%;
+}
+
 a.card-link {
     text-decoration: none;
-    color: inherit; 
+    color: inherit;
 }
 
 a.card-link:hover {
-    text-decoration: none; 
-    color: inherit; 
+    text-decoration: none;
+    color: inherit;
 }
 
-.buttons_search_filter{
+.buttons_search_filter {
     width: 100%;
     display: flex;
     flex-direction: row;

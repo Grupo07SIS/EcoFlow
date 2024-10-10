@@ -24,22 +24,27 @@ async function entrar() {
                 console.log("Organizador found: ", organizadorUser);
 
                 // Save organizador details in sessionStorage
+                // Save organizador details in sessionStorage
                 sessionStorage.setItem('ID_ORGANIZADOR', organizadorUser.id_organizador);
                 sessionStorage.setItem('EMAIL_ORGANIZADOR', organizadorUser.email);
                 sessionStorage.setItem('CNPJ_ORGANIZADOR', organizadorUser.cnpj);
                 sessionStorage.setItem('NOME_RESP_ORGANIZADOR', organizadorUser.nome_resp);
+                sessionStorage.setItem('SENHA_ORGANIZADOR', organizadorUser.senha);
                 sessionStorage.setItem('CPF_RESP_ORGANIZADOR', organizadorUser.cpf_resp);
                 sessionStorage.setItem('TELEFONE_ORGANIZADOR', organizadorUser.telefone);
                 sessionStorage.setItem('IMAGEM_PERFIL_ORGANIZADOR', organizadorUser.imagemPerfil);
+                sessionStorage.setItem('PERMISSAO_ORGANIZADOR', organizadorUser.permissao);  // Corrected to use organizadorUser.permissao
 
-                // Store address data
-                const endereco = organizadorUser.endereco;
-                sessionStorage.setItem('LOGRADOURO_ORGANIZADOR', endereco.logradouro);
-                sessionStorage.setItem('NUMERO_ORGANIZADOR', endereco.numero);
-                sessionStorage.setItem('COMPLEMENTO_ORGANIZADOR', endereco.complemento);
-                sessionStorage.setItem('CIDADE_ORGANIZADOR', endereco.cidade);
-                sessionStorage.setItem('ESTADO_ORGANIZADOR', endereco.estado);
-                sessionStorage.setItem('CEP_ORGANIZADOR', endereco.cep);
+                // Save address (endereco) details in sessionStorage
+                const endereco = organizadorUser.endereco;  
+                    sessionStorage.setItem('ID_ENDERECO_ORGANIZADOR', endereco.id_endereco_usuario);
+                    sessionStorage.setItem('LOGRADOURO_ORGANIZADOR', endereco.logradouro);
+                    sessionStorage.setItem('NUMERO_ORGANIZADOR', endereco.numero);
+                    sessionStorage.setItem('COMPLEMENTO_ORGANIZADOR', endereco.complemento);
+                    sessionStorage.setItem('CIDADE_ORGANIZADOR', endereco.cidade);
+                    sessionStorage.setItem('ESTADO_ORGANIZADOR', endereco.estado);
+                    sessionStorage.setItem('CEP_ORGANIZADOR', endereco.cep);
+
 
                 // Proceed to the login endpoint for organizador
                 const loginResponse = await fetch("http://localhost:8080/organizador/login", {
@@ -60,7 +65,7 @@ async function entrar() {
                     return; // Early return on error
                 }
             } else {
-                alert("Usuário organizador não encontrado.");
+                checkColaborador(emailVar, senhaVar);
             }
         } else {
             alert("Erro ao verificar organizador.");
@@ -91,16 +96,24 @@ async function checkColaborador(emailVar, senhaVar) {
                 // Save colaborador details in sessionStorage
                 sessionStorage.setItem('ID_COLABORADOR', colaboradorUser.idColaborador);
                 sessionStorage.setItem('EMAIL_COLABORADOR', colaboradorUser.email);
+                sessionStorage.setItem('SENHA_COLABORADOR', colaboradorUser.senha);
                 sessionStorage.setItem('CNPJ_COLABORADOR', colaboradorUser.cnpj);
                 sessionStorage.setItem('NOME_RESP_COLABORADOR', colaboradorUser.nomeResp);
                 sessionStorage.setItem('CPF_RESP_COLABORADOR', colaboradorUser.cpfResp);
                 sessionStorage.setItem('TELEFONE_COLABORADOR', colaboradorUser.telefone);
+                sessionStorage.setItem('PERMISSAO_COLABORADOR', colaboradorUser.permissao);
+                sessionStorage.setItem('NOME_FANTASIA_COLABORADOR', colaboradorUser.nomeFantasia);
+                sessionStorage.setItem('RAZAO_SOCIAL_COLABORADOR', colaboradorUser.razaoSocial);
+                sessionStorage.setItem('TIPO_EMPRESA_COLABORADOR', colaboradorUser.tipoEmpresa);
+                sessionStorage.setItem('INSC_ESTADUAL_COLABORADOR', colaboradorUser.inscEstadual);
+                sessionStorage.setItem('RG_RESP_COLABORADOR', colaboradorUser.rgResp);
                 sessionStorage.setItem('BANNER_IMG_COLABORADOR', colaboradorUser.bannerImg);
                 sessionStorage.setItem('WPP_COMERCIAL_COLABORADOR', colaboradorUser.wppComercial);
                 sessionStorage.setItem('PROPOSITO_COLABORADOR', colaboradorUser.proposito);
 
                 // Store address data
                 const endereco = colaboradorUser.endereco;
+                sessionStorage.setItem('ID_ENDERECO_COLABORADOR', endereco.id_endereco_usuario); // Storing address ID
                 sessionStorage.setItem('LOGRADOURO_COLABORADOR', endereco.logradouro);
                 sessionStorage.setItem('NUMERO_COLABORADOR', endereco.numero);
                 sessionStorage.setItem('COMPLEMENTO_COLABORADOR', endereco.complemento);
@@ -108,11 +121,14 @@ async function checkColaborador(emailVar, senhaVar) {
                 sessionStorage.setItem('ESTADO_COLABORADOR', endereco.estado);
                 sessionStorage.setItem('CEP_COLABORADOR', endereco.cep);
 
-                // Store product and social media data
+                // Store product type data
                 const tipoProduto = colaboradorUser.tipoProduto;
+                sessionStorage.setItem('ID_TIPO_PRODUTO_COLABORADOR', tipoProduto.id_tipo_produto); // Storing product type ID
                 sessionStorage.setItem('TIPO_PRODUTO_COLABORADOR', tipoProduto.tipo);
 
+                // Store social media data
                 const midiasSociais = colaboradorUser.midiasSociais;
+                sessionStorage.setItem('ID_MIDIAS_SOCIAIS_COLABORADOR', midiasSociais.id_midias_sociais); // Storing social media ID
                 sessionStorage.setItem('INSTAGRAM_COLABORADOR', midiasSociais.instagram);
                 sessionStorage.setItem('FACEBOOK_COLABORADOR', midiasSociais.facebook);
                 sessionStorage.setItem('SITE_COLABORADOR', midiasSociais.site);
@@ -146,3 +162,4 @@ async function checkColaborador(emailVar, senhaVar) {
         alert("Erro ao tentar login como colaborador. Por favor, tente novamente mais tarde.");
     }
 }
+

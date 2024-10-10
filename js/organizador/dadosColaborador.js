@@ -1,49 +1,77 @@
-async function buscarDados() {
-    // Get the collaborator ID from localStorage
-    const collabId = localStorage.getItem('selectedCollaboratorId');
-    
-    if (!collabId) {
-      console.error('No collaborator ID found in localStorage');
-      return;
-    }
-  
-    try {
-      // Fetch the collaborator data from the backend using the ID
-      const response = await fetch(`http://localhost:8080/usuarios/${collabId}`);
-      
-      if (!response.ok) {
-        throw new Error(`Error fetching collaborator data: ${response.statusText}`);
-      }
-  
-      // Parse the JSON response
-      const collaborator = await response.json();
-  
-      // Update the HTML elements with the collaborator data
-      document.getElementById('imagem_marca').src = collaborator.imagemLogo ? `data:image/png;base64,${collaborator.imagemLogo}` : '../assets/default-image.png';
-      document.getElementById('nomeFantasia').innerText = collaborator.fkDados.nomeFantasia;
-      document.getElementById('nomeResp').innerText = collaborator.nomeResp;
-      document.getElementById('cpfResp').innerText = collaborator.cpfResp;
-      document.getElementById('rgResp').innerText = collaborator.fkDados.rgResp;
-      document.getElementById('email').innerText = collaborator.email;
-      document.getElementById('cnpj').innerText = collaborator.cnpj;
-      document.getElementById('telefone').innerText = collaborator.fkDados.telefone;
-      document.getElementById('tipoEmpresa').innerText = collaborator.fkDados.tipoEmpresa;
-      document.getElementById('cep').innerText = collaborator.fkDados.fkEnderecoUsuario.cep;
-      document.getElementById('logradouro').innerText = collaborator.fkDados.fkEnderecoUsuario.logradouro;
-      document.getElementById('numero').innerText = collaborator.fkDados.fkEnderecoUsuario.numero;
-      document.getElementById('complemento').innerText = collaborator.fkDados.fkEnderecoUsuario.complemento;
-      document.getElementById('cidade').innerText = collaborator.fkDados.fkEnderecoUsuario.cidade;
-      document.getElementById('estado').innerText = collaborator.fkDados.fkEnderecoUsuario.estado;
-      document.getElementById('inscricaoEstadual').innerText = collaborator.fkDados.inscricaoEstadual;
-      document.getElementById('proposito').innerText = collaborator.fkDados.proposito;
-      document.getElementById('nicho').innerText = collaborator.fkDados.fkTipoProducao.tipo;
-      document.getElementById('wppComercial').innerText = collaborator.fkDados.wppComercial;
-      document.getElementById('site').innerText = collaborator.fkDados.fkMidiasSociais.site;
-  
-    } catch (error) {
-      console.error(`Failed to fetch collaborator data: ${error.message}`);
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  // Get the collaborator ID from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const collaboratorId = urlParams.get('id');
+
+  if (collaboratorId) {
+      fetchCollaboratorData(collaboratorId);
+  } else {
+      console.error("No collaborator ID provided.");
   }
-  
-  window.onload = buscarDados;
-  
+});
+
+// Function to fetch collaborator data by ID
+async function fetchCollaboratorData(id) {
+  try {
+      const response = await fetch(`http://localhost:8080/colaborador/id?id=${id}`);
+      if (!response.ok) {
+          throw new Error('Erro na requisição');
+      }
+
+      const collaborator = await response.json();
+      populateCollaboratorDetails(collaborator);
+  } catch (error) {
+      console.error('Erro ao buscar dados do colaborador:', error);
+  }
+}
+
+// Function to populate the collaborator's details into the HTML
+function populateCollaboratorDetails(collaborator) {
+  // Store elements in constants
+  const nomeFantasiaElement = document.getElementById('nomeFantasia');
+  const nomeRespElement = document.getElementById('nomeResp');
+  const cpfRespElement = document.getElementById('cpfResp');
+  const rgRespElement = document.getElementById('rgResp');
+  const emailElement = document.getElementById('email');
+  const cnpjElement = document.getElementById('cnpj');
+  const telefoneElement = document.getElementById('telefone');
+  const tipoEmpresaElement = document.getElementById('tipoEmpresa');
+  const cepElement = document.getElementById('cep');
+  const logradouroElement = document.getElementById('logradouro');
+  const numeroElement = document.getElementById('numero');
+  const complementoElement = document.getElementById('complemento');
+  const cidadeElement = document.getElementById('cidade');
+  const estadoElement = document.getElementById('estado');
+  const inscricaoEstadualElement = document.getElementById('inscricaoEstadual');
+  const propositoElement = document.getElementById('proposito');
+  const nichoElement = document.getElementById('nicho');
+  const wppComercialElement = document.getElementById('wppComercial');
+  const siteElement = document.getElementById('site');
+  const imagemMarcaElement = document.getElementById('imagem_marca');
+
+  // Assign values to the elements
+  nomeFantasiaElement.innerHTML = collaborator.nomeFantasia || 'Nome Fantasia não disponível';
+  nomeRespElement.innerHTML = collaborator.nomeResp || 'Nome do Responsável não disponível';
+  cpfRespElement.innerHTML = collaborator.cpfResp || 'CPF não disponível';
+  rgRespElement.innerHTML = collaborator.rgResp || 'RG não disponível';
+  emailElement.innerHTML = collaborator.email || 'Email não disponível';
+  cnpjElement.innerHTML = collaborator.cnpj || 'CNPJ não disponível';
+  telefoneElement.innerHTML = collaborator.telefone || 'Telefone não disponível';
+  tipoEmpresaElement.innerHTML = collaborator.tipoEmpresa || 'Tipo Empresa não disponível';
+  cepElement.innerHTML = collaborator.endereco.cep || 'CEP não disponível';
+  logradouroElement.innerHTML = collaborator.endereco.logradouro || 'Logradouro não disponível';
+  numeroElement.innerHTML = collaborator.endereco.numero || 'Número não disponível';
+  complementoElement.innerHTML = collaborator.endereco.complemento || 'Complemento não disponível';
+  cidadeElement.innerHTML = collaborator.endereco.cidade || 'Cidade não disponível';
+  estadoElement.innerHTML = collaborator.endereco.estado || 'Estado não disponível';
+  inscricaoEstadualElement.innerHTML = collaborator.inscEstadual || 'Inscrição Estadual não disponível';
+  propositoElement.innerHTML = collaborator.proposito || 'Propósito não disponível';
+  nichoElement.innerHTML = collaborator.tipoProduto?.tipo || 'Nicho não disponível';
+  wppComercialElement.innerHTML = collaborator.wppComercial || 'Whatsapp não disponível';
+  siteElement.innerHTML = collaborator.midiasSociais?.site || 'Site não disponível';
+
+  // Set image if available
+  if (collaborator.bannerImg) {
+      imagemMarcaElement.src = `data:image/png;base64,${collaborator.bannerImg}`;
+  }
+}

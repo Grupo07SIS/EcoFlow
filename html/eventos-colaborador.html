@@ -12,7 +12,6 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/meus-eventos.css">
     <link rel="stylesheet" href="../css/evento-colaborador.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/navbar.css">
@@ -32,52 +31,43 @@
             <div class="buttons_search_filter">
                 <div class="filtrar_local">
                     <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
-                    <i class="bi bi-search search-icon"></i> <!-- Bootstrap search icon -->
+                    <i class="bi bi-search search-icon"></i>
                 </div>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                 aria-controls="offcanvasBottom"> <img src="../../assets/filter.png" alt=""> Filtrar</button>
             </div>
             
-            <div style="height: 50%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            <div style="height: 38%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                 aria-labelledby="offcanvasBottomLabel">
                 <div class="offcanvas-header">
-                    <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
+                    <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtro</h2>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body small">
-                    <h4 class="title">Tema do Evento</h4>
-                    <div class="filtrar_tema">
-                        <select class="form-select form-select-sm" aria-label="Small select example">
-                            <option selected>Escolhe o evento</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
                     <h4 class="titulo_filtro">Data</h4>
                     <div class="filtrar_date">
                         <div class="bloco_filtros">
                             <div class="filtrar_dt_inicio">
                                 <span>Inicio</span>
                                 <div class="input-group flex-nowrap">
-                                    <input type="date" class="form-control">
+                                    <input id="dataInicio" type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="filtrar_dt_fim">
                                 <span>Fim</span>
                                 <div class="input-group flex-nowrap">
-                                    <input type="date" class="form-control">
+                                    <input id="dataFim" type="date" class="form-control">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="grp_btn">
-                        <button class="secondary_btn">
+                        <button class="secondary_btn" onclick="clearFilters()">
                             Limpar Filtro
                         </button>
-                        <button class="primary_btn">
+                        <button class="primary_btn" onclick="applyFilters()">
                             Aplicar Filtro
                         </button>
                     </div>
@@ -86,7 +76,7 @@
         </div>
     </div>
 
-    <div class="cards-eventos" id="cards-eventos">
+    <div class="listagem_eventos" id="listagem_eventos" style="padding-top: 0%;">
     </div>
 
     <div class="menu">
@@ -122,77 +112,6 @@
 </body>
 
 </html>
-
-<script>
-   document.querySelector('.primary_btn').addEventListener('click', function () {
-    // Obtendo os valores dos filtros
-    const selectedTheme = document.querySelector('.form-select').value;
-    const startDate = document.querySelector('.filtrar_dt_inicio input').value;
-    const endDate = document.querySelector('.filtrar_dt_fim input').value;
-    const location = document.querySelector('.filtrar_local input').value.toLowerCase();
-
-    // Selecionar todos os eventos
-    const eventsContainer = document.querySelector('.cards-eventos');
-    const events = Array.from(eventsContainer.querySelectorAll('.eventos')); // Converter para um array para melhor manipulação
-    const filteredEvents = []; // Array para armazenar eventos que atendem aos critérios de filtro
-
-    events.forEach(event => {
-        // Extraindo informações do evento
-        const eventTheme = event.querySelector('.spanTitulo').textContent.trim();
-        const eventDate = new Date(event.querySelector('.infos span:nth-child(2)').textContent.trim().replace(' DE ', ' '));
-        const eventLocation = event.querySelector('.infos span:nth-child(3)').textContent.toLowerCase().trim();
-
-        // Verificar se o evento deve ser exibido
-        let showEvent = true;
-
-        if (selectedTheme !== 'Escolhe o evento' && eventTheme !== selectedTheme) {
-            showEvent = false;
-        }
-
-        if (startDate && eventDate < new Date(startDate)) {
-            showEvent = false;
-        }
-
-        if (endDate && eventDate > new Date(endDate)) {
-            showEvent = false;
-        }
-
-        if (location && !eventLocation.includes(location)) {
-            showEvent = false;
-        }
-
-        // Mostrar ou ocultar o evento e mover para o topo se necessário
-        if (showEvent) {
-            event.style.display = 'flex';
-            filteredEvents.push(event); // Adiciona o evento filtrado ao array
-        } else {
-            event.style.display = 'none';
-        }
-    });
-
-    // Mover os eventos filtrados para o topo
-    filteredEvents.forEach(event => {
-        eventsContainer.prepend(event); // Adiciona cada evento filtrado ao início da div
-    });
-});
-
-// Limpar Filtros
-document.querySelector('.secondary_btn').addEventListener('click', function () {
-    // Resetando os valores dos filtros
-    document.querySelector('.form-select').value = 'Escolhe o evento';
-    document.querySelector('.filtrar_dt_inicio input').value = '';
-    document.querySelector('.filtrar_dt_fim input').value = '';
-    document.querySelector('.filtrar_local input').value = '';
-
-    // Mostrar todos os eventos
-    const events = document.querySelectorAll('.cards-eventos .eventos');
-    events.forEach(event => {
-        event.style.display = 'flex';
-    });
-});
-
-</script>
-
 <script>
     document.querySelector('.search-input').addEventListener('input', async function () {
     const searchQuery = this.value;
@@ -202,7 +121,7 @@ document.querySelector('.secondary_btn').addEventListener('click', function () {
         const response = await fetch(`http://localhost:8080/evento/searchBar?search=${encodeURIComponent(searchQuery)}`);
         const searchResults = await response.json();
 
-        const cards = document.getElementById("cards-eventos");
+        const cards = document.getElementById("listagem_eventos");
         cards.innerHTML = ''; // Clear current events
 
         cards.innerHTML = searchResults.map((itemEvento) => {

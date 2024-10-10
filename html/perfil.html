@@ -13,76 +13,89 @@
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/perfil.css">
-    <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </head>
 
 <body>
     <div class="main_info">
-        <div class="perfil">
-            <i class="bi bi-person-circle"></i>
-            <p id="nomeUsuario">Nome do Usuário</p>
-            <p id="nomeDaEmpresa">Nome da Empresa</p>
+        <div id="mySidenav" class="sidenav">
+            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+            <div class="user_info">
+                <i class="bi bi-person-circle"></i>
+                <p id="userName">Nome do Usuário</p>
+                <p id="nomeEmpresa">Nome da Empresa</p>
+            </div>
+            <a href="meus-eventos.html">Meus eventos</a>
+            <a href="lista_de_espera.html">Participantes em espera</a>
+            <a href="dash_gerencial.html">Painel Gerencial</a>
+            <a href="login.html">Sair</a>
         </div>
 
-        <div class="div_main_info">
-            <div class="div_info">
-                <p>CNPJ:</p>
-                <span id="cnpj">00.000.000/0001-00</span>
+        <div class="openBarMain">
+            <i class="bi bi-list openBar" onclick="openNav()"></i>
+        </div>
+        <div class="content">
+            <div class="perfil">
+                <i class="bi bi-person-circle"></i>
+                <p id="nomeUsuario">Nome do Usuário</p>
             </div>
 
-            <div class="div_info">
-                <p>Telefone:</p>
-                <span id="telefone">00.000.000/0001-00</span>
-            </div>
+            <div class="informacoes_main">
+                <div class="informacoes">
+                    <div class="div_info">
+                        <label for="cnpj">CNPJ:</label>
+                        <input id="cnpj" type="text" value="CNPJ do colaborador" disabled />
+                    </div>
+                    <div class="div_info">
+                        <label for="telefone">Telefone:</label>
+                        <input id="telefone" type="text" value="0000000000" disabled />
+                    </div>
+                    <div class="div_info">
+                        <label for="email">Email:</label>
+                        <input id="email" type="text" value="@gahsjjc.com" disabled />
+                    </div>
+                </div>
 
-            <div class="div_info">
-                <p>Razão social:</p>
-                <span id="razaoSocial">Texto aqui</span>
-            </div>
-
-            <div class="div_info">
-                <p>Propósito:</p>
-                <span id="proposito">Texto aqui</span>
+                <div class="proximo-voltar">
+                    <button onclick="editarPerfil()" id="editar-btn" type="button" class="btn btn-secondary"
+                        style="width: 100%; background-color: #C7530C; color: white;">Editar perfil</button>
+                    <button onclick="salvarPerfil()" id="salvar-btn" type="button" class="btn btn-secondary"
+                        style="display: none; background-color: #C7530C; color: white;">Salvar</button>
+                    <button id="meus-eventos-btn" type="button" class="btn btn-secondary"
+                        style="background-color: #C7530C; color: white;"> <a href="meus-eventos.html">Meus Eventos</a>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="proximo-voltar">
-            <button type="button" class="btn btn-outline-secondary" onclick="enableEditing()" id="editarInfoBtn">
-                Editar Info
-            </button>
-            <button type="button" class="btn btn-secondary">
-                <a href="../html/meus-eventos.html">Meus Eventos</a>
-            </button>
+        <div class="menu">
+            <a href="index.html" class="opcoes">
+                <img src="../assets/Vector 3 (1).png" alt="">
+                <p>Inicio</p>
+            </a>
+            <a href="meus-eventos.html" class="opcoes">
+                <img src="../assets/Calendar icon.png" alt="">
+                <p>Eventos</p>
+            </a>
+            <a href="evento.html" class="opcoes">
+                <img src="../assets/Group 2.png" alt="">
+                <p>Criar Evento</p>
+            </a>
+            <a href="lista_de_espera.html" class="opcoes">
+                <img src="../assets/Group 4.png" alt="">
+                <p>Participantes</p>
+            </a>
+            <a href="perfil.html" class="opcoes">
+                <img src="../assets/perfil.png" alt="">
+                <p style="color: #C7530C;">Perfil</p>
+            </a>
         </div>
-    </div>
 
-    <div class="menu">
-        <a href="index.html" class="opcoes">
-            <img src="../assets/Vector 3 (1).png" alt="">
-            <p>Inicio</p>
-        </a>
-        <a href="meus-eventos.html" class="opcoes">
-            <img src="../assets/Calendar icon.png" alt="">
-            <p>Eventos</p>
-        </a>
-        <a href="evento.html" class="opcoes">
-            <img src="../assets/Group 2.png" alt="">
-            <p>Criar Evento</p>
-        </a>
-        <a href="lista_de_espera.html" class="opcoes">
-            <img src="../assets/Group 4.png" alt="">
-            <p>Participantes</p>
-        </a>
-        <a href="perfil.html" class="opcoes">
-            <img src="../assets/perfil.png" alt="">
-            <p style="color: #C7530C;">Perfil</p>
-        </a>
-    </div>
+        <!-- Popup for success or error messages -->
+        <div id="popup" class="popup">
+            <span id="popup-message"></span>
+        </div>
 
-    <div id="popup" class="popup">
-        <span id="popup-message"></span>
-    </div>
-
+        <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </body>
 
 </html>

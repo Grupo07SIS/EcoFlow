@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
   <!-- <link rel="stylesheet" href="../css/atracao.css"> -->
-  <link rel="stylesheet" href="../css/dash_gerencial.css">
+  <!-- <link rel="stylesheet" href="../css/dash_gerencial.css"> -->
   <link rel="stylesheet" href="../css/home.css" />
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/menu.css">
@@ -23,13 +23,24 @@
   </div>
   <div class="names">
     <div class="informacoes">
-      <a id="marca">Nome da marca</a>
-      <a id="Telefone">Telefone: 0000000000</a>
-      <a id="Email">Email: @gahsjjc.com</a>
-      <div class="proximo-voltar2">
-        <button type="button" class="btn btn-outline-secondary">
-          <a href="dados_equipes.html">Editar perfil</a>
-        </button>
+      <div>
+        <label for="nome">Nome:</label>
+        <input id="nome" type="text" value="Nome do colaborador" disabled />
+      </div>
+      <div>
+        <label for="telefone">Telefone:</label>
+        <input id="telefone" type="text" value="0000000000" disabled />
+      </div>
+    
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="text" value="@gahsjjc.com" disabled />
+      </div>
+
+      <div class="btnsClicksGroup">
+        <button onclick="voltar()" id="cancelar-btn" type="button" class="btnClick" style="display: none; background-color: #C7530C; color: white;">Cancelar</button>
+        <button onclick="editarPerfil()" id="editar-btn" type="button" class="btnClick" style="width: 100%; background-color: #C7530C; color: white;">Editar perfil</button>
+        <button onclick="salvarPerfil()" id="salvar-btn" type="button" class="btnClick" style="display: none; background-color: #C7530C; color: white;">Salvar</button>
       </div>
     </div>
   </div>
@@ -38,59 +49,14 @@
     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
       <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
         style="margin-bottom: 0px;">
-      <label class="btn btn-outline-primary" for="btnradio1">Próximos eventos</label>
+      <label class="btn" for="btnradio1" onclick="buscarEventosIncricao()">Próximos eventos</label>
 
       <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn btn-outline-primary" for="btnradio2">Eventos passados</label>
+      <label class="btn" for="btnradio2" onclick="buscarEventosIncricaoPassados()">Eventos passados</label>
     </div>
   </div>
 
-  <div class="cards-eventos">
-    <div class="eventos">
-      <img src="../../assets/Mask Group.png" alt="">
-      <div class="infos">
-        <span class="spanTitulo">Dias das mães</span>
-        <span>1 DE JUNHO 2024</span>
-        <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
-      </div>
-    </div>
-
-    <div class="eventos">
-      <img src="../../assets/Mask Group.png" alt="">
-      <div class="infos">
-        <span class="spanTitulo">Dias das mães</span>
-        <span>1 DE JUNHO 2024</span>
-        <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
-      </div>
-    </div>
-
-    <div class="eventos">
-      <img src="../../assets/Mask Group.png" alt="">
-      <div class="infos">
-        <span class="spanTitulo">Dias das mães</span>
-        <span>1 DE JUNHO 2024</span>
-        <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
-      </div>
-    </div>
-
-    <div class="eventos">
-      <img src="../../assets/Mask Group.png" alt="">
-      <div class="infos">
-        <span class="spanTitulo">Dias das mães</span>
-        <span>1 DE JUNHO 2024</span>
-        <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
-      </div>
-    </div>
-
-    <div class="eventos">
-      <img src="../../assets/Mask Group.png" alt="">
-      <div class="infos">
-        <span class="spanTitulo">Dias das mães</span>
-        <span>1 DE JUNHO 2024</span>
-        <span>Rua Joaquim Távora, 605 - Vila Mariana, SP</span>
-      </div>
-    </div>
-  </div>
+  <div class="listagem_evento" id="listagem_evento"></div>
 
   <div class="menu">
     <a href="index-colaborador.html" class="opcoes">
@@ -111,7 +77,8 @@
     </a>
   </div>
 
-  <script></script>
+
+  
 </body>
 
 </html>
