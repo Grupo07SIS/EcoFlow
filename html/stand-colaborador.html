@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../css/colaboradorParticiparStyle/dados_gerais.css">
+    <link rel="stylesheet" href="../../css/colaboradorParticiparStyle/dados_gerais.css">
     <link rel="stylesheet" href="../../css/atracao.css">
     <link rel="stylesheet" href="../../css/menu.css">
 </head>
@@ -26,64 +26,19 @@
         </div>
     </div>
 
-    <div class="escolher_stand">
-        <div class="dados_stand">
-            <div class="dados_produtos1">
-                <input type="checkbox" class="checkbox" name="" id="">
-                <div class="stand_lista">
-                    <span class="opcao_stand">Espaço tipo 01</span>
-                    <span class="opcao_stand">Mesa de 2,00 x 0,80 m com 2 cadeiras</span>
-                    <span class="opcao_stand"><b>Preço: R$ 570,00</b></span>
-                </div>
-            </div>
-        </div>
-        <div class="dados_stand">
-            <div class="dados_produtos1">
-                <input type="checkbox" class="checkbox" name="" id="">
-                <div class="stand_lista">
-                    <span class="opcao_stand">Espaço tipo 01</span>
-                    <span class="opcao_stand">Mesa de 2,00 x 0,80 m com 2 cadeiras</span>
-                    <span class="opcao_stand"><b>Preço: R$ 570,00</b></span>
-                </div>
-            </div>
-        </div>
-        <div class="dados_stand">
-            <div class="dados_produtos1">
-                <input type="checkbox" class="checkbox" name="" id="">
-                <div class="stand_lista">
-                    <span class="opcao_stand">Espaço tipo 01</span>
-                    <span class="opcao_stand">Mesa de 2,00 x 0,80 m com 2 cadeiras</span>
-                    <span class="opcao_stand"><b>Preço: R$ 570,00</b></span>
-                </div>
-            </div>
-        </div>
-        <div class="dados_stand">
-            <div class="dados_produtos1">
-                <input type="checkbox" class="checkbox" name="" id="">
-                <div class="stand_lista">
-                    <span class="opcao_stand">Espaço tipo 01</span>
-                    <span class="opcao_stand">Mesa de 2,00 x 0,80 m com 2 cadeiras</span>
-                    <span class="opcao_stand"><b>Preço: R$ 570,00</b></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="escolher_stand" id="standContainer"></div>
 
     <div class="proximo-voltar">
-        <button type="button" class="btn btn-outline-secondary">
-            <a href="dados_equipes-colaborador.html">Voltar</a>
-        </button>
-        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="perfil-colaborador.html">Finalizar</a>
-        </button>
+        <button type="button" class="btn btn-outline-secondary" onclick="voltar()">Voltar</button>
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag3()">Finalizar</button>
     </div>
 
     <div class="menu">
-        <a href="../Colaborador/index-colaborador.html" class="opcoes">
+        <a href="index-colaborador.html" class="opcoes">
             <img src="../../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
-        <a href="../Colaborador/eventos-colaborador.html" class="opcoes">
+        <a href="eventos-colaborador.html" class="opcoes">
             <img src="../../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
@@ -96,6 +51,286 @@
             <p>Sair</p>
         </a>
     </div>
+
+    <script>
+        // Function to go back to the previous page
+        function voltar() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            window.location.href = `dados_equipes-colaborador.html?id=${eventId}`;
+        }
+
+        // Function to retrieve user data from sessionStorage
+        function buscardados() {
+            return {
+                idColaborador: parseInt(sessionStorage.getItem('ID_COLABORADOR')),
+                email: sessionStorage.getItem('EMAIL_COLABORADOR'),
+                senha: sessionStorage.getItem('SENHA_COLABORADOR'),
+                cnpj: sessionStorage.getItem('CNPJ_COLABORADOR'),
+                nomeResp: sessionStorage.getItem('NOME_RESP_COLABORADOR'),
+                cpfResp: sessionStorage.getItem('CPF_RESP_COLABORADOR'),
+                telefone: sessionStorage.getItem('TELEFONE_COLABORADOR'),
+                permissao: parseInt(sessionStorage.getItem('PERMISSAO_COLABORADOR')),
+                nomeFantasia: sessionStorage.getItem('NOME_FANTASIA_COLABORADOR'),
+                razaoSocial: sessionStorage.getItem('RAZAO_SOCIAL_COLABORADOR'),
+                tipoEmpresa: sessionStorage.getItem('TIPO_EMPRESA_COLABORADOR'),
+                inscEstadual: sessionStorage.getItem('INSC_ESTADUAL_COLABORADOR'),
+                rgResp: sessionStorage.getItem('RG_RESP_COLABORADOR'),
+                bannerImg: sessionStorage.getItem('BANNER_IMG_COLABORADOR'),
+                wppComercial: sessionStorage.getItem('WPP_COMERCIAL_COLABORADOR'),
+                proposito: sessionStorage.getItem('PROPOSITO_COLABORADOR'),
+                endereco: {
+                    id_endereco_usuario: sessionStorage.getItem('ID_ENDERECO_COLABORADOR'),
+                    logradouro: sessionStorage.getItem('LOGRADOURO_COLABORADOR'),
+                    numero: parseInt(sessionStorage.getItem('NUMERO_COLABORADOR')),
+                    complemento: sessionStorage.getItem('COMPLEMENTO_COLABORADOR'),
+                    cidade: sessionStorage.getItem('CIDADE_COLABORADOR'),
+                    estado: sessionStorage.getItem('ESTADO_COLABORADOR'),
+                    cep: sessionStorage.getItem('CEP_COLABORADOR')
+                },
+                tipoProduto: {
+                    id_tipo_produto: sessionStorage.getItem('ID_TIPO_PRODUTO_COLABORADOR'),
+                    tipo: sessionStorage.getItem('TIPO_PRODUTO_COLABORADOR')
+                },
+                midiasSociais: {
+                    id_midias_sociais: sessionStorage.getItem('ID_MIDIAS_SOCIAIS_COLABORADOR'),
+                    instagram: sessionStorage.getItem('INSTAGRAM_COLABORADOR'),
+                    facebook: sessionStorage.getItem('FACEBOOK_COLABORADOR'),
+                    site: sessionStorage.getItem('SITE_COLABORADOR')
+                }
+            };
+        }
+
+        // Function to fetch event details
+        async function buscarDetalhesEvento() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            try {
+                const resposta = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
+                const evento = await resposta.json();
+                console.log("Evento:", evento);
+                return evento;
+            } catch (error) {
+                console.error('Erro ao buscar os detalhes do evento:', error);
+            }
+        }
+
+        // Function to fetch stands and render them on the page
+        async function fetchStands() {
+            try {
+                const response = await fetch('http://localhost:8080/tipoStand');
+                const stands = await response.json();
+                const standContainer = document.getElementById('standContainer');
+                standContainer.innerHTML = ''; // Clear the container
+
+                stands.forEach(stand => {
+                    const standHtml = `
+                        <div class="dados_stand">
+                            <div class="dados_produtos1">
+                                <input type="radio" class="checkbox" name="standOption" value="${stand.id_tipo_stand}">
+                                <div class="stand_lista">
+                                    <span class="opcao_stand">Espaço ${stand.tipo}</span>
+                                    <span class="opcao_stand">Mesa de ${stand.largura} x ${stand.comprimento} m com ${stand.qtd_cadeiras} cadeiras</span>
+                                    <span class="opcao_stand"><b>Preço: R$ ${stand.valor}</b></span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    standContainer.innerHTML += standHtml;
+                });
+            } catch (error) {
+                console.error('Erro ao buscar stands:', error);
+            }
+        }
+
+        // Event listener to handle stand selection
+        let selectedStandId = null;
+        document.addEventListener('change', function (event) {
+            if (event.target.name === 'standOption') {
+                selectedStandId = event.target.value;
+            }
+        });
+
+        // Finalize registration data
+        async function salvarDadosPag3() {
+            const colaboradorData = buscardados();
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+            const evento = await buscarDetalhesEvento();
+            const savedProducts = JSON.parse(sessionStorage.getItem('produtos') || '[]');
+            const savedTeam = JSON.parse(sessionStorage.getItem('equipe') || '[]');
+
+            if (!selectedStandId) {
+                alert("Por favor, escolha um stand.");
+                return;
+            }
+
+            const standResponse = await fetch(`http://localhost:8080/tipoStand/id?id=${selectedStandId}`);
+            const selectedStand = await standResponse.json();
+
+            const registrationData = {
+                id_inscricao: 0,
+                data: new Date().toISOString().split('T')[0], // Format date as "YYYY-MM-DD"
+                nicho: sessionStorage.getItem('NICHO') || 'Alimento',
+                fkUsuario: {
+                    idColaborador: colaboradorData.idColaborador || 0,
+                    email: colaboradorData.email || 'string',
+                    senha: colaboradorData.senha || 'string',
+                    cnpj: colaboradorData.cnpj || 'string',
+                    nomeResp: colaboradorData.nomeResp || 'string',
+                    cpfResp: colaboradorData.cpfResp || 'string',
+                    telefone: colaboradorData.telefone || 'string',
+                    permissao: colaboradorData.permissao || 0,
+                    nomeFantasia: colaboradorData.nomeFantasia || 'string',
+                    razaoSocial: colaboradorData.razaoSocial || 'string',
+                    tipoEmpresa: colaboradorData.tipoEmpresa || 'string',
+                    inscEstadual: colaboradorData.inscEstadual || 'string',
+                    rgResp: colaboradorData.rgResp || 'string',
+                    bannerImg: colaboradorData.bannerImg || 'string',
+                    wppComercial: colaboradorData.wppComercial || 'string',
+                    proposito: colaboradorData.proposito || 'string',
+                    endereco: {
+                        id_endereco_usuario: colaboradorData.endereco.id_endereco_usuario || 0,
+                        logradouro: colaboradorData.endereco.logradouro || 'string',
+                        numero: colaboradorData.endereco.numero || 0,
+                        complemento: colaboradorData.endereco.complemento || 'string',
+                        cidade: colaboradorData.endereco.cidade || 'string',
+                        estado: colaboradorData.endereco.estado || 'string',
+                        cep: colaboradorData.endereco.cep || 'string'
+                    },
+                    tipoProduto: {
+                        id_tipo_produto: colaboradorData.tipoProduto.id_tipo_produto || 0,
+                        tipo: colaboradorData.tipoProduto.tipo || 'string'
+                    },
+                    midiasSociais: {
+                        id_midias_sociais: colaboradorData.midiasSociais.id_midias_sociais || 0,
+                        instagram: colaboradorData.midiasSociais.instagram || 'string',
+                        facebook: colaboradorData.midiasSociais.facebook || 'string',
+                        site: colaboradorData.midiasSociais.site || 'string'
+                    }
+                },
+                tipo_stand: {
+                    id_tipo_stand: selectedStand.id_tipo_stand || 0,
+                    tipo: selectedStand.tipo || 'string',
+                    largura: selectedStand.largura || 'string',
+                    comprimento: selectedStand.comprimento || 'string',
+                    qtd_cadeiras: selectedStand.qtd_cadeiras || 0,
+                    valor: selectedStand.valor || 0,
+                    excecao: selectedStand.excecao || 'string',
+                    ponto_eletrico: selectedStand.ponto_eletrico || 'string'
+                },
+                status: {
+                    id_Status: 1, // Assuming the status is always 'Inscrito' at this stage
+                    status: 'Inscrito'
+                },
+                equipe: {
+                    id_equipe: savedTeam[0]?.id_equipe || 0, // Handle if no team is saved
+                    nome: savedTeam[0]?.nome || 'string',
+                    telefone: savedTeam[0]?.telefone || 'string',
+                    email: savedTeam[0]?.email || 'string'
+                },
+                evento: {
+                    id_evento: evento.id_evento || 0,
+                    nome: evento.nome || 'string',
+                    tema: evento.tema || 'string',
+                    descricao: evento.descricao || 'string',
+                    banner_evento: evento.banner_evento || 'string',
+                    dataEvento: evento.dataEvento || '2024-10-12',
+                    hora_inicio: evento.hora_inicio || '2024-10-12T02:21:14.570Z',
+                    hora_fim: evento.hora_fim || '2024-10-12T02:21:14.570Z',
+                    financeiro: {
+                        id_financeiro: evento.financeiro?.id_financeiro || 0,
+                        orcamento_total: evento.financeiro?.orcamento_total || 0,
+                        aluguel_local: evento.financeiro?.aluguel_local || 0,
+                        valor_funcionario: evento.financeiro?.valor_funcionario || 0,
+                        valor_infra: evento.financeiro?.valor_infra || 0,
+                        valor_inscricao: evento.financeiro?.valor_inscricao || 0,
+                        meta_lucro: evento.financeiro?.meta_lucro || 0,
+                        qtd_max_colaborador: evento.financeiro?.qtd_max_colaborador || 0
+                    },
+                    Atracao: {
+                        id_atracao: evento.Atracao?.id_atracao || 0,
+                        tipo_atracao: evento.Atracao?.tipo_atracao || 'string',
+                        valor_atracao: evento.Atracao?.valor_atracao || 0
+                    },
+                    enderecoEvento: {
+                        id_endereco_evento: evento.enderecoEvento?.id_endereco_evento || 0,
+                        logradouro: evento.enderecoEvento?.logradouro || 'string',
+                        numero: evento.enderecoEvento?.numero || 0,
+                        complemento: evento.enderecoEvento?.complemento || 'string',
+                        cidade: evento.enderecoEvento?.cidade || 'string',
+                        estado: evento.enderecoEvento?.estado || 'string',
+                        cep: evento.enderecoEvento?.cep || 'string'
+                    },
+                    deletado: evento.deletado || false,
+                    atracao: {
+                        id_atracao: evento.atracao?.id_atracao || 0,
+                        tipo_atracao: evento.atracao?.tipo_atracao || 'string',
+                        valor_atracao: evento.atracao?.valor_atracao || 0
+                    }
+                }
+            };
+
+            console.log("Dados de inscrição:", registrationData);
+
+            try {
+                const response = await fetch('http://localhost:8080/inscricao', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(registrationData)
+                });
+
+                if (response.ok) {
+                    console.log('Inscrição realizada com sucesso!');
+                    await submitProducts(savedProducts);
+                    window.location.href = 'perfil-colaborador.html';
+                } else {
+                    const errorResponse = await response.json();
+                    console.error('Erro ao realizar inscrição:', errorResponse);
+                    alert(`Erro: ${errorResponse.message || 'Ocorreu um erro durante o processo de inscrição.'}`);
+                }
+            } catch (error) {
+                console.error('Erro ao realizar inscrição:', error);
+                alert('Erro ao realizar a inscrição. Verifique os dados e tente novamente.');
+            }
+        }
+
+        // Function to submit products to /produto endpoint
+        async function submitProducts(produtos) {
+            const colaboradorData = buscardados();
+            for (const product of produtos) {
+                const productData = {
+                    nome: product.nome,
+                    ingredientes: product.ingredientes || 'Não informado',
+                    usuario: colaboradorData,
+                };
+
+                try {
+                    const response = await fetch('http://localhost:8080/produto', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(productData)
+                    });
+
+                    if (response.ok) {
+                        console.log(`Produto ${product.nome} cadastrado com sucesso!`);
+                    } else {
+                        const errorResponse = await response.json();
+                        console.error(`Erro ao cadastrar produto ${product.nome}:`, errorResponse);
+                    }
+                } catch (error) {
+                    console.error(`Erro ao cadastrar produto ${product.nome}:`, error);
+                }
+            }
+        }
+
+        // On page load, fetch stands and event details
+        window.onload = function () {
+            fetchStands();
+            buscarDetalhesEvento();
+            buscardados();
+        };
+    </script>
 </body>
 
 </html>

@@ -21,14 +21,13 @@
     <div class="main_info">
         <div class="dados_gerais">
             <h5>DADOS GERAIS</h5>
-
             <div class="info_form">
                 Nicho:
-                <select name="nichos" id="">
-                    <option value="1">Moda</option>
-                    <option value="2">Comida</option>
-                    <option value="3">Animais</option>
-                    <option value="4">Beleza</option>
+                <select name="nichos" id="nichoSelect">
+                    <option value="Moda">Moda</option>
+                    <option value="Comida">Comida</option>
+                    <option value="Animais">Animais</option>
+                    <option value="Beleza">Beleza</option>
                 </select>
             </div>
         </div>
@@ -46,14 +45,13 @@
             </div>
 
             <div id="productContainer">
-                <!-- Product cards will be appended here -->
             </div>
         </div>
     </div>
 
     <div class="proximo">
-        <button type="button" class="btn btn-secondary" , onclick="salvarDadosPag1()">
-            <a href="dados_equipes-colaborador.html">Proximo</a>
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag1()">
+            Proximo
         </button>
     </div>
 
@@ -99,32 +97,31 @@
         newCard.classList.add('info_card');
 
         newCard.innerHTML = `
-            <div class="info_form">
-                <div class="drop_down">
-                    <label>Nome do Produto:</label>
-                    <div class="expandir_div" onclick="toggleIngredients(this)">
-                        Expandir
-                        <i class="i bi bi-chevron-down"></i>
-                    </div>
-                </div>
-                <input type="text">
-                <div class="ingredientes" style="display: none;">
-                    <span>Ingredientes:</span>
-                    <input type="text">
-                </div>
-                <div class="btn_delete">
-                    <button onclick="removeProdutoCard(this)">
-                        Excluir Produto
-                        <i class="bi bi-trash"></i>
-                    </button>
+        <div class="info_form">
+            <div class="drop_down">
+                <label>Nome do Produto:</label>
+                <div class="expandir_div" onclick="toggleIngredients(this)">
+                    Expandir
+                    <i class="i bi bi-chevron-down"></i>
                 </div>
             </div>
-        `;
+            <input type="text" class="product-name">
+            <div class="ingredientes" style="display: none;">
+                <span>Ingredientes:</span>
+                <input type="text" class="product-ingredients">
+            </div>
+            <div class="btn_delete">
+                <button onclick="removeProdutoCard(this)">
+                    Excluir Produto
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+    `;
 
         container.appendChild(newCard);
     }
 
-    // Function to remove a product card
     function removeProdutoCard(button) {
         const container = document.getElementById('productContainer');
         button.closest('.info_card').remove();
@@ -134,16 +131,91 @@
         }
     }
 
-    // Add event listener to the add product button
     document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
 
-    // Show the message if no products are added on page load
+    async function salvarDadosPag1() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        const nichoValue = document.getElementById('nichoSelect').value;
+
+        // Save nicho in sessionStorage
+        sessionStorage.setItem('nicho', nichoValue);
+
+        const productContainer = document.getElementById('productContainer');
+        const products = [];
+
+        const productCards = productContainer.getElementsByClassName('info_card');
+        if (productCards.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+            return;
+        }
+
+        // Collect product details from each card
+        for (let card of productCards) {
+            const productName = card.querySelector('.product-name').value;
+            const productIngredients = card.querySelector('.product-ingredients').value;
+
+            if (productName.trim() === "") {
+                alert("Por favor, preencha o nome do produto.");
+                return;
+            }
+
+            products.push({
+                nome: productName,
+                ingredientes: productIngredients
+            });
+        }
+
+        // Save the products in sessionStorage
+        sessionStorage.setItem('produtos', JSON.stringify(products));
+
+        // Redirect to the next page (add team members)
+        window.location.href = `dados_equipes-colaborador.html?id=${eventId}`;
+    }
+
+    // On page load, restore the saved products and nicho from sessionStorage
     window.onload = function () {
         const container = document.getElementById('productContainer');
-        if (container.children.length === 0) {
+        const savedProducts = JSON.parse(sessionStorage.getItem('produtos') || '[]');
+        const savedNicho = sessionStorage.getItem('nicho') || 'Moda';  // Default to 'Moda'
+
+        document.getElementById('nichoSelect').value = savedNicho;
+
+        if (savedProducts.length > 0) {
+            savedProducts.forEach(product => {
+                const newCard = document.createElement('div');
+                newCard.classList.add('info_card');
+
+                newCard.innerHTML = `
+                    <div class="info_form">
+                        <div class="drop_down">
+                            <label>Nome do Produto:</label>
+                            <div class="expandir_div" onclick="toggleIngredients(this)">
+                                Expandir
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="product-name" value="${product.nome}">
+                        <div class="ingredientes" style="display: none;">
+                            <span>Ingredientes:</span>
+                            <input type="text" class="product-ingredients" value="${product.ingredientes}">
+                        </div>
+                        <div class="btn_delete">
+                            <button onclick="removeProdutoCard(this)">
+                                Excluir Produto
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(newCard);
+            });
+        } else {
             document.getElementById('productMessage').style.display = 'block';
         }
     };
+
 </script>
 
 </html>

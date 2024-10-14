@@ -75,4 +75,83 @@ function geocode(address) {
             console.error(error);
         });
 }
+
+async function registerForEvent(participationData) {
+    try {
+        const response = await fetch('http://localhost:8080/inscricao', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(participationData)
+        });
+        const result = await response.json();
+        console.log('Event registration successful:', result);
+    } catch (error) {
+        console.error('Error during registration:', error);
+    }
+}
+
+async function addProduct(productData) {
+    try {
+        const response = await fetch('http://localhost:8080/produto', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(productData)
+        });
+        const result = await response.json();
+        console.log('Product added successfully:', result);
+    } catch (error) {
+        console.error('Error adding product:', error);
+    }
+}
+
+async function addTeamMember(teamMemberData) {
+    try {
+        const response = await fetch('http://localhost:8080/equipe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(teamMemberData)
+        });
+        const result = await response.json();
+        console.log('Team member added successfully:', result);
+    } catch (error) {
+        console.error('Error adding team member:', error);
+    }
+}
+
+async function selectStand(standData) {
+    try {
+        const response = await fetch('http://localhost:8080/setor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(standData)
+        });
+        const result = await response.json();
+        console.log('Stand selected successfully:', result);
+    } catch (error) {
+        console.error('Error selecting stand:', error);
+    }
+}
+
+function submitFormStep(step) {
+    switch (step) {
+        case 'general':
+            const generalData = { /* collect data from form */ };
+            registerForEvent(generalData);
+            break;
+        case 'product':
+            const productData = { /* collect product details from form */ };
+            addProduct(productData);
+            break;
+        case 'team':
+            const teamData = { /* collect team details from form */ };
+            addTeamMember(teamData);
+            break;
+        case 'stand':
+            const standData = { /* collect stand selection */ };
+            selectStand(standData);
+            break;
+    }
+}
+
+
 window.onload = buscarDetalhesEvento;
