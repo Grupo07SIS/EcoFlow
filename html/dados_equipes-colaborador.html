@@ -27,11 +27,11 @@
             <div>
                 <h5>EQUIPE</h5>
                 <div class="adicionar_produto">
-                    <h6>Adicionar pessoas na equipe</h6>
+                    <h6>Adicionar pessoa na equipe</h6>
                     <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
                 </div>
                 <div id="productMessage" class="alert alert-warning" role="alert" style="display: none;">
-                    Você precisa adicionar membros.
+                    Você precisa adicionar um membro.
                 </div>
             </div>
 
@@ -70,166 +70,172 @@
 </body>
 
 <script>
-
-function voltar() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');
-    
-    window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
-}
-    // Function to toggle the visibility of ingredients and rotate the icon
-function toggleIngredients(element) {
-    const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
-    const icon = element.querySelector('i');
-    if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
-        ingredientesDiv.style.display = "block";
-        icon.style.transform = "rotate(180deg)";
-    } else {
-        ingredientesDiv.style.display = "none";
-        icon.style.transform = "rotate(0deg)";
+    // Function to go back to the previous page
+    function voltar() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
     }
-}
 
-// Function to add a new team member card
-function addEquipeCard() {
-    const container = document.getElementById('productContainer');
-    const productMessage = document.getElementById('productMessage');
-    productMessage.style.display = 'none';
+    // Function to toggle the visibility of ingredients and rotate the icon
+    function toggleIngredients(element) {
+        const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
+        const icon = element.querySelector('i');
+        if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
+            ingredientesDiv.style.display = "block";
+            icon.style.transform = "rotate(180deg)";
+        } else {
+            ingredientesDiv.style.display = "none";
+            icon.style.transform = "rotate(0deg)";
+        }
+    }
 
-    const newCard = document.createElement('div');
-    newCard.classList.add('info_card');
+    // Function to add a new team member card (limit to one member)
+    function addEquipeCard() {
+        const container = document.getElementById('productContainer');
+        const productMessage = document.getElementById('productMessage');
+        
+        // If there is already one member, prevent adding another
+        if (container.children.length >= 1) {
+            alert("Você só pode adicionar um membro.");
+            return;
+        }
 
-    newCard.innerHTML = `
-        <div class="info_form">
-            <div class="drop_down">
-                <label>Nome da Pessoa:</label>
-                <div class="expandir_div" onclick="toggleIngredients(this)">
-                    Expandir
-                    <i class="bi bi-chevron-down"></i>
+        productMessage.style.display = 'none';
+
+        const newCard = document.createElement('div');
+        newCard.classList.add('info_card');
+
+        newCard.innerHTML = `
+            <div class="info_form">
+                <div class="drop_down">
+                    <label>Nome da Pessoa:</label>
+                    <div class="expandir_div" onclick="toggleIngredients(this)">
+                        Expandir
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <input type="text" class="team-name">
+                <div class="ingredientes" style="display: none;">
+                    <span>Telefone:</span>
+                    <input type="text" class="team-phone">
+                    <span>E-mail:</span>
+                    <input type="text" class="team-email">
+                </div>
+                <div class="btn_delete">
+                    <button onclick="removeEquipeCard(this)">
+                        Excluir Membro
+                        <i class="bi bi-trash"></i>
+                    </button>
                 </div>
             </div>
-            <input type="text" class="team-name">
-            <div class="ingredientes" style="display: none;">
-                <span>Telefone:</span>
-                <input type="text" class="team-phone">
-            
-                <span>E-mail:</span>
-                <input type="text" class="team-email">
-            </div>
-            <div class="btn_delete">
-                <button onclick="removeEquipeCard(this)">
-                    Excluir Membro
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        </div>
-    `;
+        `;
 
-    container.appendChild(newCard);
-}
-
-// Function to remove a team member card
-function removeEquipeCard(button) {
-    const container = document.getElementById('productContainer');
-    button.closest('.info_card').remove();
-
-    if (container.children.length === 0) {
-        document.getElementById('productMessage').style.display = 'block';
-    }
-}
-
-// Add event listener to the add team member button
-document.getElementById('addProdutoCard').addEventListener('click', addEquipeCard);
-
-// Show the message if no team members are added on page load
-window.onload = function () {
-    const container = document.getElementById('productContainer');
-    if (container.children.length === 0) {
-        document.getElementById('productMessage').style.display = 'block';
-    }
-};
-
-async function salvarDadosPag2() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');
-    const teamContainer = document.getElementById('productContainer');
-    const teamMembers = [];
-
-    const teamCards = teamContainer.getElementsByClassName('info_card');
-    if (teamCards.length === 0) {
-        document.getElementById('productMessage').style.display = 'block';
-        return;
+        container.appendChild(newCard);
     }
 
-    // Collect team member details from each card
-    for (let card of teamCards) {
-        const memberName = card.querySelector('.team-name').value;
-        const memberPhone = card.querySelector('.team-phone').value;
-        const memberEmail = card.querySelector('.team-email').value;
+    // Function to remove a team member card
+    function removeEquipeCard(button) {
+        const container = document.getElementById('productContainer');
+        button.closest('.info_card').remove();
 
-        if (memberName.trim() === "") {
+        if (container.children.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+        }
+    }
+
+    // Add event listener to the add team member button
+    document.getElementById('addProdutoCard').addEventListener('click', addEquipeCard);
+
+    // Save team data and redirect to the next page
+    async function salvarDadosPag2() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        const teamContainer = document.getElementById('productContainer');
+
+        const teamCards = teamContainer.getElementsByClassName('info_card');
+        if (teamCards.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+            return;
+        }
+
+        const memberName = teamCards[0].querySelector('.team-name').value;
+        const memberPhone = teamCards[0].querySelector('.team-phone').value;
+        const memberEmail = teamCards[0].querySelector('.team-email').value;
+
+        if (!memberName.trim()) {
             alert("Por favor, preencha o nome do membro da equipe.");
             return;
         }
 
-        teamMembers.push({
+        // Save the single team member to sessionStorage
+        const teamMember = {
             nome: memberName,
             telefone: memberPhone,
             email: memberEmail
-        });
+        };
+
+        sessionStorage.setItem('equipe', JSON.stringify(teamMember));
+
+        // Redirect to the next page (choose a stand)
+        window.location.href = `stand-colaborador.html?id=${eventId}`;
     }
 
-    // Save team members to sessionStorage instead of sending to the backend
-    sessionStorage.setItem('equipe', JSON.stringify(teamMembers));
-
-    // Redirect to the next page (choose a stand)
-    window.location.href = `stand-colaborador.html?id=${eventId}`;
-}
-
-// On page load, restore the saved team members from sessionStorage
+    // On page load, restore the saved team member from sessionStorage
+    // On page load, restore the saved team member from sessionStorage
 window.onload = function () {
     const container = document.getElementById('productContainer');
-    const savedTeam = JSON.parse(sessionStorage.getItem('equipe') || '[]');
+    const savedTeamData = sessionStorage.getItem('equipe');
 
-    if (savedTeam.length > 0) {
-        savedTeam.forEach(member => {
-            const newCard = document.createElement('div');
-            newCard.classList.add('info_card');
+    // Check if equipe data is present in sessionStorage
+    if (savedTeamData) {
+        // Try to parse the savedTeam data
+        try {
+            const savedTeam = JSON.parse(savedTeamData);
 
-            newCard.innerHTML = `
-                <div class="info_form">
-                    <div class="drop_down">
-                        <label>Nome da Pessoa:</label>
-                        <div class="expandir_div" onclick="toggleIngredients(this)">
-                            Expandir
-                            <i class="bi bi-chevron-down"></i>
+            // Check if savedTeam contains valid properties
+            if (savedTeam && savedTeam.nome && savedTeam.telefone && savedTeam.email) {
+                const newCard = document.createElement('div');
+                newCard.classList.add('info_card');
+
+                newCard.innerHTML = `
+                    <div class="info_form">
+                        <div class="drop_down">
+                            <label>Nome da Pessoa:</label>
+                            <div class="expandir_div" onclick="toggleIngredients(this)">
+                                Expandir
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="team-name" value="${savedTeam.nome}">
+                        <div class="ingredientes" style="display: none;">
+                            <span>Telefone:</span>
+                            <input type="text" class="team-phone" value="${savedTeam.telefone}">
+                            <span>E-mail:</span>
+                            <input type="text" class="team-email" value="${savedTeam.email}">
+                        </div>
+                        <div class="btn_delete">
+                            <button onclick="removeEquipeCard(this)">
+                                Excluir Membro
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </div>
                     </div>
-                    <input type="text" class="team-name" value="${member.nome}">
-                    <div class="ingredientes" style="display: none;">
-                        <span>Telefone:</span>
-                        <input type="text" class="team-phone" value="${member.telefone}">
-                    
-                        <span>E-mail:</span>
-                        <input type="text" class="team-email" value="${member.email}">
-                    </div>
-                    <div class="btn_delete">
-                        <button onclick="removeEquipeCard(this)">
-                            Excluir Membro
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
+                `;
 
-            container.appendChild(newCard);
-        });
+                container.appendChild(newCard);
+            } else {
+                console.error('Invalid equipe data in sessionStorage:', savedTeam);
+                document.getElementById('productMessage').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error parsing equipe from sessionStorage:', error);
+            document.getElementById('productMessage').style.display = 'block';
+        }
     } else {
         document.getElementById('productMessage').style.display = 'block';
     }
 };
-
-
 
 </script>
 

@@ -35,15 +35,15 @@
 
     <div class="menu">
         <a href="index-colaborador.html" class="opcoes">
-            <img src="../../assets/Vector 3 (1).png" alt="">
-            <p>Inicio</p>
+            <img src="../../assets/Vector 3 (1).png" alt="Início">
+            <p>Início</p>
         </a>
         <a href="eventos-colaborador.html" class="opcoes">
-            <img src="../../assets/Calendar icon.png" alt="">
+            <img src="../../assets/Calendar icon.png" alt="Eventos">
             <p>Eventos</p>
         </a>
         <a href="perfil-colaborador.html" class="opcoes">
-            <img src="../../assets/Group 3.png" alt="">
+            <img src="../../assets/Group 3.png" alt="Perfil">
             <p>Perfil</p>
         </a>
         <a href="login.html" class="opcoes">
@@ -158,118 +158,128 @@
             const eventId = urlParams.get('id');
             const evento = await buscarDetalhesEvento();
             const savedProducts = JSON.parse(sessionStorage.getItem('produtos') || '[]');
-            const savedTeam = JSON.parse(sessionStorage.getItem('equipe') || '[]');
+            const savedTeam = JSON.parse(sessionStorage.getItem('equipe'));
+            console.log(savedTeam) // Handle as an object
 
             if (!selectedStandId) {
                 alert("Por favor, escolha um stand.");
                 return;
             }
 
+            if (!savedTeam || !savedTeam.nome) {
+                alert("Por favor, adicione um membro da equipe.");
+                return;
+            }
+
+            // Post the team data to /equipe endpoint (only once)
+            const equipeId = await postTeam(savedTeam);
+
             const standResponse = await fetch(`http://localhost:8080/tipoStand/id?id=${selectedStandId}`);
             const selectedStand = await standResponse.json();
 
             const registrationData = {
-                id_inscricao: 0,
-                data: new Date().toISOString().split('T')[0], // Format date as "YYYY-MM-DD"
-                nicho: sessionStorage.getItem('NICHO') || 'Alimento',
-                fkUsuario: {
-                    idColaborador: colaboradorData.idColaborador || 0,
-                    email: colaboradorData.email || 'string',
-                    senha: colaboradorData.senha || 'string',
-                    cnpj: colaboradorData.cnpj || 'string',
-                    nomeResp: colaboradorData.nomeResp || 'string',
-                    cpfResp: colaboradorData.cpfResp || 'string',
-                    telefone: colaboradorData.telefone || 'string',
-                    permissao: colaboradorData.permissao || 0,
-                    nomeFantasia: colaboradorData.nomeFantasia || 'string',
-                    razaoSocial: colaboradorData.razaoSocial || 'string',
-                    tipoEmpresa: colaboradorData.tipoEmpresa || 'string',
-                    inscEstadual: colaboradorData.inscEstadual || 'string',
-                    rgResp: colaboradorData.rgResp || 'string',
-                    bannerImg: colaboradorData.bannerImg || 'string',
-                    wppComercial: colaboradorData.wppComercial || 'string',
-                    proposito: colaboradorData.proposito || 'string',
-                    endereco: {
-                        id_endereco_usuario: colaboradorData.endereco.id_endereco_usuario || 0,
-                        logradouro: colaboradorData.endereco.logradouro || 'string',
-                        numero: colaboradorData.endereco.numero || 0,
-                        complemento: colaboradorData.endereco.complemento || 'string',
-                        cidade: colaboradorData.endereco.cidade || 'string',
-                        estado: colaboradorData.endereco.estado || 'string',
-                        cep: colaboradorData.endereco.cep || 'string'
+                "id_inscricao": 0,
+                "data": new Date().toISOString().split('T')[0],
+                "nicho": sessionStorage.getItem('NICHO') || 'Alimento',
+                "fkUsuario": {
+                    "idColaborador": colaboradorData.idColaborador || 0,
+                    "email": colaboradorData.email || "",
+                    "senha": colaboradorData.senha || "",
+                    "cnpj": colaboradorData.cnpj || "",
+                    "nomeResp": colaboradorData.nomeResp || "",
+                    "cpfResp": colaboradorData.cpfResp || "",
+                    "telefone": colaboradorData.telefone || "",
+                    "permissao": colaboradorData.permissao || 0,
+                    "nomeFantasia": colaboradorData.nomeFantasia || "",
+                    "razaoSocial": colaboradorData.razaoSocial || "",
+                    "tipoEmpresa": colaboradorData.tipoEmpresa || "",
+                    "inscEstadual": colaboradorData.inscEstadual || "",
+                    "rgResp": colaboradorData.rgResp || "",
+                    "bannerImg": colaboradorData.bannerImg || "",
+                    "wppComercial": colaboradorData.wppComercial || "",
+                    "proposito": colaboradorData.proposito || "",
+                    "endereco": {
+                        "id_endereco_usuario": colaboradorData.endereco.id_endereco_usuario || 0,
+                        "logradouro": colaboradorData.endereco.logradouro || "",
+                        "numero": colaboradorData.endereco.numero || 0,
+                        "complemento": colaboradorData.endereco.complemento || "",
+                        "cidade": colaboradorData.endereco.cidade || "",
+                        "estado": colaboradorData.endereco.estado || "",
+                        "cep": colaboradorData.endereco.cep || ""
                     },
-                    tipoProduto: {
-                        id_tipo_produto: colaboradorData.tipoProduto.id_tipo_produto || 0,
-                        tipo: colaboradorData.tipoProduto.tipo || 'string'
+                    "tipoProduto": {
+                        "id_tipo_produto": colaboradorData.tipoProduto.id_tipo_produto || 0,
+                        "tipo": colaboradorData.tipoProduto.tipo || ""
                     },
-                    midiasSociais: {
-                        id_midias_sociais: colaboradorData.midiasSociais.id_midias_sociais || 0,
-                        instagram: colaboradorData.midiasSociais.instagram || 'string',
-                        facebook: colaboradorData.midiasSociais.facebook || 'string',
-                        site: colaboradorData.midiasSociais.site || 'string'
+                    "midiasSociais": {
+                        "id_midias_sociais": colaboradorData.midiasSociais.id_midias_sociais || 0,
+                        "instagram": colaboradorData.midiasSociais.instagram || "",
+                        "facebook": colaboradorData.midiasSociais.facebook || "",
+                        "site": colaboradorData.midiasSociais.site || ""
                     }
                 },
-                tipo_stand: {
-                    id_tipo_stand: selectedStand.id_tipo_stand || 0,
-                    tipo: selectedStand.tipo || 'string',
-                    largura: selectedStand.largura || 'string',
-                    comprimento: selectedStand.comprimento || 'string',
-                    qtd_cadeiras: selectedStand.qtd_cadeiras || 0,
-                    valor: selectedStand.valor || 0,
-                    excecao: selectedStand.excecao || 'string',
-                    ponto_eletrico: selectedStand.ponto_eletrico || 'string'
+                "tipo_stand": {
+                    "id_tipo_stand": selectedStand.id_tipo_stand || 0,
+                    "tipo": selectedStand.tipo || "",
+                    "largura": selectedStand.largura || "",
+                    "comprimento": selectedStand.comprimento || "",
+                    "qtd_cadeiras": selectedStand.qtd_cadeiras || 0,
+                    "valor": selectedStand.valor || 0,
+                    "excecao": selectedStand.excecao || "",
+                    "ponto_eletrico": selectedStand.ponto_eletrico || ""
                 },
-                status: {
-                    id_Status: 1, // Assuming the status is always 'Inscrito' at this stage
-                    status: 'Inscrito'
+                "status": {
+                    "id_Status": 1,
+                    "status": "Ativo"
                 },
-                equipe: {
-                    id_equipe: savedTeam[0]?.id_equipe || 0, // Handle if no team is saved
-                    nome: savedTeam[0]?.nome || 'string',
-                    telefone: savedTeam[0]?.telefone || 'string',
-                    email: savedTeam[0]?.email || 'string'
+                "equipe": {
+                    "id_equipe": equipeId || 0, // Use the ID returned from the POST request
+                    "nome": savedTeam.nome || "",
+                    "telefone": savedTeam.telefone || "",
+                    "email": savedTeam.email || ""
                 },
-                evento: {
-                    id_evento: evento.id_evento || 0,
-                    nome: evento.nome || 'string',
-                    tema: evento.tema || 'string',
-                    descricao: evento.descricao || 'string',
-                    banner_evento: evento.banner_evento || 'string',
-                    dataEvento: evento.dataEvento || '2024-10-12',
-                    hora_inicio: evento.hora_inicio || '2024-10-12T02:21:14.570Z',
-                    hora_fim: evento.hora_fim || '2024-10-12T02:21:14.570Z',
-                    financeiro: {
-                        id_financeiro: evento.financeiro?.id_financeiro || 0,
-                        orcamento_total: evento.financeiro?.orcamento_total || 0,
-                        aluguel_local: evento.financeiro?.aluguel_local || 0,
-                        valor_funcionario: evento.financeiro?.valor_funcionario || 0,
-                        valor_infra: evento.financeiro?.valor_infra || 0,
-                        valor_inscricao: evento.financeiro?.valor_inscricao || 0,
-                        meta_lucro: evento.financeiro?.meta_lucro || 0,
-                        qtd_max_colaborador: evento.financeiro?.qtd_max_colaborador || 0
+                "evento": {
+                    "id_evento": evento.id_evento || 0,
+                    "nome": evento.nome || "",
+                    "tema": evento.tema || "",
+                    "descricao": evento.descricao || "",
+                    "banner_evento": evento.banner_evento || "",
+                    "dataEvento": evento.dataEvento || "",
+                    "hora_inicio": evento.hora_inicio || "",
+                    "hora_fim": evento.hora_fim || "",
+                    "financeiro": {
+                        "id_financeiro": evento.financeiro?.id_financeiro || 0,
+                        "orcamento_total": evento.financeiro?.orcamento_total || 0,
+                        "aluguel_local": evento.financeiro?.aluguel_local || 0,
+                        "valor_funcionario": evento.financeiro?.valor_funcionario || 0,
+                        "valor_infra": evento.financeiro?.valor_infra || 0,
+                        "valor_inscricao": evento.financeiro?.valor_inscricao || 0,
+                        "meta_lucro": evento.financeiro?.meta_lucro || 0,
+                        "qtd_max_colaborador": evento.financeiro?.qtd_max_colaborador || 0
                     },
-                    Atracao: {
-                        id_atracao: evento.Atracao?.id_atracao || 0,
-                        tipo_atracao: evento.Atracao?.tipo_atracao || 'string',
-                        valor_atracao: evento.Atracao?.valor_atracao || 0
+                    "Atracao": {
+                        "id_atracao": evento.Atracao?.id_atracao || 0,
+                        "tipo_atracao": evento.Atracao?.tipo_atracao || "",
+                        "valor_atracao": evento.Atracao?.valor_atracao || 0
                     },
-                    enderecoEvento: {
-                        id_endereco_evento: evento.enderecoEvento?.id_endereco_evento || 0,
-                        logradouro: evento.enderecoEvento?.logradouro || 'string',
-                        numero: evento.enderecoEvento?.numero || 0,
-                        complemento: evento.enderecoEvento?.complemento || 'string',
-                        cidade: evento.enderecoEvento?.cidade || 'string',
-                        estado: evento.enderecoEvento?.estado || 'string',
-                        cep: evento.enderecoEvento?.cep || 'string'
+                    "enderecoEvento": {
+                        "id_endereco_evento": evento.enderecoEvento?.id_endereco_evento || 0,
+                        "logradouro": evento.enderecoEvento?.logradouro || "",
+                        "numero": evento.enderecoEvento?.numero || 0,
+                        "complemento": evento.enderecoEvento?.complemento || "",
+                        "cidade": evento.enderecoEvento?.cidade || "",
+                        "estado": evento.enderecoEvento?.estado || "",
+                        "cep": evento.enderecoEvento?.cep || ""
                     },
-                    deletado: evento.deletado || false,
-                    atracao: {
-                        id_atracao: evento.atracao?.id_atracao || 0,
-                        tipo_atracao: evento.atracao?.tipo_atracao || 'string',
-                        valor_atracao: evento.atracao?.valor_atracao || 0
+                    "deletado": evento.deletado || false,
+                    "atracao": {
+                        "id_atracao": evento.atracao?.id_atracao || 0,
+                        "tipo_atracao": evento.atracao?.tipo_atracao || "",
+                        "valor_atracao": evento.atracao?.valor_atracao || 0
                     }
                 }
             };
+
 
             console.log("Dados de inscrição:", registrationData);
 
@@ -295,31 +305,67 @@
             }
         }
 
-        // Function to submit products to /produto endpoint
+        // Function to submit the team (equipe) to /equipe endpoint
+        async function postTeam(savedTeam) {
+            try {
+                // Primeiro, faz o POST da equipe
+                const postResponse = await fetch('http://localhost:8080/equipe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(savedTeam)
+                });
+
+                if (postResponse.ok) {
+                    console.log('Equipe criada com sucesso, buscando a última equipe cadastrada...');
+
+                    // Agora faz um GET para buscar todas as equipes
+                    const getResponse = await fetch('http://localhost:8080/equipe', {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    if (getResponse.ok) {
+                        const allTeams = await getResponse.json();
+
+                        if (allTeams.length > 0) {
+                            const lastTeam = allTeams[allTeams.length - 1];
+                            console.log('Última equipe cadastrada:', lastTeam);
+                            return lastTeam.id_equipe;
+                        } else {
+                            throw new Error('Nenhuma equipe encontrada.');
+                        }
+                    } else {
+                        throw new Error('Erro ao buscar equipes.');
+                    }
+                } else {
+                    throw new Error('Erro ao criar a equipe');
+                }
+            } catch (error) {
+                console.error('Erro ao criar a equipe e buscar a última equipe:', error);
+                alert('Erro ao criar a equipe e buscar a última equipe.');
+            }
+        }
+
         async function submitProducts(produtos) {
             const colaboradorData = buscardados();
-            for (const product of produtos) {
+
+            for (let product of produtos) {
                 const productData = {
                     nome: product.nome,
                     ingredientes: product.ingredientes || 'Não informado',
                     usuario: colaboradorData,
                 };
 
-                try {
-                    const response = await fetch('http://localhost:8080/produto', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(productData)
-                    });
+                const response = await fetch('http://localhost:8080/produto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
 
-                    if (response.ok) {
-                        console.log(`Produto ${product.nome} cadastrado com sucesso!`);
-                    } else {
-                        const errorResponse = await response.json();
-                        console.error(`Erro ao cadastrar produto ${product.nome}:`, errorResponse);
-                    }
-                } catch (error) {
-                    console.error(`Erro ao cadastrar produto ${product.nome}:`, error);
+                if (response.ok) {
+                    console.log(`Produto ${product.nome} cadastrado com sucesso!`);
+                } else {
+                    alert(`Erro ao cadastrar o produto ${product.nome}.`);
                 }
             }
         }

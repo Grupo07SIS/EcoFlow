@@ -76,7 +76,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
 
 async function buscarEventos() {
     try {
-        const resposta = await fetch("http://localhost:8080/evento");
+        const resposta = await fetch("http://localhost:8080/evento/futuros");
         const respostaDadosEventos = await resposta.json();
         console.log("Resposta: ", respostaDadosEventos);
 
