@@ -26,23 +26,23 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
-            <div class="user_info">
-                <i class="bi bi-person-circle"></i>
-                <p id="userName">Nome do Usuário</p>
-                <p id="nomeEmpresa">Nome da Empresa</p>
-            </div>
-            <a href="meus-eventos.html">Meus eventos</a>
-            <a href="lista_de_espera.html">Participantes em espera</a>
-            <a href="dash_gerencial.html">Painel Gerencial</a>
-            <a href="login.html">Sair</a>
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
+    </div>
 
-        <div class="openBarMain">
-            <i class="bi bi-list openBar" onclick="openNav()"></i>
-        </div>
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
     <div class="content">
-        
+
 
         <!-- Titulo da tela -->
         <div class="titulo">
@@ -199,6 +199,17 @@
                 return text.substring(0, maxLength) + '...';
             }
             return text;
+        }
+
+        window.onload = valorPadrao()
+
+        async function valorPadrao() {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+            const nomeNavBar = document.getElementById('userName')
+            const emailNavBar = document.getElementById('nomeEmpresa')
+            nomeNavBar.innerHTML = nomeSS
+            emailNavBar.innerHTML = emailSS
         }
     </script>
 </body>

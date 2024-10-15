@@ -27,10 +27,11 @@ function obterDados() {
     };
 }
 
+
+
 // Function to load profile data into the form fields
 async function carregarPerfil() {
     const dados = obterDados();
-
     const nomePerfil = document.getElementById('nomeUsuario');
     const telefoneCampo = document.getElementById('telefone');
     const cnpjCampo = document.getElementById('cnpj');

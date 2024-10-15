@@ -62,7 +62,7 @@
                     <button class="primary_btn" onclick="applyFilters()">
                         Aplicar Filtro
                     </button>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -105,3 +105,16 @@
 </body>
 
 </html>
+
+<script>
+    window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+</script>

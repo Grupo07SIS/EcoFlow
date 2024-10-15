@@ -8,7 +8,7 @@
     <title>Ecoflow | Criar Evento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/evento.css">
     <link rel="stylesheet" href="../css/valores.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -20,15 +20,14 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -98,15 +97,15 @@
 
     <div class="proximo-voltar">
         <button type="button" class="btn btn-outline-secondary">
-            <a href="../html/evento.html">Voltar</a>
+            <a href="evento.html">Voltar</a>
         </button>
         <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="../html/standEscolher.html">Proximo</a>
+            <a href="standEscolher.html">Proximo</a>
         </button>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
@@ -114,7 +113,7 @@
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2 (1).png" alt="">
             <p>Criar Evento</p>
         </a>
@@ -149,7 +148,7 @@
 
         // Eventos para formatar valor enquanto digita
         document.querySelectorAll('.form-control-currency').forEach(input => {
-            input.addEventListener('input', function(e) {
+            input.addEventListener('input', function (e) {
                 formatCurrencyInput(this);
             });
         });
@@ -158,7 +157,22 @@
             return valor.replace(/[R$\s]/g, '');
         }
 
-        function salvarDadosPag2(){
+        window.onload = function () {
+            // Load stored event data if present
+            const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
+
+            if (dadosEvento) {
+                document.getElementById('orcamento').value = dadosEvento.orcamentoTotal || '';
+                document.getElementById('meta').value = dadosEvento.metaLucro || '';
+                document.getElementById('aluguel').value = dadosEvento.aluguelLocal || '';
+                document.getElementById('infra').value = dadosEvento.valorInfra || '';
+                document.getElementById('inscricao').value = dadosEvento.valorInscricao || '';
+                document.getElementById('func').value = dadosEvento.valorFuncionarios || '';
+                document.getElementById('qtdColab').value = dadosEvento.qtdMaxColaboradores || '';
+            }
+        }
+
+        function salvarDadosPag2() {
             const dados = JSON.parse(sessionStorage.getItem('dadosEvento')) || {};
             dados.orcamentoTotal = limparValor(document.getElementById('orcamento').value);
             dados.metaLucro = limparValor(document.getElementById('meta').value);
@@ -168,19 +182,20 @@
             dados.valorFuncionarios = limparValor(document.getElementById('func').value);
             dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
             sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
+
+            window.location.href = 'standEscolher.html';
         }
 
         window.onload = valorPadrao()
 
-    async function valorPadrao() {
-        console.log("CHEGOU NESSA BCT")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
-        const nomeNavBar = document.getElementById('userName')
-        const emailNavBar = document.getElementById('nomeEmpresa')
-        nomeNavBar.innerHTML = nomeSS
-        emailNavBar.innerHTML = emailSS
-    }
+        async function valorPadrao() {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+            const nomeNavBar = document.getElementById('userName')
+            const emailNavBar = document.getElementById('nomeEmpresa')
+            nomeNavBar.innerHTML = nomeSS
+            emailNavBar.innerHTML = emailSS
+        }
     </script>
 </body>
 

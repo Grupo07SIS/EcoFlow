@@ -80,15 +80,26 @@
 
 </html>
 <script>
+
+  window.onload = valorPadrao()
+
+  async function valorPadrao() {
+    const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+    const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+    const nomeNavBar = document.getElementById('userName')
+    const emailNavBar = document.getElementById('nomeEmpresa')
+    nomeNavBar.innerHTML = nomeSS
+    emailNavBar.innerHTML = emailSS
+  }
   document.querySelector('.search-input').addEventListener('input', async function () {
     const searchQuery = this.value.trim();
     const nicho = getNichoFromUrl();
 
     if (nicho) {
-        fetchCollaboratorsByNiche(`/${nicho}/fila/busca?nome=${encodeURIComponent(searchQuery)}`);
+      fetchCollaboratorsByNiche(`/${nicho}/fila/busca?nome=${encodeURIComponent(searchQuery)}`);
     } else {
-        console.error('Nicho não encontrado na URL.');
+      console.error('Nicho não encontrado na URL.');
     }
-});
+  });
 
 </script>

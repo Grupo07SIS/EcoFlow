@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <script src="../js/organizador/evento.js"></script>
+    <!-- <script src="../js/organizador/evento.js"></script> -->
 
     <!-- Leaflet (for maps) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -27,8 +27,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="loading.html">Sair</a>
     </div>
@@ -99,5 +99,16 @@
 <script>
     function backpage() {
         window.history.back();
+    }
+
+    window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
     }
 </script>

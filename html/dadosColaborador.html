@@ -30,8 +30,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="loading.html">Sair</a>
     </div>
@@ -96,7 +96,8 @@
             <div class="bloco_dados">
                 <span style="font-weight: 600;">Número</span>
                 <span id="numero">501</span>
-            </div><div class="bloco_dados">
+            </div>
+            <div class="bloco_dados">
                 <span style="font-weight: 600;">Complemento</span>
                 <span id="complemento">Salão 3</span>
             </div>
@@ -105,7 +106,8 @@
             <div class="bloco_dados">
                 <span style="font-weight: 600;">Cidade</span>
                 <span id="cidade">São Paulo</span>
-            </div><div class="bloco_dados">
+            </div>
+            <div class="bloco_dados">
                 <span style="font-weight: 600;">Estado</span>
                 <span id="estado">São Paulo</span>
             </div>
@@ -116,7 +118,9 @@
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Propósito</span>
-            <span id="proposito">Fornecer papetes que tragam junto á estilo, conscientização sobre o consumo de materia prima prejudicial ao meio ambiente. Nossas papetes não possuem material de origem animal e nem plástico.</span>
+            <span id="proposito">Fornecer papetes que tragam junto á estilo, conscientização sobre o consumo de materia
+                prima prejudicial ao meio ambiente. Nossas papetes não possuem material de origem animal e nem
+                plástico.</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Nicho Produtos</span>
@@ -133,23 +137,23 @@
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
-        <a href="../html/meus-eventos.html" class="opcoes">
+        <a href="meus-eventos.html" class="opcoes">
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2.png" alt="">
             <p>Criar Evento</p>
         </a>
-        <a href="../html/lista_de_espera.html" class="opcoes">
+        <a href="lista_de_espera.html" class="opcoes">
             <img src="../assets/Group 4.png" alt="">
             <p>Participantes</p>
         </a>
-        <a href="../html/perfil.html" class="opcoes">
+        <a href="perfil.html" class="opcoes">
             <img src="../assets/Group 3.png" alt="">
             <p>Perfil</p>
         </a>
@@ -164,7 +168,18 @@
 </html>
 
 <script>
-function backpage(){
-    window.history.back();
-}
+    function backpage() {
+        window.history.back();
+    }
+
+    window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
 </script>

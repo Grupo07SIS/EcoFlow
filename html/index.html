@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </head>
 
 <body>
@@ -20,11 +21,11 @@
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
-            <p id="userName">Nome do Usuário</p>
+            <p id="userName"></p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -157,9 +158,8 @@
     window.onload = valorPadrao()
 
     async function valorPadrao() {
-        console.log("CHEGOU")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
         const nomeNavBar = document.getElementById('userName')
         const emailNavBar = document.getElementById('nomeEmpresa')
         nomeNavBar.innerHTML = nomeSS

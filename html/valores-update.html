@@ -26,8 +26,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -97,15 +97,15 @@
 
     <div class="proximo-voltar">
         <button type="button" class="btn btn-outline-secondary">
-            <a href="../html/evento.html">Voltar</a>
+            <a href="evento.html">Voltar</a>
         </button>
         <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="../html/standEscolher-update.html">Proximo</a>
+            <a href="standEscolher-update.html">Proximo</a>
         </button>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
@@ -113,7 +113,7 @@
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2 (1).png" alt="">
             <p>Criar Evento</p>
         </a>
@@ -205,9 +205,8 @@
         window.onload = valorPadrao2()
 
         async function valorPadrao2() {
-            console.log("CHEGOU NESSA BCT")
-            const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-            const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
             const nomeNavBar = document.getElementById('userName')
             const emailNavBar = document.getElementById('nomeEmpresa')
             nomeNavBar.innerHTML = nomeSS

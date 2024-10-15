@@ -27,8 +27,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -53,29 +53,29 @@
 
     <div class="proximo-voltar">
         <button type="button" class="btn btn-outline-secondary">
-            <a href="../html/standEscolher.html">Voltar</a>
+            <a href="standEscolher.html">Voltar</a>
         </button>
-        <button type="button" class="btn btn-secondary" onclick="cadastrarEvento()">Salvar</button>
+        <button type="button" class="btn btn-secondary" onclick="submitEvent()">Criar Evento</button>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
-        <a href="../html/meus-eventos.html" class="opcoes">
+        <a href="meus-eventos.html" class="opcoes">
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2 (1).png" alt="">
             <p style="color: #C7530C;">Criar Evento</p>
         </a>
-        <a href="../html/lista_de_espera.html" class="opcoes">
+        <a href="lista_de_espera.html" class="opcoes">
             <img src="../assets/Group 4.png" alt="">
             <p>Participantes</p>
         </a>
-        <a href="../html/perfil.html" class="opcoes">
+        <a href="perfil.html" class="opcoes">
             <img src="../assets/Group 3.png" alt="">
             <p>Perfil</p>
         </a>
@@ -86,6 +86,17 @@
     </div>
 
     <script>
+
+        window.onload = valorPadrao()
+
+        async function valorPadrao() {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+            const nomeNavBar = document.getElementById('userName')
+            const emailNavBar = document.getElementById('nomeEmpresa')
+            nomeNavBar.innerHTML = nomeSS
+            emailNavBar.innerHTML = emailSS
+        }
         // Function to format the currency input
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, '');
@@ -108,9 +119,16 @@
             }
         }
 
-        // Function to add a new attraction card
+        // Function to add a new attraction card (only one allowed)
         function addAttractionCard() {
             const container = document.getElementById('attractionContainer');
+
+            // If there's already an attraction card, do not allow adding another one
+            if (container.children.length > 1) {
+                alert("Você só pode adicionar uma atração.");
+                return;
+            }
+
             const newCard = document.createElement('div');
             newCard.classList.add('background-box');
 
@@ -118,14 +136,14 @@
                 <div class="group-box">
                     <div class="form-group">
                         <label>Tipo de atração:</label>
-                        <input type="text" class="form-control" id="inputQtdColaboradores">
+                        <input type="text" class="form-control" id="tipoAtracao">
                     </div>
                     <div class="input-group">
                         <label>Valor atração:</label>
                         <div class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                         </div>
-                        <input type="text" class="form-control form-control-currency" id="orcamentoInput" placeholder="0,00">
+                        <input type="text" class="form-control form-control-currency" id="valorAtracao" placeholder="0,00">
                     </div>
                 </div>
                 <div class="proximo1">
@@ -146,8 +164,49 @@
         // Function to remove an attraction card
         function removeAttractionCard(button) {
             button.closest('.background-box').remove();
+            sessionStorage.removeItem('atracao'); // Clear the attraction from sessionStorage if it's removed
             toggleNoAttractionsMessage();
         }
+
+        // Function to collect form data and store in sessionStorage
+        function submitAttraction() {
+            const attractionCards = document.querySelectorAll('.background-box');
+
+            // Check if more than one attraction card exists
+            if (attractionCards.length > 1) {
+                alert("Você só pode adicionar uma atração.");
+                return;
+            }
+
+            attractionCards.forEach(card => {
+                const tipoAtracao = card.querySelector('#tipoAtracao').value;
+                const valorAtracaoRaw = card.querySelector('#valorAtracao').value.replace(/[R$,]/g, '');
+
+                // Check if tipoAtracao or valorAtracaoRaw is empty
+                if (!tipoAtracao || !valorAtracaoRaw) {
+                    alert("Preencha todos os campos da atração.");
+                    return;
+                }
+
+                const valorAtracao = parseFloat(valorAtracaoRaw) / 100;
+
+                const atracao = {
+                    id_atracao: 0,
+                    tipo_atracao: tipoAtracao,
+                    valor_atracao: valorAtracao
+                };
+
+                // Log the attraction to verify it's being created correctly
+                console.log("Attraction:", atracao);
+
+                // Store the single attraction in sessionStorage
+                sessionStorage.setItem('atracao', JSON.stringify(atracao));
+
+                // Verify if the attraction was added to sessionStorage
+                console.log("Stored attraction:", sessionStorage.getItem('atracao'));
+            });
+        }
+
 
         // Add event listener to the add attraction button
         document.getElementById('addAttractionButton').addEventListener('click', addAttractionCard);
@@ -159,9 +218,183 @@
             document.getElementById('userName').innerHTML = nomeSS;
             document.getElementById('nomeEmpresa').innerHTML = emailSS;
 
-            // Show no attractions message on load
             toggleNoAttractionsMessage();
         };
+
+        async function submitEvent() {
+            try {
+                const dadosEventoString = sessionStorage.getItem('dadosEvento');
+                if (!dadosEventoString) {
+                    throw new Error("Dados do evento não encontrados.");
+                }
+
+                const dadosEvento = JSON.parse(dadosEventoString);
+
+                const {
+                    nome,
+                    tema,
+                    descricao,
+                    dataEvento,
+                    hora_inicio,
+                    hora_fim,
+                    orcamentoTotal,
+                    aluguelLocal,
+                    valorFuncionarios,
+                    valorInfra,
+                    valorInscricao,
+                    metaLucro,
+                    qtdMaxColaboradores,
+                    enderecoEvento
+                } = dadosEvento;
+
+                const { logradouro, numero, complemento, cidade, estado, cep } = enderecoEvento;
+
+                const financeiroData = {
+                    id_financeiro: 0,
+                    orcamento_total: orcamentoTotal,
+                    aluguel_local: aluguelLocal,
+                    valor_funcionario: valorFuncionarios,
+                    valor_infra: valorInfra,
+                    valor_inscricao: valorInscricao,
+                    meta_lucro: metaLucro,
+                    qtd_max_colaborador: qtdMaxColaboradores
+                };
+
+                // POST to create financial data
+                const financeiroResponse = await fetch('http://localhost:8080/financeiro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(financeiroData)
+                });
+
+                if (!financeiroResponse.ok) {
+                    throw new Error('Erro ao criar dados financeiros');
+                }
+
+                const financeiroResult = await financeiroResponse.json();
+                const financeiroId = financeiroResult.id_financeiro;
+
+                // Address data
+                const enderecoData = {
+                    id_endereco_evento: 0,
+                    logradouro,
+                    numero,
+                    complemento,
+                    cidade,
+                    estado,
+                    cep
+                };
+
+                const enderecoResponse = await fetch('http://localhost:8080/endereco/evento', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(enderecoData)
+                });
+
+                if (!enderecoResponse.ok) {
+                    throw new Error('Erro ao criar endereço');
+                }
+
+                const enderecoResult = await enderecoResponse.json();
+                const enderecoId = enderecoResult.id_endereco_evento;
+
+                // Fetch the attraction from sessionStorage (only one allowed)
+                const atracaoData = JSON.parse(sessionStorage.getItem('atracao'));
+                if (!atracaoData) {
+                    throw new Error('Você deve adicionar uma atração.');
+                }
+                const { id_atracao, tipo_atracao, valor_atracao } = atracaoData;
+
+                // POST for the single attraction
+                const atracaoResponse = await fetch('http://localhost:8080/atracao', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(atracaoData)
+                });
+
+                if (!atracaoResponse.ok) {
+                    throw new Error('Erro ao criar atração');
+                }
+
+                const atracaoResult = await atracaoResponse.json();
+                const atracaoid = atracaoResult.id_atracao;
+                console.log('Atracao:', atracaoResult);
+
+                // Correcting the field names and structure
+                const eventoData = {
+                    "id_evento": 0,
+                    "nome": nome,
+                    "tema": tema,
+                    "descricao": descricao,
+                    "banner_evento": 'YmFubmVyMS5qcGc=',
+                    "dataEvento": dataEvento,
+                    "hora_inicio": hora_inicio,
+                    "hora_fim": hora_fim,
+                    "financeiro": {
+                        "id_financeiro": financeiroId,
+                        "orcamento_total": financeiroData.orcamento_total,
+                        "aluguel_local": financeiroData.aluguel_local,
+                        "valor_funcionario": financeiroData.valor_funcionario,
+                        "valor_infra": financeiroData.valor_infra,
+                        "valor_inscricao": financeiroData.valor_inscricao,
+                        "meta_lucro": financeiroData.meta_lucro,
+                        "qtd_max_colaborador": financeiroData.qtd_max_colaborador
+                    },
+                    "Atracao": {
+                        "id_atracao": 0,
+                        "tipo_atracao": "string",
+                        "valor_atracao": 0
+                    },
+                    "enderecoEvento": {
+                        "id_endereco_evento": enderecoId,
+                        "logradouro": enderecoData.logradouro,
+                        "numero": enderecoData.numero,
+                        "complemento": enderecoData.complemento,
+                        "cidade": enderecoData.cidade,
+                        "estado": enderecoData.estado,
+                        "cep": enderecoData.cep
+                    },
+                    "deletado": false,
+                    "atracao": {
+                        "id_atracao": atracaoid,
+                        "tipo_atracao": atracaoResult.tipo_atracao,
+                        "valor_atracao": atracaoResult.valor_atracao
+                    }
+                };
+
+                console.log('Evento:', eventoData);
+
+                // POST final to create the event
+                const eventoResponse = await fetch('http://localhost:8080/evento', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(eventoData)
+                });
+
+                if (eventoResponse.ok) {
+                    alert('Evento criado com sucesso!');
+                    sessionStorage.removeItem('dadosEvento');
+                    sessionStorage.removeItem('atracao');
+                    sessionStorage.removeItem('bannerEvento');
+                    sessionStorage.removeItem('dadosStand');
+                    window.location.href = 'meus-eventos.html';
+                } else {
+                    alert('Erro ao criar o evento');
+                }
+            } catch (error) {
+                console.error('Erro ao criar o evento:', error);
+                alert('Erro: ' + error.message);
+            }
+        }
+
     </script>
 </body>
 
