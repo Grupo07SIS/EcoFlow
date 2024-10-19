@@ -85,15 +85,17 @@ function geocode(address) {
 }
 
 async function deletarEvento() {
+    // Mostrar o popup de confirmação
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('popup-message').innerText = "Você realmente quer apagar este evento?";
+
+    // Pegar o ID do evento da URL
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');  
+    const eventId = urlParams.get('id');
 
-    // Exibe a confirmação para o usuário antes de fazer a requisição
-    const confirmed = confirm("Você realmente quer apagar este evento?");
-
-    if (confirmed) {
+    // Evento para confirmar a exclusão
+    document.getElementById('confirm').onclick = async function () {
         try {
-            // Agora faz a requisição de deletar somente após a confirmação
             const eventDeleteUrl = `http://localhost:8080/evento?id=${eventId}`;
             const response = await fetch(eventDeleteUrl, {
                 method: 'DELETE',
@@ -105,21 +107,24 @@ async function deletarEvento() {
 
             if (response.ok) {
                 console.log('Evento deletado com sucesso');
-                // Redireciona para a página de "Meus Eventos" ou mostra a mensagem de sucesso
                 window.location.href = `meus-eventos.html`;
             } else {
                 console.error('Erro ao marcar o evento como deletado');
-                alert('Erro ao tentar deletar o evento. Por favor, tente novamente.');
+                document.getElementById('popup-message').innerText = 'Erro ao tentar deletar o evento. Por favor, tente novamente.';
             }
         } catch (error) {
             console.error('Erro ao fazer a requisição de deleção:', error);
-            alert('Ocorreu um erro. Por favor, tente novamente.');
+            document.getElementById('popup-message').innerText = 'Ocorreu um erro. Por favor, tente novamente.';
         }
-    } else {
+    };
+
+    // Evento para cancelar a exclusão
+    document.getElementById('cancel').onclick = function () {
+        document.getElementById('popup').style.display = 'none';
         console.log('A exclusão foi cancelada pelo usuário');
-        // Se necessário, você pode adicionar lógica para desfazer outras ações aqui
-    }
+    };
 }
+
 
 
 // Função para desfazer a deleção do evento
