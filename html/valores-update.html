@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Monetário com Símbolo R$</title>
+    <title>Alterar evento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
@@ -178,16 +178,16 @@
 
 
         function valorPadrao() {
-            const dadosJSON = sessionStorage.getItem('dadosGetEvento')
+            const dadosJSON = sessionStorage.getItem('financeiro')
             const dados = JSON.parse(dadosJSON)
             console.log(dados)
-            document.getElementById('orcamento').value = formatarMoeda(dados.fkFinanceiro.orcamentoTotal) || '';
-            document.getElementById('meta').value = formatarMoeda(dados.fkFinanceiro.ticketMedio) || '';
-            document.getElementById('aluguel').value = formatarMoeda(dados.fkFinanceiro.aluguelLocal) || '';
-            document.getElementById('infra').value = formatarMoeda(dados.fkFinanceiro.valorInfra) || '';
-            document.getElementById('inscricao').value = formatarMoeda(dados.fkFinanceiro.valorInscricao) || '';
-            document.getElementById('func').value = formatarMoeda(dados.fkFinanceiro.valorFuncionario) || '';
-            document.getElementById('qtdColab').value = dados.fkFinanceiro.qtdMaxColaboradores || '';
+            document.getElementById('orcamento').value = formatarMoeda(dados.orcamentoTotal) || '';
+            document.getElementById('meta').value = formatarMoeda(dados.metalucaro) || '';
+            document.getElementById('aluguel').value = formatarMoeda(dados.aluguelLocal) || '';
+            document.getElementById('infra').value = formatarMoeda(dados.valorInfra) || '';
+            document.getElementById('inscricao').value = formatarMoeda(dados.valorInscricao) || '';
+            document.getElementById('func').value = formatarMoeda(dados.valorFuncionario) || '';
+            document.getElementById('qtdColab').value = dados.qtdMaxColaboradores || '';
         }
 
         function salvarDadosPag2() {
@@ -200,6 +200,7 @@
             dados.valorFuncionarios = parseFloat(limparValor(document.getElementById('func').value));
             dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
             sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dados));
+            window.location.href = 'standEscolher-update.html';
         }
 
         window.onload = valorPadrao2()

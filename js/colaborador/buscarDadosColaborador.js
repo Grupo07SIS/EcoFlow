@@ -39,32 +39,28 @@ async function valorDados() {
     const telefoneDoColaborador = document.getElementById('telefone');
     const emailNavBar = document.getElementById('email');
 
-    // Store original data
     originalData = {
         nome: nomeColaborador,
         telefone: telefoneColaborador,
         email: emailColaborador
     };
 
-    // Set form values
     nomeColaboradorNavBar.innerText = nomeFantasia;
     nomeDaMarca.value = nomeColaborador;
     telefoneDoColaborador.value = telefoneColaborador;
     emailNavBar.value = emailColaborador;
 }
 
-// Function to enable editing
 function editarPerfil() {
     document.getElementById('nome').disabled = false;
     document.getElementById('telefone').disabled = false;
     document.getElementById('email').disabled = false;
 
-    document.getElementById('cancelar-btn').style.display = 'inline';  // Show 'Cancelar'
-    document.getElementById('salvar-btn').style.display = 'inline';   // Show 'Salvar'
-    document.getElementById('editar-btn').style.display = 'none';     // Hide 'Editar'
+    document.getElementById('cancelar-btn').style.display = 'inline';  
+    document.getElementById('salvar-btn').style.display = 'inline';   
+    document.getElementById('editar-btn').style.display = 'none';    
 }
 
-// Function to save profile
 async function salvarPerfil() {
     const nomeResp = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
@@ -133,29 +129,174 @@ async function salvarPerfil() {
     }
 }
 
-// Function to revert changes (local reset, no server update)
 function voltar() {
-    // Revert fields to original values
     document.getElementById('nome').value = originalData.nome;
     document.getElementById('telefone').value = originalData.telefone;
     document.getElementById('email').value = originalData.email;
 
-    cancelarEdicao(); // Exit editing mode without saving changes
+    cancelarEdicao(); 
 }
 
-// Function to cancel editing mode and disable fields
 function cancelarEdicao() {
     document.getElementById('nome').disabled = true;
     document.getElementById('telefone').disabled = true;
     document.getElementById('email').disabled = true;
 
-    document.getElementById('cancelar-btn').style.display = 'none';   // Hide 'Cancelar'
-    document.getElementById('salvar-btn').style.display = 'none';     // Hide 'Salvar'
-    document.getElementById('editar-btn').style.display = 'inline';   // Show 'Editar'
+    document.getElementById('cancelar-btn').style.display = 'none';   
+    document.getElementById('salvar-btn').style.display = 'none';     
+    document.getElementById('editar-btn').style.display = 'inline';   
 }
 
 
-// Set event listeners on page load
+async function buscarEventosIncricao() {
+    try {
+        const resposta = await fetch("http://localhost:8080/inscricao/futuro");
+        const inscricoes = await resposta.json();
+
+        if (!inscricoes || inscricoes.length === 0) {
+            console.log("Nenhum evento futuro encontrado.");
+            document.querySelector(".listagem_evento").innerHTML = "<p>Nenhum evento futuro encontrado.</p>";
+            return;
+        }
+
+        const cards = document.querySelector(".listagem_evento");
+        if (!cards) {
+            console.error("Elemento '.listagem_evento' não encontrado!");
+            return;
+        }
+
+        cards.innerHTML = ''; // Limpa o conteúdo anterior
+
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        // Mapeia os eventos futuros e os insere na página
+        cards.innerHTML = inscricoes.map(inscricao => {
+            const evento = inscricao.evento;
+            if (evento) {
+                // Converte a data para um objeto Date
+                const eventDate = new Date(evento.dataEvento); 
+                const formattedDate = `${eventDate.getDate()} de ${monthNames[eventDate.getMonth()]} de ${eventDate.getFullYear()}`;
+                
+                const enderecoEvento = evento.enderecoEvento || {};
+                const fullAddress = `${enderecoEvento.logradouro || 'Logradouro'}, ${enderecoEvento.numero || 'N°'} - ${enderecoEvento.cidade || 'Cidade'}`;
+
+                const titulo = truncateText(evento.nome, 15);
+                const truncatedAddress = truncateText(fullAddress, 40);
+
+                return `
+                <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
+                   style="text-decoration:none" 
+                   class="card-link" 
+                   data-id="${evento.id_evento}">
+                    <div class="card_evento">
+                        <div class="imagem_evento">
+                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                        </div>
+                        <div class="desc_evento">
+                            <h5>${titulo}</h5>
+                            <span>${formattedDate}</span>
+                            <span>${truncatedAddress}</span>
+                        </div>
+                    </div>
+                </a>`;
+            }
+        }).join(''); // Junta todos os eventos em uma única string
+
+        // Adiciona eventos de clique para os links dos eventos
+        const cardLinks = document.querySelectorAll('.card-link');
+        cardLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const eventId = link.getAttribute('data-id');
+                sessionStorage.setItem('currentEventId', eventId);
+                window.location.href = link.getAttribute('href');
+            });
+        });
+
+    } catch (error) {
+        console.error('Erro ao buscar eventos futuros:', error);
+        document.querySelector(".listagem_evento").innerHTML = "<p>Erro ao carregar eventos futuros. Tente novamente mais tarde.</p>";
+    }
+}
+
+async function buscarEventosIncricaoPassados() {
+    console.log("CHEGOU EVENTO");
+    try {
+        const resposta = await fetch("http://localhost:8080/inscricao/passado");
+
+        if (!resposta.ok) {
+            throw new Error(`Erro no servidor: ${resposta.statusText}`);
+        }
+
+        const inscricoes = await resposta.json();
+
+        const cards = document.querySelector(".listagem_evento");
+        if (!cards) {
+            console.error("Elemento '.listagem_evento' não encontrado!");
+            return;
+        }
+
+        cards.innerHTML = ''; // Limpa o conteúdo anterior
+
+        if (!inscricoes || inscricoes.length === 0) {
+            console.log("Nenhum evento passado encontrado.");
+            cards.innerHTML = "<p>Você não participou de nenhum evento no momento.</p>";
+            return;
+        }
+
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+        // Mapeia os eventos passados e os insere na página
+        cards.innerHTML = inscricoes.map(inscricao => {
+            const evento = inscricao.evento;
+            if (evento) {
+                const eventDate = new Date(evento.dataEvento);
+                const formattedDate = `${eventDate.getDate()} de ${monthNames[eventDate.getMonth()]} de ${eventDate.getFullYear()}`;
+
+                const enderecoEvento = evento.enderecoEvento || {};
+                const fullAddress = `${enderecoEvento.logradouro || 'Logradouro'}, ${enderecoEvento.numero || 'N°'} - ${enderecoEvento.cidade || 'Cidade'}`;
+
+                const titulo = truncateText(evento.nome, 15);
+                const truncatedAddress = truncateText(fullAddress, 40);
+
+                return `
+                <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
+                   style="text-decoration:none" 
+                   class="card-link" 
+                   data-id="${evento.id_evento}">
+                    <div class="card_evento">
+                        <div class="imagem_evento">
+                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                        </div>
+                        <div class="desc_evento">
+                            <h5>${titulo}</h5>
+                            <span>${formattedDate}</span>
+                            <span>${truncatedAddress}</span>
+                        </div>
+                    </div>
+                </a>`;
+            }
+        }).join(''); // Junta todos os eventos em uma única string
+
+        // Adiciona eventos de clique para os links dos eventos
+        const cardLinks = document.querySelectorAll('.card-link');
+        cardLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const eventId = link.getAttribute('data-id');
+                sessionStorage.setItem('currentEventId', eventId);
+                window.location.href = link.getAttribute('href');
+            });
+        });
+
+    } catch (error) {
+        console.error('Erro ao buscar eventos passados:', error.message);
+        document.querySelector(".listagem_evento").innerHTML = "<p>Erro ao carregar eventos passados. Tente novamente mais tarde.</p>";
+    }
+}
+
 function truncateText(description, maxLength) {
     if (description.length > maxLength) {
         return description.substring(0, maxLength) + '...';
@@ -163,166 +304,8 @@ function truncateText(description, maxLength) {
     return description;
 }
 
-// Function to fetch and display events
-async function buscarEventosIncricao() {
-    try {
-        const resposta = await fetch("http://localhost:8080/inscricao/futuro");
-        const inscricoes = await resposta.json();
-        
-        // Validate response
-        if (!inscricoes || inscricoes.length === 0) {
-            console.log("No events found");
-            return;
-        }
-
-        const cards = document.querySelector(".listagem_evento");  // Corrected selector for class
-        if (!cards) {
-            console.error("Cards element not found!");
-            return;
-        }
-
-        cards.innerHTML = ''; 
-
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        // Correctly map and join the events into HTML
-        cards.innerHTML = inscricoes.map(inscricao => {
-            const evento = inscricao.evento;
-            if (evento) {
-                const [year, month, day] = evento.dataEvento.map(Number);  // Correct date parsing
-                const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
-                
-                const enderecoEvento = evento.enderecoEvento || {};
-                const fullAddress = `${enderecoEvento.logradouro || 'Logradouro'}, ${enderecoEvento.numero || 'N°'} - ${enderecoEvento.cidade || 'Cidade'}`;
-
-                const titulo = truncateText(evento.nome, 15);
-                const truncatedAddress = truncateText(fullAddress, 40);
-
-                return `
-                <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
-                   style="text-decoration:none" 
-                   class="card-link" 
-                   data-id="${evento.id_evento}">
-                    <div class="card_evento">
-                        <div class="imagem_evento">
-                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
-                        </div>
-                        <div class="desc_evento">
-                            <h5>${titulo}</h5>
-                            <span>${formattedDate}</span>
-                            <span>${truncatedAddress}</span>
-                        </div>
-                    </div>
-                </a>`;
-            }
-        }).join('');  // Join the mapped items into a string
-
-        const cardLinks = document.querySelectorAll('.card-link');
-        cardLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const eventId = link.getAttribute('data-id');
-                sessionStorage.setItem('currentEventId', eventId);
-                window.location.href = link.getAttribute('href');
-            });
-        });
-
-    } catch (error) {
-        console.error('Erro ao buscar eventos:', error);
-    }
-}
-
-async function buscarEventosIncricaoPassados() {
-    try {
-        const resposta = await fetch("http://localhost:8080/inscricao/passado");
-
-        // Check if the response is OK (status 200-299)
-        if (!resposta.ok) {
-            throw new Error(`Erro no servidor: ${resposta.statusText}`);
-        }
-
-        // Check for empty response body
-        const responseText = await resposta.text();
-        if (!responseText) {
-            console.error("Resposta vazia do servidor.");
-            document.querySelector(".listagem_evento").innerHTML = "<p>Você não tinha participando em nenhum evento no momento</p>";
-            return;
-        }
-
-        // Try parsing the response as JSON
-        const inscricoes = JSON.parse(responseText);
-
-        const cards = document.querySelector(".listagem_evento");
-        if (!cards) {
-            console.error("Cards element not found!");
-            return;
-        }
-
-        cards.innerHTML = ''; // Clear the cards container
-
-        // Handle case where there are no events
-        if (!inscricoes || inscricoes.length === 0) {
-            console.log("No events found");
-            cards.innerHTML = "<p>Você não tinha participando em nenhum evento no momento</p>";
-            return;
-        }
-
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-        // Correctly map and join the events into HTML
-        cards.innerHTML = inscricoes.map(inscricao => {
-            const evento = inscricao.evento;
-            if (evento) {
-                // Correct date parsing: split the date string
-                const [year, month, day] = evento.dataEvento.map(Number);
-                const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
-                
-                const enderecoEvento = evento.enderecoEvento || {};
-                const fullAddress = `${enderecoEvento.logradouro || 'Logradouro'}, ${enderecoEvento.numero || 'N°'} - ${enderecoEvento.cidade || 'Cidade'}`;
-
-                const titulo = truncateText(evento.nome, 15);
-                const truncatedAddress = truncateText(fullAddress, 40);
-
-                return `
-                <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
-                   style="text-decoration:none" 
-                   class="card-link" 
-                   data-id="${evento.id_evento}">
-                    <div class="card_evento">
-                        <div class="imagem_evento">
-                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
-                        </div>
-                        <div class="desc_evento">
-                            <h5>${titulo}</h5>
-                            <span>${formattedDate}</span>
-                            <span>${truncatedAddress}</span>
-                        </div>
-                    </div>
-                </a>`;
-            }
-        }).join('');  // Join the mapped items into a string
-
-        // Add click event listeners to the links
-        const cardLinks = document.querySelectorAll('.card-link');
-        cardLinks.forEach(link => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                const eventId = link.getAttribute('data-id');
-                sessionStorage.setItem('currentEventId', eventId);
-                window.location.href = link.getAttribute('href');
-            });
-        });
-
-    } catch (error) {
-        console.error('Erro ao buscar eventos:', error.message);
-    }
-}
-
-
-
 window.onload = function() {
     buscarEventosIncricao();
     valorDados();
 };
+

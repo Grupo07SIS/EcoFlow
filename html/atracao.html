@@ -175,8 +175,10 @@
             // Check if more than one attraction card exists
             if (attractionCards.length > 1) {
                 alert("Você só pode adicionar uma atração.");
-                return;
+                return false;
             }
+
+            let isAttractionValid = true;
 
             attractionCards.forEach(card => {
                 const tipoAtracao = card.querySelector('#tipoAtracao').value;
@@ -185,6 +187,7 @@
                 // Check if tipoAtracao or valorAtracaoRaw is empty
                 if (!tipoAtracao || !valorAtracaoRaw) {
                     alert("Preencha todos os campos da atração.");
+                    isAttractionValid = false;
                     return;
                 }
 
@@ -196,15 +199,14 @@
                     valor_atracao: valorAtracao
                 };
 
-                // Log the attraction to verify it's being created correctly
-                console.log("Attraction:", atracao);
-
                 // Store the single attraction in sessionStorage
                 sessionStorage.setItem('atracao', JSON.stringify(atracao));
 
                 // Verify if the attraction was added to sessionStorage
                 console.log("Stored attraction:", sessionStorage.getItem('atracao'));
             });
+
+            return isAttractionValid;
         }
 
 
@@ -222,179 +224,187 @@
         };
 
         async function submitEvent() {
-            try {
-                const dadosEventoString = sessionStorage.getItem('dadosEvento');
-                if (!dadosEventoString) {
-                    throw new Error("Dados do evento não encontrados.");
-                }
-
-                const dadosEvento = JSON.parse(dadosEventoString);
-
-                const {
-                    nome,
-                    tema,
-                    descricao,
-                    dataEvento,
-                    hora_inicio,
-                    hora_fim,
-                    orcamentoTotal,
-                    aluguelLocal,
-                    valorFuncionarios,
-                    valorInfra,
-                    valorInscricao,
-                    metaLucro,
-                    qtdMaxColaboradores,
-                    enderecoEvento
-                } = dadosEvento;
-
-                const { logradouro, numero, complemento, cidade, estado, cep } = enderecoEvento;
-
-                const financeiroData = {
-                    id_financeiro: 0,
-                    orcamento_total: orcamentoTotal,
-                    aluguel_local: aluguelLocal,
-                    valor_funcionario: valorFuncionarios,
-                    valor_infra: valorInfra,
-                    valor_inscricao: valorInscricao,
-                    meta_lucro: metaLucro,
-                    qtd_max_colaborador: qtdMaxColaboradores
-                };
-
-                // POST to create financial data
-                const financeiroResponse = await fetch('http://localhost:8080/financeiro', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(financeiroData)
-                });
-
-                if (!financeiroResponse.ok) {
-                    throw new Error('Erro ao criar dados financeiros');
-                }
-
-                const financeiroResult = await financeiroResponse.json();
-                const financeiroId = financeiroResult.id_financeiro;
-
-                // Address data
-                const enderecoData = {
-                    id_endereco_evento: 0,
-                    logradouro,
-                    numero,
-                    complemento,
-                    cidade,
-                    estado,
-                    cep
-                };
-
-                const enderecoResponse = await fetch('http://localhost:8080/endereco/evento', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(enderecoData)
-                });
-
-                if (!enderecoResponse.ok) {
-                    throw new Error('Erro ao criar endereço');
-                }
-
-                const enderecoResult = await enderecoResponse.json();
-                const enderecoId = enderecoResult.id_endereco_evento;
-
-                // Fetch the attraction from sessionStorage (only one allowed)
-                const atracaoData = JSON.parse(sessionStorage.getItem('atracao'));
-                if (!atracaoData) {
-                    throw new Error('Você deve adicionar uma atração.');
-                }
-                const { id_atracao, tipo_atracao, valor_atracao } = atracaoData;
-
-                // POST for the single attraction
-                const atracaoResponse = await fetch('http://localhost:8080/atracao', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(atracaoData)
-                });
-
-                if (!atracaoResponse.ok) {
-                    throw new Error('Erro ao criar atração');
-                }
-
-                const atracaoResult = await atracaoResponse.json();
-                const atracaoid = atracaoResult.id_atracao;
-                console.log('Atracao:', atracaoResult);
-
-                // Correcting the field names and structure
-                const eventoData = {
-                    "id_evento": 0,
-                    "nome": nome,
-                    "tema": tema,
-                    "descricao": descricao,
-                    "banner_evento": 'YmFubmVyMS5qcGc=',
-                    "dataEvento": dataEvento,
-                    "hora_inicio": hora_inicio,
-                    "hora_fim": hora_fim,
-                    "financeiro": {
-                        "id_financeiro": financeiroId,
-                        "orcamento_total": financeiroData.orcamento_total,
-                        "aluguel_local": financeiroData.aluguel_local,
-                        "valor_funcionario": financeiroData.valor_funcionario,
-                        "valor_infra": financeiroData.valor_infra,
-                        "valor_inscricao": financeiroData.valor_inscricao,
-                        "meta_lucro": financeiroData.meta_lucro,
-                        "qtd_max_colaborador": financeiroData.qtd_max_colaborador
-                    },
-                    "Atracao": {
-                        "id_atracao": 0,
-                        "tipo_atracao": "string",
-                        "valor_atracao": 0
-                    },
-                    "enderecoEvento": {
-                        "id_endereco_evento": enderecoId,
-                        "logradouro": enderecoData.logradouro,
-                        "numero": enderecoData.numero,
-                        "complemento": enderecoData.complemento,
-                        "cidade": enderecoData.cidade,
-                        "estado": enderecoData.estado,
-                        "cep": enderecoData.cep
-                    },
-                    "deletado": false,
-                    "atracao": {
-                        "id_atracao": atracaoid,
-                        "tipo_atracao": atracaoResult.tipo_atracao,
-                        "valor_atracao": atracaoResult.valor_atracao
-                    }
-                };
-
-                console.log('Evento:', eventoData);
-
-                // POST final to create the event
-                const eventoResponse = await fetch('http://localhost:8080/evento', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(eventoData)
-                });
-
-                if (eventoResponse.ok) {
-                    alert('Evento criado com sucesso!');
-                    sessionStorage.removeItem('dadosEvento');
-                    sessionStorage.removeItem('atracao');
-                    sessionStorage.removeItem('bannerEvento');
-                    sessionStorage.removeItem('dadosStand');
-                    window.location.href = 'meus-eventos.html';
-                } else {
-                    alert('Erro ao criar o evento');
-                }
-            } catch (error) {
-                console.error('Erro ao criar o evento:', error);
-                alert('Erro: ' + error.message);
+        try {
+            // Primeiro, tenta submeter a atração
+            const isAttractionSubmitted = submitAttraction();
+            if (!isAttractionSubmitted) {
+                throw new Error('Erro ao submeter a atração.');
             }
-        }
 
+            // Depois, tenta pegar os dados do evento
+            const dadosEventoString = sessionStorage.getItem('dadosEvento');
+            if (!dadosEventoString) {
+                throw new Error("Dados do evento não encontrados.");
+            }
+
+            const dadosEvento = JSON.parse(dadosEventoString);
+
+            const {
+                nome,
+                tema,
+                descricao,
+                dataEvento,
+                hora_inicio,
+                hora_fim,
+                orcamentoTotal,
+                aluguelLocal,
+                valorFuncionarios,
+                valorInfra,
+                valorInscricao,
+                metaLucro,
+                qtdMaxColaboradores,
+                enderecoEvento
+            } = dadosEvento;
+
+            const { logradouro, numero, complemento, cidade, estado, cep } = enderecoEvento;
+
+            const financeiroData = {
+                id_financeiro: 0,
+                orcamento_total: orcamentoTotal,
+                aluguel_local: aluguelLocal,
+                valor_funcionario: valorFuncionarios,
+                valor_infra: valorInfra,
+                valor_inscricao: valorInscricao,
+                meta_lucro: metaLucro,
+                qtd_max_colaborador: qtdMaxColaboradores
+            };
+
+            // POST to create financial data
+            const financeiroResponse = await fetch('http://localhost:8080/financeiro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(financeiroData)
+            });
+
+            if (!financeiroResponse.ok) {
+                throw new Error('Erro ao criar dados financeiros');
+            }
+
+            const financeiroResult = await financeiroResponse.json();
+            const financeiroId = financeiroResult.id_financeiro;
+
+            // Address data
+            const enderecoData = {
+                id_endereco_evento: 0,
+                logradouro,
+                numero,
+                complemento,
+                cidade,
+                estado,
+                cep
+            };
+
+            const enderecoResponse = await fetch('http://localhost:8080/endereco/evento', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(enderecoData)
+            });
+
+            if (!enderecoResponse.ok) {
+                throw new Error('Erro ao criar endereço');
+            }
+
+            const enderecoResult = await enderecoResponse.json();
+            const enderecoId = enderecoResult.id_endereco_evento;
+
+            // Fetch the attraction from sessionStorage (only one allowed)
+            const atracaoData = JSON.parse(sessionStorage.getItem('atracao'));
+            if (!atracaoData) {
+                throw new Error('Você deve adicionar uma atração.');
+            }
+
+            const { tipo_atracao, valor_atracao } = atracaoData;
+
+            const atracaoDataSend = {
+                "id_atracao": 0,
+                "tipo_atracao": tipo_atracao,
+                "valor_atracao": valor_atracao
+            };
+
+            // POST for the single attraction
+            const atracaoResponse = await fetch('http://localhost:8080/atracao', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(atracaoDataSend)
+            });
+
+            if (!atracaoResponse.ok) {
+                throw new Error('Erro ao criar atração');
+            }
+
+            const atracaoResult = await atracaoResponse.json();
+            const atracaoid = atracaoResult.id_atracao;
+            console.log('Atracao:', atracaoResult);
+
+            // Correcting the field names and structure
+            const eventoData = {
+                "id_evento": 0,
+                "nome": nome,
+                "tema": tema,
+                "descricao": descricao,
+                "banner_evento": 'YmFubmVyMS5qcGc=',
+                "dataEvento": dataEvento,
+                "hora_inicio": hora_inicio,
+                "hora_fim": hora_fim,
+                "financeiro": {
+                    "id_financeiro": financeiroId,
+                    "orcamento_total": financeiroData.orcamento_total,
+                    "aluguel_local": financeiroData.aluguel_local,
+                    "valor_funcionario": financeiroData.valor_funcionario,
+                    "valor_infra": financeiroData.valor_infra,
+                    "valor_inscricao": financeiroData.valor_inscricao,
+                    "meta_lucro": financeiroData.meta_lucro,
+                    "qtd_max_colaborador": financeiroData.qtd_max_colaborador
+                },
+                "enderecoEvento": {
+                    "id_endereco_evento": enderecoId,
+                    "logradouro": enderecoData.logradouro,
+                    "numero": enderecoData.numero,
+                    "complemento": enderecoData.complemento,
+                    "cidade": enderecoData.cidade,
+                    "estado": enderecoData.estado,
+                    "cep": enderecoData.cep
+                },
+                "deletado": false,
+                "atracao": {
+                    "id_atracao": atracaoid,
+                    "tipo_atracao": atracaoResult.tipo_atracao,
+                    "valor_atracao": atracaoResult.valor_atracao
+                }
+            };
+
+            console.log('Evento:', eventoData);
+
+            // POST final to create the event
+            const eventoResponse = await fetch('http://localhost:8080/evento', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventoData)
+            });
+
+            if (eventoResponse.ok) {
+                console.log('Evento criado com sucesso!');
+                sessionStorage.removeItem('dadosEvento');
+                sessionStorage.removeItem('atracao');
+                sessionStorage.removeItem('bannerEvento');
+                sessionStorage.removeItem('dadosStand');
+                window.location.href = 'meus-eventos.html';
+            } else {
+                alert('Erro ao criar o evento');
+            }
+        } catch (error) {
+            console.error('Erro ao criar o evento:', error);
+            alert('Erro: ' + error.message);
+        }
+    }
     </script>
 </body>
 

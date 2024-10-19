@@ -57,7 +57,7 @@
 
         <div class="bloco_botoes">
             <!-- Button to create a new event -->
-            <button type="button" class="btn btn-primary">Criar novo Evento <i
+            <button type="button" class="btn btn-primary" onclick="meusEventos()">Criar novo Evento <i
                     class="bi bi-plus-circle-fill"></i></button>
 
             <!-- Filter button with offcanvas -->
@@ -210,6 +210,10 @@
             const emailNavBar = document.getElementById('nomeEmpresa')
             nomeNavBar.innerHTML = nomeSS
             emailNavBar.innerHTML = emailSS
+        }
+
+        function meusEventos() {
+            window.location.href = "evento.html"
         }
     </script>
 </body>

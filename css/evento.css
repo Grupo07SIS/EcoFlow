@@ -9,6 +9,26 @@
     }
 
 }
+#popup {
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50; /* Cor padrão de sucesso */
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#popup-message {
+    margin: 0;
+}
+
+#popup.error {
+    background-color: #f44336; /* Vermelho para erros */
+}
 
 /* h5 {
     font-weight: bold;

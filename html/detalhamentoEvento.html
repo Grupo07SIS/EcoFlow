@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <!-- <script src="../js/organizador/evento.js"></script> -->
-
     <!-- Leaflet (for maps) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -44,8 +42,11 @@
     <div class="picture_bg">
         <img id="event_image" src="../assets/image 7.png" alt="Event Image">
     </div>
+
+    <!-- Edit and Delete Buttons -->
     <div class="btns_Styles">
-        <a href="../html/evento-update.html"><button class="main_Btns">Editar</button></a>
+        <!-- Add an onclick to call the function with event ID -->
+        <button class="main_Btns" onclick="editarEvento()">Editar</button> <!-- Example Event ID -->
         <button class="main_Btns" onclick="deletarEvento()">Deletar</button>
     </div>
 
@@ -53,7 +54,7 @@
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
             <i class="bi bi-calendar"></i>
-            <p id="event_date">Domingo, 6 Dec 2024</p>
+            <p id="event_date">Domingo, 6 Dec 2024</p> 
         </div>
         <div class="style_info">
             <i class="bi bi-geo-alt"></i>
@@ -92,23 +93,20 @@
     <div id="popup" class="popup">
         <p id="popup-message"></p>
     </div>
+
+    <script>
+        function backpage() {
+            window.history.back();
+        }
+
+        // Function to load default user information
+        window.onload = function () {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
+            document.getElementById('userName').innerHTML = nomeSS;
+            document.getElementById('nomeEmpresa').innerHTML = emailSS;
+        };
+    </script>
 </body>
 
 </html>
-
-<script>
-    function backpage() {
-        window.history.back();
-    }
-
-    window.onload = valorPadrao()
-
-    async function valorPadrao() {
-        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
-        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
-        const nomeNavBar = document.getElementById('userName')
-        const emailNavBar = document.getElementById('nomeEmpresa')
-        nomeNavBar.innerHTML = nomeSS
-        emailNavBar.innerHTML = emailSS
-    }
-</script>
