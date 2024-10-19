@@ -15,8 +15,8 @@
   <script src="../js/navbar.js"></script>
   <link rel="stylesheet" href="../css/menu.css">
   <link rel="stylesheet" href="../css/filterColabList.css">
-  <script src="../js/buscarEventos.js"></script>
   <script src="../js/filterColabList.js"></script>
+  <script src="../js/organizador/listagemColaboradores.js"></script>
 </head>
 
 <body>
@@ -28,8 +28,8 @@
       <p id="nomeEmpresa">Nome da Empresa</p>
     </div>
 
-    <a href="#">Meus eventos</a>
-    <a href="#">Participantes em espera</a>
+    <a href="meus-eventos.html">Meus eventos</a>
+    <a href="lista_de_espera.html">Participantes em espera</a>
     <a href="dash_gerencial.html">Painel Gerencial</a>
     <a href="login.html">Sair</a>
   </div>
@@ -43,72 +43,13 @@
     </div>
 
     <div class="events0">
-      <div class="src_bar">
-        <i class="bi bi-search"></i>
-        <p>Pesquisar Evento</p>
-      </div>
-
-
-      <!-- botão de filtrar e suas filtragens -->
-      <div class="downFilter" id="filterMain">
-        <div class="main_separation_filter">
-          <div class="header_filtrer">
-            <i class="bi bi-x" onclick="closeFilter()"></i>
-            <h2>Filtros</h2>
-          </div>
-          <div class="filtrar_categorias">
-            <h4>Categorias</h4>
-            <div class="nichos">
-              <div class="nicho">
-                <img src="../assets/Property 1=Default.png" alt="">
-                <h5>Moda</h5>
-              </div>
-              <div class="nicho">
-                <img src="../assets/Property 1=Variant2.png" alt="">
-                <h5>Comida</h5>
-              </div>
-              <div class="nicho">
-                <img src="../assets/Property 1=Variant3.png" alt="">
-                <h5>Animais</h5>
-              </div>
-              <div class="nicho">
-                <img src="../assets/Property 1=Variant4.png" alt="">
-                <h5>Beleza</h5>
-              </div>
-            </div>
-          </div>
-
-          <div class="filtrar_evento">
-            <h4>Evento</h4>
-            <select class="select-filter">
-              <option selected>Escolher o evento</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-          </select>
-          </div>
-
-          <div class="grp_btn">
-            <button class="secondary_btn">
-              Limpar Filtro
-            </button>
-            <button class="primary_btn">
-              Aplicar Filtro
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="btnOpenFilter">
-        <button type="button" onclick="openFilter()">
-          <img src="../assets/filter.png" alt="">
-          Filtrar
-        </button>
+      <div class="filtrar_local">
+        <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
+        <i class="bi bi-search search-icon"></i> <!-- Bootstrap search icon -->
       </div>
     </div>
 
     <div class="allOrgs" id="collaboratorContainer"></div>
-
 
 
     <div class="menu">
@@ -135,37 +76,30 @@
     </div>
 
   </div>
-  <script src="../js/mockDados/mockDadosColaborador.js"></script>
 </body>
 
 </html>
-
 <script>
-  function renderCollaborators() {
-    const container = document.getElementById("collaboratorContainer");
-    
-    collaborators.forEach(collab => {
-      const collabDiv = document.createElement("div");
-      collabDiv.className = "orgs";
-      collabDiv.innerHTML = `
-        <img class="photo0" src="${collab.image}" />
-        <div class="allCards">
-          <div class="cards1">
-            <span><b>Nome da Marca:</b> ${collab.name}</span>
-            <span><b>Telefone:</b> ${collab.phone}</span>
-            <span><b>Email:</b> ${collab.email}</span>
-            <span><b>Nicho:</b> ${collab.niche}</span>
-          </div>
-        </div>
-        <h3 class="ver_mais" onclick="viewDetails(${collab.id})">Ver mais >></h3>
-      `;
-      container.appendChild(collabDiv);
-    });
-  }
-  window.onload = renderCollaborators;
 
-  function viewDetails(id) {
-    localStorage.setItem('selectedCollaboratorId', id);
-    window.location.href = 'dadosColaborador.html';
+  window.onload = valorPadrao()
+
+  async function valorPadrao() {
+    const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+    const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+    const nomeNavBar = document.getElementById('userName')
+    const emailNavBar = document.getElementById('nomeEmpresa')
+    nomeNavBar.innerHTML = nomeSS
+    emailNavBar.innerHTML = emailSS
   }
+  document.querySelector('.search-input').addEventListener('input', async function () {
+    const searchQuery = this.value.trim();
+    const nicho = getNichoFromUrl();
+
+    if (nicho) {
+      fetchCollaboratorsByNiche(`/${nicho}/fila/busca?nome=${encodeURIComponent(searchQuery)}`);
+    } else {
+      console.error('Nicho não encontrado na URL.');
+    }
+  });
+
 </script>

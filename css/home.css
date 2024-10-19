@@ -12,7 +12,9 @@
 
 .names {
   display: flex;
+  flex-direction: column;
   text-align: center;
+  width: 100%;
 }
 
 .btn-group {
@@ -39,18 +41,17 @@ input[type=checkbox], input[type=radio] {
 }
 
 .informacoes {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   font-size: 18px;
   text-align: start;
-  padding-bottom: 10px;
-  word-break: break-all;
+  gap: 8px;
 }
 
 .informacoes1 {
-  width: 50%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }

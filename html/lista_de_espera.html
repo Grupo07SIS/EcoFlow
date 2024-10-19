@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/participante_em_espera.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/filter.css">
+    <script src="../js/organizador/buscarListaDeEspera.js"></script>
 </head>
 
 <body>
@@ -22,8 +23,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -35,6 +36,7 @@
         <div class="titulo">
             <p>PARTICIPANTES EM ESPERA</p>
         </div>
+
         <!-- botão de filtrar e suas filtragens -->
         <div class="downFilter" id="filterMain">
             <div class="main_separation_filter">
@@ -42,66 +44,22 @@
                     <i class="bi bi-x" onclick="closeFilter()"></i>
                     <h2>Filtros</h2>
                 </div>
-                <div class="filtrar_categorias">
-                    <h4>Categorias</h4>
-                    <div class="nichos">
-                        <div class="nicho">
-                            <img src="../assets/Property 1=Default.png" alt="">
-                            <h5>Moda</h5>
-                        </div>
-                        <div class="nicho">
-                            <img src="../assets/Property 1=Variant2.png" alt="">
-                            <h5>Comida</h5>
-                        </div>
-                        <div class="nicho">
-                            <img src="../assets/Property 1=Variant3.png" alt="">
-                            <h5>Animais</h5>
-                        </div>
-                        <div class="nicho">
-                            <img src="../assets/Property 1=Variant4.png" alt="">
-                            <h5>Beleza</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <h4 class="title">Evento</h4>
-                <div class="filtrar_tema">
-                    <select class="form-select form-select-sm" aria-label="Small select example">
-                        <option selected>Escolhe o evento</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                </div>
-
                 <div class="filtrar_date">
-                    <h4 class="titulo_filtro">Data</h4>
-                    <div class="bloco_filtros">
-                        <div class="filtrar_dt_inicio">
-                            <span>Inicio</span>
-                            <div>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="filtrar_dt_fim">
-                            <span>Fim</span>
-                            <div>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="filtroDtsPronto">
-                        <button>Essa semana</button>
-                        <button>Esse mês</button>
-                        <button>Esse ano</button>
+                    <h4 class="titulo_filtro">Participantes em:</h4>
+                    <div class="filtrar_tema">
+                        <select class="form-select form-select-sm" id="statusSelect" aria-label="Small select example">
+                            <option value="1">Aguardando</option>
+                            <option value="2">Reprovado</option>
+                            <option value="3">Aprovado</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="grp_btn">
-                    <button class="secondary_btn">
+                    <button class="secondary_btn" onclick="clearFilters()">
                         Limpar Filtro
                     </button>
-                    <button class="primary_btn">
+                    <button class="primary_btn" onclick="applyFilters()">
                         Aplicar Filtro
                     </button>
                 </div>
@@ -116,12 +74,11 @@
         </div>
 
         <div class="participante_main_div" id="participantsContainer">
-
         </div>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
@@ -129,7 +86,7 @@
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2.png" alt="">
             <p>Criar Evento</p>
         </a>
@@ -145,19 +102,19 @@
 
     <script src="../js/navbar.js"></script>
     <script src="../js/filter.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
-
-            filtroDtsProntoButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
-        });
-    </script>
-    <script src="../js/organizador/buscarListaDeEspera.js"></script>
 </body>
 
 </html>
+
+<script>
+    window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+</script>

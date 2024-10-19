@@ -13,108 +13,99 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/evento-colaborador.css">
     <link rel="stylesheet" href="../css/meus-eventos.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/menu.css">
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../js/dash_gerencial.js" defer></script>
+    <script src="../js/organizador/dash_gerencial.js" defer></script>
     <script src="../js/navbar.js" defer></script>
-    <script src="../js/buscarMeusEventos.js" defer></script>
+    <script src="../js/organizador/buscarMeusEventos.js" defer></script>
 </head>
 
 <body>
-    <div class="content">
-        <div id="mySidenav" class="sidenav">
-            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
-            <div class="user_info">
-                <i class="bi bi-person-circle"></i>
-                <p id="userName">Nome do Usuário</p>
-                <p id="nomeEmpresa">Nome da Empresa</p>
-            </div>
-            <a href="meus-eventos.html">Meus eventos</a>
-            <a href="#">Participantes em espera</a>
-            <a href="dash_gerencial.html">Painel Gerencial</a>
-            <a href="login.html">Sair</a>
+    <div id="mySidenav" class="sidenav">
+        <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+        <div class="user_info">
+            <i class="bi bi-person-circle"></i>
+            <p id="userName">Nome do Usuário</p>
+            <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
+        <a href="dash_gerencial.html">Painel Gerencial</a>
+        <a href="login.html">Sair</a>
+    </div>
 
-        <div class="openBarMain">
-            <i class="bi bi-list openBar" onclick="openNav()"></i>
-        </div>
+    <div class="openBarMain">
+        <i class="bi bi-list openBar" onclick="openNav()"></i>
+    </div>
+    <div class="content">
+
 
         <!-- Titulo da tela -->
         <div class="titulo">
-            <span>Meus Eventos</span>
+            <h4>Meus Eventos</h4>
         </div>
 
-        <!-- Botões iniciais -->
+        <!-- Search input with icon -->
+        <div class="filtrar_local">
+            <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
+            <i class="bi bi-search search-icon"></i> <!-- Bootstrap search icon -->
+        </div>
+
         <div class="bloco_botoes">
-            <!-- Botão para criar novo evento -->
-            <button type="button" class="btn btn-primary">Criar novo Evento <i
+            <!-- Button to create a new event -->
+            <button type="button" class="btn btn-primary" onclick="meusEventos()">Criar novo Evento <i
                     class="bi bi-plus-circle-fill"></i></button>
-            <!-- Botão de filtrar e suas filtragens -->
+
+            <!-- Filter button with offcanvas -->
             <div class="bloco_filtros">
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                     <img src="../assets/filter.png" alt=""> Filtrar
                 </button>
-                <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                <div style="height: 38%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                     aria-labelledby="offcanvasBottomLabel">
                     <div class="offcanvas-header">
-                        <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
+                        <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtro</h2>
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body small">
-                        <h4 class="title">Tema do Evento</h4>
-                        <div class="filtrar_tema">
-                            <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>Escolha o evento</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
                         <h4 class="titulo_filtro">Data</h4>
                         <div class="filtrar_date">
                             <div class="bloco_filtros">
                                 <div class="filtrar_dt_inicio">
                                     <span>Inicio</span>
                                     <div class="input-group flex-nowrap">
-                                        <input type="date" class="form-control">
+                                        <input id="dataInicio" type="date" class="form-control">
                                     </div>
                                 </div>
                                 <div class="filtrar_dt_fim">
                                     <span>Fim</span>
                                     <div class="input-group flex-nowrap">
-                                        <input type="date" class="form-control">
+                                        <input id="dataFim" type="date" class="form-control">
                                     </div>
                                 </div>
                             </div>
-                            <div style="padding-top:18px; width: 100%;">
-                                <div class="filtroDtsPronto">
-                                    <button>Essa semana</button>
-                                    <button>Esse mês</button>
-                                    <button>Esse ano</button>
-                                </div>
-                            </div>
                         </div>
-                        <div class="filtrar_local">
-                            <h4>Local</h4>
-                            <input type="text" placeholder="Digite o local aqui...">
-                        </div>
+
                         <div class="grp_btn">
-                            <button class="secondary_btn">Limpar Filtro</button>
-                            <button class="primary_btn">Aplicar Filtro</button>
+                            <button class="secondary_btn" onclick="clearFilters()">
+                                Limpar Filtro
+                            </button>
+                            <button class="primary_btn" onclick="applyFilters()">
+                                Aplicar Filtro
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Filtro de próximos eventos e eventos passados -->
+        <!-- Filter for upcoming and past events -->
         <div class="filtrar">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
@@ -124,8 +115,9 @@
                 <label class="btn btn-outline-primary" for="btnradio2" onclick="filtrarEventos('past')">Eventos
                     passados</label>
             </div>
-        </div>    
-        <!-- Listagem dos eventos -->
+        </div>
+
+        <!-- Event listing -->
         <div id="listagem_eventos" class="listagem_eventos"></div>
 
         <!-- Bottom menu -->
@@ -158,28 +150,70 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom JS -->
+    <!-- Custom JS for event search -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const filtroDtsProntoButtons = document.querySelectorAll('.filtroDtsPronto button');
+        document.querySelector('.search-input').addEventListener('input', async function () {
+            const searchQuery = this.value;
 
-            filtroDtsProntoButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filtroDtsProntoButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                });
-            });
+            try {
+                // Properly use backticks for the template literal URL
+                const response = await fetch(`http://localhost:8080/evento/searchBar?search=${encodeURIComponent(searchQuery)}`);
+                const searchResults = await response.json();
+
+                const listagem = document.getElementById("listagem_eventos"); // Correct ID here
+                listagem.innerHTML = ''; // Clear current events
+
+                listagem.innerHTML = searchResults.map((itemEvento) => {
+                    const [year, month, day] = itemEvento.dataEvento;
+                    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+                    const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
+
+                    const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
+                    const titulo = truncateText(itemEvento.nome, 15);
+                    const truncatedAddress = truncateText(fullAddress, 40);
+
+                    // Properly wrap the returned HTML inside backticks
+                    return `
+                    <a href="detalhamentoEvento.html?id=${itemEvento.id_evento}" style="text-decoration:none" class="card-link" data-id="${itemEvento.id_evento}">
+                        <div class="card_evento">
+                            <div class="imagem_evento">
+                                <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                            </div>
+                            <div class="desc_evento">
+                                <h5>${titulo}</h5>
+                                <span>${formattedDate}</span>
+                                <span>${truncatedAddress}</span>
+                            </div>
+                        </div>
+                    </a>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Erro ao buscar eventos:', error);
+            }
         });
 
-        window.onload = () => {
-            const valorPadrao = async () => {
-                console.log("CHEGOU, viva Jesus");
-                const nomeSS = sessionStorage.getItem('NOME_USUARIO');
-                const emailSS = sessionStorage.getItem('EMAIL_USUARIO');
-                document.getElementById('userName').innerHTML = nomeSS;
-                document.getElementById('nomeEmpresa').innerHTML = emailSS;
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
             }
-            valorPadrao();
+            return text;
+        }
+
+        window.onload = valorPadrao()
+
+        async function valorPadrao() {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+            const nomeNavBar = document.getElementById('userName')
+            const emailNavBar = document.getElementById('nomeEmpresa')
+            nomeNavBar.innerHTML = nomeSS
+            emailNavBar.innerHTML = emailSS
+        }
+
+        function meusEventos() {
+            window.location.href = "evento.html"
         }
     </script>
 </body>

@@ -8,7 +8,7 @@
     <title>Ecoflow | Criar Evento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/evento.css">
     <link rel="stylesheet" href="../css/valores.css">
     <link rel="stylesheet" href="../css/standsEscolher.css">
@@ -21,15 +21,14 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -44,12 +43,13 @@
     <div class="main_info">
         <div class="dados_produtos">
             <div>
-                <h5>DEFINIÇÃO DE MESAS</h5>
+                <h5>DEFINIÇÃO DE STANDS/MESAS</h5>
                 <div class="adicionar_produto">
-                    <h6>Adicionar Stands/mesa</h6>
+                    <h6>Adicionar Stands/Mesas</h6>
                     <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
                 </div>
-                <div id="productMessage" class="alert alert-warning" role="alert" style="display: none; margin-bottom: 0%; ">
+                <div id="productMessage" class="alert alert-warning" role="alert"
+                    style="display: none; margin-bottom: 0%;">
                     Você precisa adicionar um stand/mesa.
                 </div>
             </div>
@@ -62,10 +62,10 @@
 
     <div class="proximo-voltar">
         <button type="button" class="btn btn-outline-secondary">
-            <a href="../html/valores.html">Voltar</a>
+            <a href="valores.html">Voltar</a>
         </button>
         <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="../html/atracao.html">Proximo</a>
+            <a href="atracao.html">Proximo</a>
         </button>
     </div>
 
@@ -92,79 +92,184 @@
         </a>
     </div>
 
-    
-<script>
-    // Function to toggle the visibility of ingredients and rotate the icon
-    function toggleIngredients(element) {
-        const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
-        const icon = element.querySelector('i');
-        if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
-            ingredientesDiv.style.display = "block";
-            icon.style.transform = "rotate(180deg)";
-        } else {
-            ingredientesDiv.style.display = "none";
-            icon.style.transform = "rotate(0deg)";
+    <script>
+        // Function to toggle the visibility of the stand details except for the "Nome do stand"
+        function toggleStandDetails(element) {
+            const parentForm = element.closest('.info_form');
+            const inputs = parentForm.querySelectorAll('.toggleable');
+            const icon = element.querySelector('i');
+
+            // Toggle the visibility of all fields except the "Nome do stand"
+            inputs.forEach(input => {
+                if (input.style.display === "none" || input.style.display === "") {
+                    input.style.display = "block";
+                } else {
+                    input.style.display = "none";
+                }
+            });
+
+            // Rotate the icon
+            if (icon.style.transform === "rotate(180deg)") {
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                icon.style.transform = "rotate(180deg)";
+            }
         }
-    }
 
-    // Function to add a new product card
-    function addProdutoCard() {
-        const container = document.getElementById('productContainer');
-        const productMessage = document.getElementById('productMessage');
-        productMessage.style.display = 'none';
+        // Function to add a new stand/mesa card
+        function addProdutoCard() {
+            const container = document.getElementById('productContainer');
+            const productMessage = document.getElementById('productMessage');
+            productMessage.style.display = 'none';
 
-        const newCard = document.createElement('div');
-        newCard.classList.add('info_card');
+            const newCard = document.createElement('div');
+            newCard.classList.add('info_card');
 
-        newCard.innerHTML = `
+            newCard.innerHTML = `
             <div class="info_form">
-                <div class="drop_down">
+                <div class="form-group d-flex justify-content-between align-items-center" style="width:100%;left: 63%;
+    position: relative;">
+                    <button type="button" class="btn btn-outline-secondary ml-2 expandir_div" onclick="toggleStandDetails(this)">
+                        Expandir <i class="bi bi-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="form-group" >
                     <label>Nome do stand:</label>
-                    <div class="expandir_div" onclick="toggleIngredients(this)">
-                        Expandir
-                        <i class="bi bi-chevron-down"></i>
+                    <input type="text" id="nomeStand" placeholder="Nome do Stand" class="form-control" style="flex: 1;" required>
+                </div>
+            
+                <div class="toggleable" style="display: none;">
+                    <div class="form-group">
+                        <label>Tipo de stand:</label>
+                        <input type="text" id="tipoStand" placeholder="Tipo de Stand" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Largura:</label>
+                        <input type="text" id="largura" placeholder="Largura (m)" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Comprimento:</label>
+                        <input type="text" id="comprimento" placeholder="Comprimento (m)" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de Cadeiras:</label>
+                        <input type="number" id="qtdCadeiras" placeholder="Quantidade de Cadeiras" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Valor (R$):</label>
+                        <input type="number" id="valor" placeholder="Valor" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Exceção:</label>
+                        <input type="text" id="excecao" placeholder="Exceção (se houver)" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Ponto Elétrico:</label>
+                        <select class="form-control" id="pontoEletrico">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
                     </div>
                 </div>
-                <input type="text">
-                <div class="ingredientes" style="display: none;">
-                    <span>Preço:</span>
-                    <input type="number">
-                    <span>Descrição:</span>
-                    <input type="text">
-                </div>
                 <div class="btn_delete">
-                    <button onclick="removeProdutoCard(this)">
+                    <button onclick="removeProdutoCard(this)" class="btn btn-danger mt-2">
                         Excluir Stand/Mesa
                         <i class="bi bi-trash"></i>
                     </button>
                 </div>
             </div>
-        `;
+            `;
 
-        container.appendChild(newCard);
-    }
-
-    // Function to remove a product card
-    function removeProdutoCard(button) {
-        const container = document.getElementById('productContainer');
-        button.closest('.info_card').remove();
-
-        if (container.children.length === 0) {
-            document.getElementById('productMessage').style.display = 'block';
+            container.appendChild(newCard);
         }
-    }
 
-    // Add event listener to the add product button
-    document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
+        // Function to remove a stand/mesa card
+        function removeProdutoCard(button) {
+            const container = document.getElementById('productContainer');
+            button.closest('.info_card').remove();
 
-    // Show the message if no products are added on page load
-    window.onload = function () {
-        const container = document.getElementById('productContainer');
-        if (container.children.length === 0) {
-            document.getElementById('productMessage').style.display = 'block';
+            if (container.children.length === 0) {
+                document.getElementById('productMessage').style.display = 'block';
+            }
         }
-    };
-</script>
+
+        // Function to collect form data and send POST request
+        async function salvarDadosPag2() {
+            const stands = [];
+
+            // Obtenha todos os produtos/stands adicionados
+            const standElements = document.querySelectorAll('.info_card');
+
+            standElements.forEach(card => {
+                const tipo = card.querySelector('#tipoStand').value;
+                const largura = card.querySelector('#largura').value;
+                const comprimento = card.querySelector('#comprimento').value;
+                const qtdCadeiras = card.querySelector('#qtdCadeiras').value;
+                const valor = card.querySelector('#valor').value;
+                const excecao = card.querySelector('#excecao').value;
+                const pontoEletrico = card.querySelector('#pontoEletrico').value;
+
+                const standData = {
+                    id_tipo_stand: 0,
+                    tipo: tipo,
+                    largura: largura,
+                    comprimento: comprimento,
+                    qtd_cadeiras: parseInt(qtdCadeiras, 10),
+                    valor: parseFloat(valor),
+                    excecao: excecao,
+                    ponto_eletrico: pontoEletrico
+                };
+
+                stands.push(standData);
+            });
+
+            // Salvar todos os stands como um array no sessionStorage
+            sessionStorage.setItem('dadosStand', JSON.stringify(stands));
+            window.location.href = 'atracao.html';
+        }
+
+
+        // Add event listener to the add product button
+        document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
+
+        // Show the message if no products are added on page load
+        window.onload = function () {
+            const storedStands = JSON.parse(sessionStorage.getItem('dadosStand')) || [];
+
+            if (storedStands.length === 0) {
+                document.getElementById('productMessage').style.display = 'block';
+            } else {
+                document.getElementById('productMessage').style.display = 'none';
+
+                // Recriar cada stand salvo
+                storedStands.forEach(stand => {
+                    addProdutoCard();
+
+                    const lastCard = document.querySelector('#productContainer .info_card:last-child');
+
+                    lastCard.querySelector('#tipoStand').value = stand.tipo;
+                    lastCard.querySelector('#largura').value = stand.largura;
+                    lastCard.querySelector('#comprimento').value = stand.comprimento;
+                    lastCard.querySelector('#qtdCadeiras').value = stand.qtd_cadeiras;
+                    lastCard.querySelector('#valor').value = stand.valor;
+                    lastCard.querySelector('#excecao').value = stand.excecao;
+                    lastCard.querySelector('#pontoEletrico').value = stand.ponto_eletrico;
+                });
+            }
+        };
+
+        window.onload = valorPadrao()
+
+        async function valorPadrao() {
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+            const nomeNavBar = document.getElementById('userName')
+            const emailNavBar = document.getElementById('nomeEmpresa')
+            nomeNavBar.innerHTML = nomeSS
+            emailNavBar.innerHTML = emailSS
+        }
+
+    </script>
 </body>
 
 </html>

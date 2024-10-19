@@ -13,76 +13,231 @@
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/perfil.css">
-    <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </head>
 
 <body>
     <div class="main_info">
-        <div class="perfil">
-            <i class="bi bi-person-circle"></i>
-            <p id="nomeUsuario">Nome do Usuário</p>
-            <p id="nomeDaEmpresa">Nome da Empresa</p>
+        <div id="mySidenav" class="sidenav">
+            <i class="bi bi-list closebtn" onclick="closeNav()"></i>
+            <div class="user_info">
+                <i class="bi bi-person-circle"></i>
+                <p id="userName">Nome do Usuário</p>
+                <p id="nomeEmpresa">Nome da Empresa</p>
+            </div>
+            <a href="meus-eventos.html">Meus eventos</a>
+            <a href="lista_de_espera.html">Participantes em espera</a>
+            <a href="dash_gerencial.html">Painel Gerencial</a>
+            <a href="login.html">Sair</a>
         </div>
 
-        <div class="div_main_info">
-            <div class="div_info">
-                <p>CNPJ:</p>
-                <span id="cnpj">00.000.000/0001-00</span>
+        <div class="openBarMain">
+            <i class="bi bi-list openBar" onclick="openNav()"></i>
+        </div>
+        <div class="content">
+            <div class="perfil">
+                <i class="bi bi-person-circle"></i>
+                <p id="nomeUsuario">Nome do Usuário</p>
             </div>
 
-            <div class="div_info">
-                <p>Telefone:</p>
-                <span id="telefone">00.000.000/0001-00</span>
-            </div>
+            <div class="informacoes_main">
+                <div class="informacoes">
+                    <div class="div_info">
+                        <label for="cnpj">CNPJ:</label>
+                        <input id="cnpj" type="text" value="CNPJ do colaborador" disabled />
+                    </div>
+                    <div class="div_info">
+                        <label for="telefone">Telefone:</label>
+                        <input id="telefone" type="text" value="0000000000" disabled />
+                    </div>
+                    <div class="div_info">
+                        <label for="email">Email:</label>
+                        <input id="email" type="text" value="@gahsjjc.com" disabled />
+                    </div>
+                </div>
 
-            <div class="div_info">
-                <p>Razão social:</p>
-                <span id="razaoSocial">Texto aqui</span>
-            </div>
-
-            <div class="div_info">
-                <p>Propósito:</p>
-                <span id="proposito">Texto aqui</span>
+                <div class="proximo-voltar">
+                    <button onclick="editarPerfil()" id="editar-btn" type="button" class="btn btn-secondary"
+                        style="width: 100%; background-color: #C7530C; color: white;">Editar perfil</button>
+                    <button onclick="salvarPerfil()" id="salvar-btn" type="button" class="btn btn-secondary"
+                        style="display: none; background-color: #C7530C; color: white;">Salvar</button>
+                    <button id="meus-eventos-btn" type="button" class="btn btn-secondary"
+                        style="background-color: #C7530C; color: white;"> <a href="meus-eventos.html">Meus Eventos</a>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="proximo-voltar">
-            <button type="button" class="btn btn-outline-secondary" onclick="enableEditing()" id="editarInfoBtn">
-                Editar Info
-            </button>
-            <button type="button" class="btn btn-secondary">
-                <a href="../html/meus-eventos.html">Meus Eventos</a>
-            </button>
+        <div class="menu">
+            <a href="index.html" class="opcoes">
+                <img src="../assets/Vector 3 (1).png" alt="">
+                <p>Inicio</p>
+            </a>
+            <a href="meus-eventos.html" class="opcoes">
+                <img src="../assets/Calendar icon.png" alt="">
+                <p>Eventos</p>
+            </a>
+            <a href="evento.html" class="opcoes">
+                <img src="../assets/Group 2.png" alt="">
+                <p>Criar Evento</p>
+            </a>
+            <a href="lista_de_espera.html" class="opcoes">
+                <img src="../assets/Group 4.png" alt="">
+                <p>Participantes</p>
+            </a>
+            <a href="perfil.html" class="opcoes">
+                <img src="../assets/perfil.png" alt="">
+                <p style="color: #C7530C;">Perfil</p>
+            </a>
         </div>
-    </div>
 
-    <div class="menu">
-        <a href="index.html" class="opcoes">
-            <img src="../assets/Vector 3 (1).png" alt="">
-            <p>Inicio</p>
-        </a>
-        <a href="meus-eventos.html" class="opcoes">
-            <img src="../assets/Calendar icon.png" alt="">
-            <p>Eventos</p>
-        </a>
-        <a href="evento.html" class="opcoes">
-            <img src="../assets/Group 2.png" alt="">
-            <p>Criar Evento</p>
-        </a>
-        <a href="lista_de_espera.html" class="opcoes">
-            <img src="../assets/Group 4.png" alt="">
-            <p>Participantes</p>
-        </a>
-        <a href="perfil.html" class="opcoes">
-            <img src="../assets/perfil.png" alt="">
-            <p style="color: #C7530C;">Perfil</p>
-        </a>
-    </div>
+        <!-- Popup for success or error messages -->
+        <div id="popup" class="popup">
+            <span id="popup-message"></span>
+        </div>
 
-    <div id="popup" class="popup">
-        <span id="popup-message"></span>
-    </div>
-
+        <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </body>
 
 </html>
+
+<script>
+    window.onload = function () {
+        valorPadrao()
+        carregarPerfil()
+    }
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+
+    const isOrganizador = sessionStorage.getItem('ID_ORGANIZADOR') !== null;
+    let originalData = {};
+
+    // Function to get user data from sessionStorage
+    function obterDados() {
+        return {
+            id_organizador: parseInt(sessionStorage.getItem('ID_ORGANIZADOR')),
+            email: sessionStorage.getItem('EMAIL_ORGANIZADOR'),
+            senha: sessionStorage.getItem('SENHA_ORGANIZADOR'),
+            cnpj: sessionStorage.getItem('CNPJ_ORGANIZADOR'),
+            nome_resp: sessionStorage.getItem('NOME_RESP_ORGANIZADOR'),
+            cpf_resp: sessionStorage.getItem('CPF_RESP_ORGANIZADOR'),
+            telefone: sessionStorage.getItem('TELEFONE_ORGANIZADOR'),
+            imagemPerfil: sessionStorage.getItem('IMAGEM_PERFIL_ORGANIZADOR'),
+            permissao: parseInt(sessionStorage.getItem('PERMISSAO_ORGANIZADOR')),
+
+            // Address details
+            endereco: {
+                id_endereco_usuario: parseInt(sessionStorage.getItem('ID_ENDERECO_ORGANIZADOR')),
+                logradouro: sessionStorage.getItem('LOGRADOURO_ORGANIZADOR'),
+                numero: parseInt(sessionStorage.getItem('NUMERO_ORGANIZADOR')),
+                complemento: sessionStorage.getItem('COMPLEMENTO_ORGANIZADOR'),
+                cidade: sessionStorage.getItem('CIDADE_ORGANIZADOR'),
+                estado: sessionStorage.getItem('ESTADO_ORGANIZADOR'),
+                cep: sessionStorage.getItem('CEP_ORGANIZADOR')
+            }
+        };
+    }
+
+
+
+    // Function to load profile data into the form fields
+    async function carregarPerfil() {
+        const dados = obterDados();
+        const nomePerfil = document.getElementById('nomeUsuario');
+        const telefoneCampo = document.getElementById('telefone');
+        const cnpjCampo = document.getElementById('cnpj');
+        const emailCampo = document.getElementById('email');
+        console.log(dados);
+
+        originalData = {
+            telefone: dados.telefone,
+            cnpj: dados.cnpj,
+            email: dados.email,
+        };
+
+        // Fill fields with session data
+        nomePerfil.innerHTML = dados.nome_resp;
+        telefoneCampo.value = dados.telefone;
+        cnpjCampo.value = dados.cnpj;
+        emailCampo.value = dados.email;
+    }
+
+    // Function to enable editing
+    function editarPerfil() {
+        document.getElementById('telefone').disabled = false;
+        document.getElementById('email').disabled = false;
+
+        document.getElementById('salvar-btn').style.display = 'inline';   // Show 'Salvar'
+        document.getElementById('editar-btn').style.display = 'none';     // Hide 'Editar'
+    }
+
+    // Function to save profile
+    async function salvarPerfil() {
+        const dados = obterDados();
+        const telefone = document.getElementById('telefone').value;
+        const email = document.getElementById('email').value;
+
+
+        // Construct the data to be sent in the PATCH request
+        const data = {
+            id_organizador: dados.id_organizador,
+            email: email,
+            senha: dados.senha,
+            cnpj: dados.cnpj,
+            nome_resp: dados.nome_resp,
+            cpf_resp: dados.cpf_resp,
+            telefone: telefone,
+            permissao: dados.permissao,
+            endereco: {
+                id_endereco_usuario: dados.endereco.id_endereco_usuario,
+                logradouro: dados.endereco.logradouro,
+                numero: dados.endereco.numero,
+                complemento: dados.endereco.complemento,
+                cidade: dados.endereco.cidade,
+                estado: dados.endereco.estado,
+                cep: dados.endereco.cep
+            },
+            imagemPerfil: dados.imagemPerfil
+        };
+
+        const url = `http://localhost:8080/organizador?id=${dados.id_organizador}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                console.error('Erro no servidor:', response.status, errorMessage);
+            } else {
+                console.log('Perfil atualizado com sucesso!');
+                sessionStorage.setItem('TELEFONE_ORGANIZADOR', telefone);
+                sessionStorage.setItem('EMAIL_ORGANIZADOR', email);
+                cancelarEdicao();
+            }
+        } catch (error) {
+            console.error('Erro ao realizar o PATCH:', error.message);
+        }
+    }
+
+    // Function to cancel the edit and disable fields
+    function cancelarEdicao() {
+        document.getElementById('telefone').disabled = true;
+        document.getElementById('email').disabled = true;
+
+        document.getElementById('salvar-btn').style.display = 'none';     // Hide 'Salvar'
+        document.getElementById('editar-btn').style.display = 'inline';   // Show 'Editar'
+    }
+
+</script>

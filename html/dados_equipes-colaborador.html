@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/Logo.png" />
+    <title>Ecoflow | Participar Evento</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../css/colaboradorParticiparStyle/dados_gerais.css">
+    <link rel="stylesheet" href="../../css/atracao.css">
+    <link rel="stylesheet" href="../../css/menu.css">
+</head>
+
+<body>
+    <div class="titulo_pagina">
+        <h4>PARTICIPAR EVENTO</h4>
+    </div>
+    <div class="main_info">
+        <div class="dados_gerais">
+            <h5>DADOS DA EQUIPE</h5>
+        </div>
+
+        <div class="dados_produtos">
+            <div>
+                <h5>EQUIPE</h5>
+                <div class="adicionar_produto">
+                    <h6>Adicionar pessoa na equipe</h6>
+                    <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
+                </div>
+                <div id="productMessage" class="alert alert-warning" role="alert" style="display: none;">
+                    Você precisa adicionar um membro.
+                </div>
+            </div>
+
+            <div id="productContainer">
+            </div>
+        </div>
+    </div>
+
+    <div class="proximo-voltar">
+        <button type="button" class="btn btn-outline-secondary" onclick="voltar()">
+            Voltar
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
+            Proximo
+        </button>
+    </div>
+
+    <div class="menu">
+        <a href="index-colaborador.html" class="opcoes">
+            <img src="../../assets/Vector 3 (1).png" alt="">
+            <p>Inicio</p>
+        </a>
+        <a href="eventos-colaborador.html" class="opcoes">
+            <img src="../../assets/Calendar icon.png" alt="">
+            <p>Eventos</p>
+        </a>
+        <a href="perfil-colaborador.html" class="opcoes">
+            <img src="../../assets/Group 3.png" alt="">
+            <p>Perfil</p>
+        </a>
+        <a href="login.html" class="opcoes">
+            <img src="../../assets/Logout.png" alt="Sair">
+            <p>Sair</p>
+        </a>
+    </div>
+</body>
+
+<script>
+    // Function to go back to the previous page
+    function voltar() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
+    }
+
+    // Function to toggle the visibility of ingredients and rotate the icon
+    function toggleIngredients(element) {
+        const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
+        const icon = element.querySelector('i');
+        if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
+            ingredientesDiv.style.display = "block";
+            icon.style.transform = "rotate(180deg)";
+        } else {
+            ingredientesDiv.style.display = "none";
+            icon.style.transform = "rotate(0deg)";
+        }
+    }
+
+    // Function to add a new team member card (limit to one member)
+    function addEquipeCard() {
+        const container = document.getElementById('productContainer');
+        const productMessage = document.getElementById('productMessage');
+        
+        // If there is already one member, prevent adding another
+        if (container.children.length >= 1) {
+            alert("Você só pode adicionar um membro.");
+            return;
+        }
+
+        productMessage.style.display = 'none';
+
+        const newCard = document.createElement('div');
+        newCard.classList.add('info_card');
+
+        newCard.innerHTML = `
+            <div class="info_form">
+                <div class="drop_down">
+                    <label>Nome da Pessoa:</label>
+                    <div class="expandir_div" onclick="toggleIngredients(this)">
+                        Expandir
+                        <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <input type="text" class="team-name">
+                <div class="ingredientes" style="display: none;">
+                    <span>Telefone:</span>
+                    <input type="text" class="team-phone">
+                    <span>E-mail:</span>
+                    <input type="text" class="team-email">
+                </div>
+                <div class="btn_delete">
+                    <button onclick="removeEquipeCard(this)">
+                        Excluir Membro
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(newCard);
+    }
+
+    // Function to remove a team member card
+    function removeEquipeCard(button) {
+        const container = document.getElementById('productContainer');
+        button.closest('.info_card').remove();
+
+        if (container.children.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+        }
+    }
+
+    // Add event listener to the add team member button
+    document.getElementById('addProdutoCard').addEventListener('click', addEquipeCard);
+
+    // Save team data and redirect to the next page
+    async function salvarDadosPag2() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+        const teamContainer = document.getElementById('productContainer');
+
+        const teamCards = teamContainer.getElementsByClassName('info_card');
+        if (teamCards.length === 0) {
+            document.getElementById('productMessage').style.display = 'block';
+            return;
+        }
+
+        const memberName = teamCards[0].querySelector('.team-name').value;
+        const memberPhone = teamCards[0].querySelector('.team-phone').value;
+        const memberEmail = teamCards[0].querySelector('.team-email').value;
+
+        if (!memberName.trim()) {
+            alert("Por favor, preencha o nome do membro da equipe.");
+            return;
+        }
+
+        // Save the single team member to sessionStorage
+        const teamMember = {
+            nome: memberName,
+            telefone: memberPhone,
+            email: memberEmail
+        };
+
+        sessionStorage.setItem('equipe', JSON.stringify(teamMember));
+
+        // Redirect to the next page (choose a stand)
+        window.location.href = `stand-colaborador.html?id=${eventId}`;
+    }
+
+    // On page load, restore the saved team member from sessionStorage
+    // On page load, restore the saved team member from sessionStorage
+window.onload = function () {
+    const container = document.getElementById('productContainer');
+    const savedTeamData = sessionStorage.getItem('equipe');
+
+    // Check if equipe data is present in sessionStorage
+    if (savedTeamData) {
+        // Try to parse the savedTeam data
+        try {
+            const savedTeam = JSON.parse(savedTeamData);
+
+            // Check if savedTeam contains valid properties
+            if (savedTeam && savedTeam.nome && savedTeam.telefone && savedTeam.email) {
+                const newCard = document.createElement('div');
+                newCard.classList.add('info_card');
+
+                newCard.innerHTML = `
+                    <div class="info_form">
+                        <div class="drop_down">
+                            <label>Nome da Pessoa:</label>
+                            <div class="expandir_div" onclick="toggleIngredients(this)">
+                                Expandir
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="team-name" value="${savedTeam.nome}">
+                        <div class="ingredientes" style="display: none;">
+                            <span>Telefone:</span>
+                            <input type="text" class="team-phone" value="${savedTeam.telefone}">
+                            <span>E-mail:</span>
+                            <input type="text" class="team-email" value="${savedTeam.email}">
+                        </div>
+                        <div class="btn_delete">
+                            <button onclick="removeEquipeCard(this)">
+                                Excluir Membro
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(newCard);
+            } else {
+                console.error('Invalid equipe data in sessionStorage:', savedTeam);
+                document.getElementById('productMessage').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error parsing equipe from sessionStorage:', error);
+            document.getElementById('productMessage').style.display = 'block';
+        }
+    } else {
+        document.getElementById('productMessage').style.display = 'block';
+    }
+};
+
+</script>
+
+</html>

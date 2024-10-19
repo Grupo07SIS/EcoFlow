@@ -6,6 +6,7 @@
 
 body {
   background-color: #EDEDED;
+  padding-top: 0%;
 }
 
 .content {
@@ -118,13 +119,14 @@ a{
 
 .titulo {
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-content: center;
   width: 100%;
-  height: fit-content;
-  font-size: 22px;
+
+  h4 {
   font-weight: bold;
-  color: #163915;
+  }
+
 }
 
 .filtroDtsPronto {
@@ -178,8 +180,32 @@ a{
 .offcanvas-sm,
 .offcanvas-xl,
 .offcanvas-xxl {
-  --bs-offcanvas-height: 50%;
+  --bs-offcanvas-height: 38%;
 }
+
+.filtrar_local {
+  position: relative;
+  height: 90%;
+  width: 100%;
+}
+
+.search-input {
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 18px; /* Position the icon inside the input */
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: gray;
+  pointer-events: none; /* Make sure the icon doesn't block interaction with the input */
+}
+
+
 
 .btn-primary {
   --bs-btn-color: #fff;
@@ -223,19 +249,6 @@ a{
   margin: 0%;
 }
 
-.filtrar_local {
-  width: 100%;
-
-  input {
-    width: 100%;
-    height: 36px;
-    border-radius: 4px;
-    border: #7a7a7a 1px solid;
-  }
-
-  ;
-}
-
 .grp_btn {
   display: flex;
   flex-direction: row;
@@ -269,7 +282,7 @@ a{
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-top: 12px;
+  padding-top: 16px;
   margin-bottom: 90px;
 }
 
@@ -299,4 +312,41 @@ a{
 
 .desc_evento span {
   font-size: 16px;
+}
+
+a.card-link {
+  text-decoration: none;
+  color: inherit; 
+}
+
+a.card-link:hover {
+  text-decoration: none; 
+  color: inherit; 
+}
+
+.buttons_search_filter{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proximo-voltar2 {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .btn-outline-secondary {
+      width: 100%;
+      color: #C7530C;
+      border: solid 1px #C7530C;
+      font-size: 1.2rem;
+      font-weight: 500;
+
+      a {
+          text-decoration: none;
+          color: #C7530C;
+      }
+  }
 }

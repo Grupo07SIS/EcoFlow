@@ -25,8 +25,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -66,11 +66,11 @@
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label>Hora Inicio:</label>
-                <input type="time" class="form-control" id="numero">
+                <input type="time" class="form-control" id="horaInicio">
             </div>
             <div class="form-group col-md-2">
                 <label>Hora Fim</label>
-                <input type="time" class="form-control" id="cep">
+                <input type="time" class="form-control" id="horaFim">
             </div>
         </div>
         <div class="form-group">
@@ -113,7 +113,7 @@
 
     <div class="proximo">
         <button type="button" class="btn btn-secondary" , onclick="salvarDadosPag1()">
-            <a href="../html/valores.html">Proximo</a>
+            <a href="valores.html">Proximo</a>
         </button>
     </div>
 
@@ -141,47 +141,6 @@
     </div>
 
 
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-
-        fileInput.addEventListener('change', handleFiles);
-
-        function handleFiles(event) {
-            const files = event.target.files;
-            previewFiles(files);
-        }
-
-        function previewFiles(files) {
-            previewContainer.innerHTML = ''; // Limpa qualquer pré-visualização anterior
-            for (const file of files) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    previewContainer.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function salvarDadosPag1() {
-            const dados = {
-                nomeEvento: document.getElementById('nome').value,
-                temaEvento: document.getElementById('tema').value,
-                dataEvento: document.getElementById('data').value,
-                capacidadeMax: document.getElementById('capacidadeMax').value,
-                descricaoEvento: document.getElementById('desc').value,
-                logradouro: document.getElementById('logradouro').value,
-                numero: document.getElementById('numero').value,
-                cep: document.getElementById('cep').value,
-                complemento: document.getElementById('complemento').value,
-                cidade: document.getElementById('cidade').value,
-                estado: document.getElementById('UF').value,
-            };
-            sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
-        }
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -193,12 +152,107 @@
     window.onload = valorPadrao()
 
     async function valorPadrao() {
-        console.log("CHEGOU NESSA BCT")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
         const nomeNavBar = document.getElementById('userName')
         const emailNavBar = document.getElementById('nomeEmpresa')
         nomeNavBar.innerHTML = nomeSS
         emailNavBar.innerHTML = emailSS
     }
+    const fileInput = document.getElementById('fileInput');
+    const previewContainer = document.getElementById('previewContainer');
+
+    fileInput.addEventListener('change', handleFiles);
+
+    function handleFiles(event) {
+        const files = event.target.files;
+        previewFiles(files);
+    }
+
+    function previewFiles(files) {
+        previewContainer.innerHTML = '';
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    window.onload = function () {
+        // Load stored event data if present
+        const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
+
+        if (dadosEvento) {
+            document.getElementById('nome').value = dadosEvento.nome || '';
+            document.getElementById('tema').value = dadosEvento.tema || '';
+            document.getElementById('desc').value = dadosEvento.descricao || '';
+            document.getElementById('data').value = dadosEvento.dataEvento || '';
+            document.getElementById('horaInicio').value = dadosEvento.hora_inicio || '';
+            document.getElementById('horaFim').value = dadosEvento.hora_fim || '';
+            document.getElementById('logradouro').value = dadosEvento.enderecoEvento.logradouro || '';
+            document.getElementById('numero').value = dadosEvento.enderecoEvento.numero || '';
+            document.getElementById('complemento').value = dadosEvento.enderecoEvento.complemento || '';
+            document.getElementById('cidade').value = dadosEvento.enderecoEvento.cidade || '';
+            document.getElementById('UF').value = dadosEvento.enderecoEvento.estado || '';
+            document.getElementById('cep').value = dadosEvento.enderecoEvento.cep || '';
+        }
+    }
+
+    async function salvarDadosPag1() {
+        const nomeEvento = document.getElementById('nome').value;
+        const temaEvento = document.getElementById('tema').value;
+        const descricaoEvento = document.getElementById('desc').value;
+        const dataEvento = document.getElementById('data').value;  // YYYY-MM-DD
+        const horaInicio = document.getElementById('horaInicio').value; // HH:mm
+        const horaFim = document.getElementById('horaFim').value; // HH:mm
+
+        // Capturar valores de endereço
+        const logradouro = document.getElementById('logradouro').value;
+        const numero = document.getElementById('numero').value;
+        const complemento = document.getElementById('complemento').value;
+        const cidade = document.getElementById('cidade').value;
+        const estado = document.getElementById('UF').value;
+        const cep = document.getElementById('cep').value;
+
+        // Validar campos obrigatórios
+        if (!nomeEvento || !temaEvento || !dataEvento || !horaInicio || !horaFim || !logradouro || !cidade || !estado || !cep) {
+            alert("Por favor, preencha todos os campos obrigatórios.");
+            return;
+        }
+
+        // Combine data and horaInicio into a full datetime
+        const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
+        const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
+
+        // Convert the datetimes to ISO strings to include time zone (in UTC)
+        const horaInicioISO = inicioDateTime.toISOString();
+        const horaFimISO = fimDateTime.toISOString();
+
+        const dadosEvento = {
+            nome: nomeEvento,
+            tema: temaEvento,
+            descricao: descricaoEvento,
+            dataEvento: dataEvento, // keep as date
+            hora_inicio: horaInicioISO, // ISO format with timezone
+            hora_fim: horaFimISO, // ISO format with timezone
+            enderecoEvento: {
+                logradouro: logradouro,
+                numero: numero,
+                complemento: complemento,
+                cidade: cidade,
+                estado: estado,
+                cep: cep
+            }
+        };
+
+        sessionStorage.setItem('dadosEvento', JSON.stringify(dadosEvento));
+
+        window.location.href = `valores.html`;
+    }
+
+
 </script>

@@ -52,7 +52,7 @@ async function cadastrarEvento() {
         "data": dataEvento
     }
     console.log(evento)
-    const respostaCadastro = await fetch("http://localhost:8080/eventos", {
+    const respostaCadastro = await fetch("http://localhost:8080/evento", {
         method: "POST",
         body: JSON.stringify(evento),
         headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -86,7 +86,7 @@ async function buscarDados() {
     const eventId = sessionStorage.getItem('currentEventId');
 
     try {
-        const resposta = await fetch(`http://localhost:8080/eventos/id?id=${eventId}`);
+        const resposta = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
         const evento = await resposta.json();
 
         console.log("Resposta: ", evento);
@@ -207,7 +207,7 @@ async function alterarEvento() {
     };
 
     try {
-        const respostaCadastro = await fetch(`http://localhost:8080/eventos/update?id=${eventId}`, {
+        const respostaCadastro = await fetch(`http://localhost:8080/evento/update?id=${eventId}`, {
             method: "PATCH",
             body: JSON.stringify(evento),
             headers: {
@@ -269,7 +269,7 @@ async function deletarEvento() {
     };
 
     try {
-        const deletar = await fetch(`http://localhost:8080/eventos?id=${eventId}`, {
+        const deletar = await fetch(`http://localhost:8080/evento?id=${eventId}`, {
             method: "DELETE",
             headers: headers
         });
@@ -300,11 +300,11 @@ async function deletarEvento() {
         // Show popup
         popup.classList.add('show');
 
-        // Hide popup after 3 seconds and redirect to index.html on success
+        // Hide popup after 3 seconds and redirect on success
         setTimeout(() => {
             popup.classList.remove('show');
             if (deletar.status === 204) {
-                window.location.href = 'index.html';
+                window.location.href = 'meus-eventos.html';
             }
         }, 3000);
 

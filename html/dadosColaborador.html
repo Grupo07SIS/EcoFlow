@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <script src="../js/evento.js"></script>
+    <script src="../js/organizador/evento.JS"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <!-- <script src="../js/buscarDetalhamentoEvento.js" defer></script> -->
     <!-- Incluindo a biblioteca Leaflet CSS -->
@@ -20,9 +20,6 @@
 
     <!-- Incluindo a biblioteca Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        window.onload = buscarDados()
-    </script>
 </head>
 
 <body>
@@ -33,8 +30,8 @@
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="loading.html">Sair</a>
     </div>
@@ -51,108 +48,112 @@
         <div id="bloco_marca"> <img id="imagem_marca" src="/assets/marca_vegana.jfif" alt=""></div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Nome da Marca</span>
-            <span>PapEcos - Papetes Ecológicas</span>
+            <span id="nomeFantasia">PapEcos - Papetes Ecológicas</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Nome do Colaborador</span>
-            <span>Paulo Rosas Santos</span>
+            <span id="nomeResp">Paulo Rosas Santos</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 700; font-size: 20px;">Dados Responsável Legal</span>
             <span style="font-weight: 600;">CPF Responsável</span>
-            <span>123.456.789-00</span>
+            <span id="cpfResp">123.456.789-00</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">RG Responsável</span>
-            <span>12.345.768-22</span>
+            <span id="rgResp">12.345.768-22</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">E-mail</span>
-            <span>paulo.rosas@hotmail.com</span>
+            <span id="email">paulo.rosas@hotmail.com</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 700; font-size: 20px;">Dados da Marca</span>
             <span style="font-weight: 600;">Razão Social</span>
-            <span>Papecos Indústrias Ltda.</span>
+            <span id="">Papecos Indústrias Ltda.</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">CNPJ</span>
-            <span>00.000.000/0001-00</span>
+            <span id="cnpj">00.000.000/0001-00</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Telefone</span>
-            <span>(11) 3456-9872</span>
+            <span id="telefone">(11) 3456-9872</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Tipo Empresa</span>
-            <span>Pessoa Jurídica</span>
+            <span id="tipoEmpresa">Pessoa Jurídica</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">CEP</span>
-            <span>12345-000</span>
+            <span id="cep">12345-000</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Logradouro</span>
-            <span>Rua dos Doidos</span>
+            <span id="logradouro">Rua dos Doidos</span>
         </div>
         <div class="bloco_maior_dados">
             <div class="bloco_dados">
                 <span style="font-weight: 600;">Número</span>
-                <span>501</span>
-            </div><div class="bloco_dados">
+                <span id="numero">501</span>
+            </div>
+            <div class="bloco_dados">
                 <span style="font-weight: 600;">Complemento</span>
-                <span>Salão 3</span>
+                <span id="complemento">Salão 3</span>
             </div>
         </div>
         <div class="bloco_maior_dados">
             <div class="bloco_dados">
                 <span style="font-weight: 600;">Cidade</span>
-                <span>São Paulo</span>
-            </div><div class="bloco_dados">
+                <span id="cidade">São Paulo</span>
+            </div>
+            <div class="bloco_dados">
                 <span style="font-weight: 600;">Estado</span>
-                <span>São Paulo</span>
+                <span id="estado">São Paulo</span>
             </div>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Inscrição Estadual</span>
-            <span>1234567890</span>
+            <span id="inscricaoEstadual">1234567890</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Propósito</span>
-            <span>Fornecer papetes que tragam junto á estilo, conscientização sobre o consumo de materia prima prejudicial ao meio ambiente. Nossas papetes não possuem material de origem animal e nem plástico.</span>
+            <span id="proposito">Fornecer papetes que tragam junto á estilo, conscientização sobre o consumo de materia
+                prima prejudicial ao meio ambiente. Nossas papetes não possuem material de origem animal e nem
+                plástico.</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Nicho Produtos</span>
-            <span>Vestuário</span>
+            <span id="nicho">Vestuário</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Whatsapp Comercial</span>
-            <span>(12)34567-8930</span>
+            <span id="wppComercial">(12)34567-8930</span>
         </div>
         <div class="bloco_dados">
             <span style="font-weight: 600;">Site</span>
-            <span>www.papecos.com.br</span>
+            <span id="site">www.papecos.com.br</span>
         </div>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
-        <a href="../html/meus-eventos.html" class="opcoes">
+        <a href="meus-eventos.html" class="opcoes">
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2.png" alt="">
             <p>Criar Evento</p>
         </a>
-        <a href="../html/lista_de_espera.html" class="opcoes">
+        <a href="lista_de_espera.html" class="opcoes">
             <img src="../assets/Group 4.png" alt="">
             <p>Participantes</p>
         </a>
-        <a href="../html/perfil.html" class="opcoes">
+        <a href="perfil.html" class="opcoes">
             <img src="../assets/Group 3.png" alt="">
             <p>Perfil</p>
         </a>
@@ -161,29 +162,24 @@
     <div id="popup" class="popup">
         <p id="popup-message"></p>
     </div>
-    <script src="../js/mockDados/mockDadosColaborador.js"></script>
+    <script src="../js/organizador/dadosColaborador.js"></script>
 </body>
 
 </html>
 
 <script>
-function backpage(){
-    window.location.href = 'lista_colaborador.html';
-}
-
-</script>
-
-<script>
-    function buscarDados() {
-      const collabId = localStorage.getItem('selectedCollaboratorId');
-      const collaborator = collaborators.find(collab => collab.id == collabId);
-  
-      if (collaborator) {
-        document.querySelector('#imagem_marca').src = collaborator.image;
-        document.querySelector('.nome_colaborador').innerText = `Dados de ${collaborator.name}`;
-        document.querySelector('#bloco_marca span').innerText = collaborator.name;
-      }
+    function backpage() {
+        window.history.back();
     }
-  
-    window.onload = buscarDados;
-  </script>
+
+    window.onload = valorPadrao()
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
+        const nomeNavBar = document.getElementById('userName')
+        const emailNavBar = document.getElementById('nomeEmpresa')
+        nomeNavBar.innerHTML = nomeSS
+        emailNavBar.innerHTML = emailSS
+    }
+</script>

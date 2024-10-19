@@ -12,29 +12,23 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dash_gerencial.css">
-    <script src="../js/dash_gerencial.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/navbar.css">
-    <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <script>
-        window.onload = gerarGrafico()
-    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body onload="gerarGrafico()">
+<body>
     <div class="content">
         <div id="mySidenav" class="sidenav">
-            <!-- <a href="javascript:void(0)" </a> -->
             <i class="bi bi-list closebtn" onclick="closeNav()"></i>
             <div class="user_info">
                 <i class="bi bi-person-circle"></i>
                 <p id="userName">Nome do Usuário</p>
                 <p id="nomeEmpresa">Nome da Empresa</p>
             </div>
-            <a href="#">Meus eventos</a>
-            <a href="#">Participantes em espera</a>
+            <a href="meus-eventos.html">Meus eventos</a>
+            <a href="meus-eventos.html">Participantes em espera</a>
             <a href="dash_gerencial.html">Painel Gerencial</a>
             <a href="login.html">Sair</a>
         </div>
@@ -45,27 +39,14 @@
 
         <!-- titulo da tela -->
         <div class="titulo">
-            <span>Painel Gerencial</span>
-        </div>
-
-        <!-- filtro de próximos eventos e eventos passados -->
-
-        <div class="filtrar">
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked
-                    style="margin-bottom: 0px;">
-                <label class="btn btn-outline-primary" for="btnradio1">Próximos eventos</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">Eventos passados</label>
-            </div>
+            <p>Painel Gerencial</p>
         </div>
 
         <!-- botão de filtrar e suas filtragens -->
         <div class="bloco_filtros">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                 aria-controls="offcanvasBottom"> <img src="../assets/filter.png" alt=""> Filtrar</button>
-            <div style="height: 75%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+            <div style="height: 40%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
                 aria-labelledby="offcanvasBottomLabel">
                 <div class="offcanvas-header">
                     <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtros</h2>
@@ -73,54 +54,31 @@
                         aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body small">
-                    <h4>Tema do Evento</h4>
-                    <div class="filtrar_tema">
-                        <select class="form-select form-select-sm" aria-label="Small select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
                     <h4 class="titulo_filtro">Data</h4>
                     <div class="filtrar_date">
                         <div class="bloco_filtro">
                             <div class="filtrar_dt_inicio">
                                 <span>Inicio</span>
                                 <div class="input-group flex-nowrap">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" id="start">
                                 </div>
                             </div>
                             <div class="filtrar_dt_fim">
                                 <span>Fim</span>
                                 <div class="input-group flex-nowrap">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" id="end">
                                 </div>
                             </div>
                         </div>
-                        <div style="padding-top:18px; width: 100%;">
-                            <div class="filtroDtsPronto">
-                                <button>Essa semana</button>
-                                <button>Esse mês</button>
-                                <button>Esse ano</button>
-                            </div>
-                        </div>
-
-                        <div class="filtrar_local">
-                            <h4>Local</h4>
-                            <input type="text" placeholder="Digite o local aqui...">
-                        </div>
-
                         <div class="grp_btn">
-                            <button class="secondary_btn">
-                                Limpar Filtro
-                            </button>
-                            <button class="primary_btn">
-                                Aplicar Filtro
-                            </button>
+                            <!-- button to clear filters -->
+                            <button class="secondary_btn" onclick="limpar()">Limpar Filtro</button>
+                            <!-- button to apply filters -->
+                            <button class="primary_btn" onclick="aplicar()">Aplicar Filtro</button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -130,11 +88,11 @@
                 <h4>Lucro do Evento</h4>
             </div>
             <div class="grafico_linha">
-                <div class="lucro_alcancado"></div>
+                <div class="lucro_alcancado" id="lucro_alcancado"></div>
             </div>
             <div class="descricao_linha">
-                <h6>Alcançado</h6>
-                <h6>Meta</h6>
+                <h6>Alcançado - <span id="alcando"></span></h6>
+                <h6>Meta - <span id="meta"></span></h6>
             </div>
             <!-- KPIs -->
             <div class="kpis">
@@ -165,7 +123,6 @@
             </div>
         </div>
 
-        <!-- gráfico de numeros de inscrições -->
         <div class="grafico_pizza">
             <div class="subtitulo2">
                 <h4>Número de Inscritos no Evento</h4>
@@ -173,7 +130,6 @@
             <div class="grafico_inscricoes">
                 <canvas id="myChart"></canvas>
             </div>
-            <!-- KPIs -->
             <div class="kpis1">
                 <div class="kpi_geral1">
                     <div class="titulo_kpi1">
@@ -193,16 +149,15 @@
                 </div>
                 <div class="kpi_geral1">
                     <div class="titulo_kpi1">
-                        <span>Média de Avaliações</span>
+                        <span>Avaliações em média</span>
                     </div>
                     <div class="dado_kpi1">
-                        <span id="media_avaliacoes">00</span>
+                        <span id="colab_aprovados">00</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Nichos Presentes -->
         <div class="main_nichos">
             <div class="grafico_nichos">
                 <div class="subtitulo">
@@ -210,24 +165,29 @@
                 </div>
                 <div class="bolhas">
                     <div class="content_bolha">
-                        <div class="bolha_geral_1">
-                            <div class="bolha_dado"><span id="dado_bolha">32</span></div>
+                        <div class="bolha_geral" id="bolha_alimento">
+                            <div class="dado_bolha_alimento"><span id="dado_bolha_alimento">00</span></div>
                         </div>
                         <div class="bolha_titulo" id="titulo_bolha">Alimentos</div>
                     </div>
                     <div class="content_bolha">
-                        <div class="bolha_geral_2">
-                            <div class="bolha_dado"><span id="dado_bolha">24</span></div>
+                        <div class="bolha_geral" id="bolha_moda">
+                            <div class="dado_bolha_moda"><span id="dado_bolha_moda">00</span></div>
                         </div>
                         <div class="bolha_titulo" id="titulo_bolha">Moda</div>
                     </div>
                     <div class="content_bolha">
-                        <div class="bolha_geral_3">
-                            <div class="bolha_dado"><span id="dado_bolha">12</span></div>
+                        <div class="bolha_geral" id="bolha_beleza">
+                            <div class="dado_bolha_beleza"><span id="dado_bolha_beleza">00</span></div>
                         </div>
                         <div class="bolha_titulo" id="titulo_bolha">Beleza</div>
                     </div>
-
+                    <div class="content_bolha">
+                        <div class="bolha_geral" id="bolha_pets">
+                            <div class="dado_bolha_pets"><span id="dado_bolha_pets">00</span></div>
+                        </div>
+                        <div class="bolha_titulo" id="titulo_bolha">Animais</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -277,9 +237,8 @@
         window.onload = valorPadrao()
 
         async function valorPadrao() {
-            console.log("CHEGOU, viva Jesus")
-            const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-            const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
             const nomeNavBar = document.getElementById('userName')
             const emailNavBar = document.getElementById('nomeEmpresa')
             nomeNavBar.innerHTML = nomeSS
@@ -299,6 +258,9 @@
             });
         });
     </script>
+    
+    <script src="../js/organizador/dash_gerencial.js"></script>
+    <script src="../js/navbar.js"></script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/Logo.png" />
-    <title>Ecoflow | Criar Evento</title>
+    <title>Alterar evento</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="../css/style.css">
@@ -16,20 +16,18 @@
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 </head>
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
             <p id="userName">Nome do Usuário</p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -62,15 +60,15 @@
 
     <div class="proximo-voltar">
         <button type="button" class="btn btn-outline-secondary">
-            <a href="../html/valores-update.html">Voltar</a>
+            <a href="valores-update.html">Voltar</a>
         </button>
         <button type="button" class="btn btn-secondary" onclick="salvarDadosPag2()">
-            <a href="../html/atracao-update.html">Proximo</a>
+            <a>Proximo</a>
         </button>
     </div>
 
     <div class="menu">
-        <a href="../html/index.html" class="opcoes">
+        <a href="index.html" class="opcoes">
             <img src="../assets/Vector 3 (1).png" alt="">
             <p>Inicio</p>
         </a>
@@ -78,7 +76,7 @@
             <img src="../assets/Calendar icon.png" alt="">
             <p>Eventos</p>
         </a>
-        <a href="../html/evento.html" class="opcoes">
+        <a href="evento.html" class="opcoes">
             <img src="../assets/Group 2 (1).png" alt="">
             <p style="color: #C7530C;">Criar Evento</p>
         </a>
@@ -94,21 +92,29 @@
 
     
 <script>
-    // Function to toggle the visibility of ingredients and rotate the icon
-    function toggleIngredients(element) {
-        const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
-        const icon = element.querySelector('i');
-        if (ingredientesDiv.style.display === "none" || ingredientesDiv.style.display === "") {
-            ingredientesDiv.style.display = "block";
-            icon.style.transform = "rotate(180deg)";
-        } else {
-            ingredientesDiv.style.display = "none";
-            icon.style.transform = "rotate(0deg)";
+    const eventId = sessionStorage.getItem('eventoID');
+
+    // Função para buscar tipos de stands (GET)
+    async function buscarTiposStands() {
+        try {
+            const response = await fetch(`http://localhost:8080/tipoStand`);
+            const stands = await response.json();
+
+            if (stands.length > 0) {
+                document.getElementById('productMessage').style.display = 'none';
+                stands.forEach(stand => {
+                    addProdutoCard(stand);
+                });
+            } else {
+                document.getElementById('productMessage').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Erro ao buscar os tipos de stands:', error);
         }
     }
 
-    // Function to add a new product card
-    function addProdutoCard() {
+    // Função para adicionar um novo stand/mesa
+    function addProdutoCard(stand = {}) {
         const container = document.getElementById('productContainer');
         const productMessage = document.getElementById('productMessage');
         productMessage.style.display = 'none';
@@ -117,23 +123,52 @@
         newCard.classList.add('info_card');
 
         newCard.innerHTML = `
-            <div class="info_form">
-                <div class="drop_down">
+            <div class="info_form" data-stand-id="${stand.id_tipo_stand || ''}">
+                <div class="form-group d-flex justify-content-between align-items-center" style="width:100%;left: 63%; position: relative;">
+                    <button type="button" class="btn btn-outline-secondary ml-2 expandir_div" onclick="toggleStandDetails(this)">
+                        Expandir <i class="bi bi-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="form-group">
                     <label>Nome do stand:</label>
-                    <div class="expandir_div" onclick="toggleIngredients(this)">
-                        Expandir
-                        <i class="bi bi-chevron-down"></i>
+                    <input type="text" value="${stand.tipo || ''}" class="form-control" required>
+                </div>
+            
+                <div class="toggleable" style="display: none;">
+                    <div class="form-group">
+                        <label>Tipo de stand:</label>
+                        <input type="text" value="${stand.tipo || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Largura:</label>
+                        <input type="text" value="${stand.largura || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Comprimento:</label>
+                        <input type="text" value="${stand.comprimento || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de Cadeiras:</label>
+                        <input type="number" value="${stand.qtd_cadeiras || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Valor (R$):</label>
+                        <input type="number" value="${stand.valor || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Exceção:</label>
+                        <input type="text" value="${stand.excecao || ''}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Ponto Elétrico:</label>
+                        <select class="form-control">
+                            <option value="Sim" ${stand.ponto_eletrico === 'Sim' ? 'selected' : ''}>Sim</option>
+                            <option value="Não" ${stand.ponto_eletrico === 'Não' ? 'selected' : ''}>Não</option>
+                        </select>
                     </div>
                 </div>
-                <input type="text">
-                <div class="ingredientes" style="display: none;">
-                    <span>Preço:</span>
-                    <input type="number">
-                    <span>Descrição:</span>
-                    <input type="text">
-                </div>
                 <div class="btn_delete">
-                    <button onclick="removeProdutoCard(this)">
+                    <button onclick="removeProdutoCard(this)" class="btn btn-danger mt-2">
                         Excluir Stand/Mesa
                         <i class="bi bi-trash"></i>
                     </button>
@@ -144,7 +179,83 @@
         container.appendChild(newCard);
     }
 
-    // Function to remove a product card
+    // Função para salvar as alterações de um stand (PATCH)
+    async function salvarDadosPag2() {
+        const container = document.getElementById('productContainer');
+        const stands = container.querySelectorAll('.info_form');
+
+        stands.forEach(async (standForm) => {
+            const standId = standForm.getAttribute('data-stand-id');
+            const nome = standForm.querySelector('input[type="text"]').value;
+            const tipo = standForm.querySelector('input:nth-of-type(2)').value;
+            const largura = standForm.querySelector('input:nth-of-type(3)').value;
+            const comprimento = standForm.querySelector('input:nth-of-type(4)').value;
+            const qtdCadeiras = standForm.querySelector('input:nth-of-type(5)').value;
+            const valor = standForm.querySelector('input:nth-of-type(6)').value;
+            const excecao = standForm.querySelector('input:nth-of-type(7)').value;
+            const pontoEletrico = standForm.querySelector('select').value;
+
+            const standData = {
+                nome,
+                tipo,
+                largura,
+                comprimento,
+                qtdCadeiras,
+                valor,
+                excecao,
+                pontoEletrico,
+            };
+
+            try {
+                const url = standId
+                    ? `http://localhost:8080/tipoStand?id=${standId}`
+                    : `http://localhost:8080/tipoStand`;
+
+                const method = standId ? 'PATCH' : 'POST';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(standData),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao salvar o stand');
+                }
+
+                console.log('Stand salvo com sucesso!');
+            } catch (error) {
+                console.error('Erro ao salvar o stand:', error);
+            }
+        });
+
+        window.location.href = 'atracao-update.html';
+    }
+
+    // Função para alternar detalhes de um stand
+    function toggleStandDetails(element) {
+        const parentForm = element.closest('.info_form');
+        const inputs = parentForm.querySelectorAll('.toggleable');
+        const icon = element.querySelector('i');
+
+        inputs.forEach(input => {
+            if (input.style.display === "none" || input.style.display === "") {
+                input.style.display = "block";
+            } else {
+                input.style.display = "none";
+            }
+        });
+
+        if (icon.style.transform === "rotate(180deg)") {
+            icon.style.transform = "rotate(0deg)";
+        } else {
+            icon.style.transform = "rotate(180deg)";
+        }
+    }
+
+    // Função para remover um stand/mesa
     function removeProdutoCard(button) {
         const container = document.getElementById('productContainer');
         button.closest('.info_card').remove();
@@ -154,16 +265,20 @@
         }
     }
 
-    // Add event listener to the add product button
-    document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
-
-    // Show the message if no products are added on page load
+    // Inicializar ao carregar a página
     window.onload = function () {
-        const container = document.getElementById('productContainer');
-        if (container.children.length === 0) {
-            document.getElementById('productMessage').style.display = 'block';
-        }
+        valorPadrao();
+        buscarTiposStands();
     };
+
+    async function valorPadrao() {
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
+        const nomeNavBar = document.getElementById('userName');
+        const emailNavBar = document.getElementById('nomeEmpresa');
+        nomeNavBar.innerHTML = nomeSS;
+        emailNavBar.innerHTML = emailSS;
+    }
 </script>
 </body>
 

@@ -154,8 +154,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    height: 100%;
 }
 
 .filtrar_local h4 {
@@ -167,6 +166,7 @@
     width: 100%;
     border-radius: 4px;
     padding: 4px;
+    height: 44px;
 }
 
 .grp_btn {

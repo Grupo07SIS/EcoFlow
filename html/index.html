@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <script src="../js/organizador/buscarDadosOrganizador.js"></script>
 </head>
 
 <body>
@@ -20,11 +21,11 @@
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
-            <p id="userName">Nome do Usuário</p>
+            <p id="userName"></p>
             <p id="nomeEmpresa">Nome da Empresa</p>
         </div>
-        <a href="#">Meus eventos</a>
-        <a href="#">Participantes em espera</a>
+        <a href="meus-eventos.html">Meus eventos</a>
+        <a href="lista_de_espera.html">Participantes em espera</a>
         <a href="dash_gerencial.html">Painel Gerencial</a>
         <a href="login.html">Sair</a>
     </div>
@@ -74,26 +75,26 @@
     </div>
 
     <div class="nichos">
-        <div class="nicho">
-            <a href="lista_colaborador.html">
+        <div class="nicho" id="modaNicho">
+            <a href="lista_colaborador.html?nicho=moda">
                 <img src="../assets/Property 1=Default.png" alt="">
                 <h5>Moda</h5>
             </a>
         </div>
-        <div class="nicho">
-            <a href="lista_colaborador.html">
+        <div class="nicho" id="comidaNicho">
+            <a href="lista_colaborador.html?nicho=alimento">
                 <img src="../assets/Property 1=Variant2.png" alt="">
                 <h5>Comida</h5>
             </a>
         </div>
-        <div class="nicho">
-            <a href="lista_colaborador.html">
+        <div class="nicho" id="animaisNicho">
+            <a href="lista_colaborador.html?nicho=pets">
                 <img src="../assets/Property 1=Variant3.png" alt="">
                 <h5>Animais</h5>
             </a>
         </div>
-        <div class="nicho">
-            <a href="lista_colaborador.html">
+        <div class="nicho" id="belezaNicho">
+            <a href="lista_colaborador.html?nicho=beleza">
                 <img src="../assets/Property 1=Variant4.png" alt="">
                 <h5>Beleza</h5>
             </a>
@@ -148,7 +149,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
     <script src="../js/navbar.js"></script>
-    <script src="../js/buscarEventos.js"></script>
+    <script src="../js/organizador/buscarEventos.js"></script>
 </body>
 
 </html>
@@ -157,9 +158,8 @@
     window.onload = valorPadrao()
 
     async function valorPadrao() {
-        console.log("CHEGOU")
-        const nomeSS = sessionStorage.getItem('NOME_USUARIO')
-        const emailSS = sessionStorage.getItem('EMAIL_USUARIO')
+        const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
+        const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
         const nomeNavBar = document.getElementById('userName')
         const emailNavBar = document.getElementById('nomeEmpresa')
         nomeNavBar.innerHTML = nomeSS
@@ -168,43 +168,43 @@
 </script>
 <script>
     const cardsContainer = document.getElementById('cards_eventos');
-let isDown = false;
-let startX;
-let scrollLeft;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
-cardsContainer.addEventListener('mousedown', (e) => {
-    isDown = true;
-    cardsContainer.classList.add('active');
-    startX = e.pageX - cardsContainer.offsetLeft;
-    scrollLeft = cardsContainer.scrollLeft;
-});
+    cardsContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        cardsContainer.classList.add('active');
+        startX = e.pageX - cardsContainer.offsetLeft;
+        scrollLeft = cardsContainer.scrollLeft;
+    });
 
-cardsContainer.addEventListener('mouseleave', () => {
-    isDown = false;
-    cardsContainer.classList.remove('active');
-});
+    cardsContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+        cardsContainer.classList.remove('active');
+    });
 
-cardsContainer.addEventListener('mouseup', () => {
-    isDown = false;
-    cardsContainer.classList.remove('active');
-});
+    cardsContainer.addEventListener('mouseup', () => {
+        isDown = false;
+        cardsContainer.classList.remove('active');
+    });
 
-cardsContainer.addEventListener('mousemove', (e) => {
-    if (!isDown) return; // parar a função se o mouse não estiver pressionado
-    e.preventDefault();
-    const x = e.pageX - cardsContainer.offsetLeft;
-    const walk = (x - startX) * 2; // quanto mais arrastar, mais longe vai
-    cardsContainer.scrollLeft = scrollLeft - walk;
-});
+    cardsContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return; // parar a função se o mouse não estiver pressionado
+        e.preventDefault();
+        const x = e.pageX - cardsContainer.offsetLeft;
+        const walk = (x - startX) * 2; // quanto mais arrastar, mais longe vai
+        cardsContainer.scrollLeft = scrollLeft - walk;
+    });
 
 </script>
 
 <script>
     document.querySelectorAll('.cardItem').forEach(card => {
-    card.addEventListener('click', function() {
-        const url = this.getAttribute('data-url');
-        window.location.href = url; // Redireciona para a página definida no atributo data-url
+        card.addEventListener('click', function () {
+            const url = this.getAttribute('data-url');
+            window.location.href = url; // Redireciona para a página definida no atributo data-url
+        });
     });
-});
 
 </script>
