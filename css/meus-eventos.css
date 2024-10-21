@@ -16,7 +16,6 @@ body {
   justify-content: center;
 }
 
-/* CARDS */
 .cardEventos {
   display: flex;
   width: 100%;
@@ -153,7 +152,6 @@ a{
   padding: 8px;
 }
 
-/* botões inicio */
 .bloco_botoes {
   display: flex;
   align-items: center;
@@ -198,11 +196,11 @@ a{
 .search-icon {
   position: absolute;
   top: 50%;
-  right: 18px; /* Position the icon inside the input */
+  right: 18px; 
   transform: translateY(-50%);
   font-size: 20px;
   color: gray;
-  pointer-events: none; /* Make sure the icon doesn't block interaction with the input */
+  pointer-events: none; 
 }
 
 
@@ -274,8 +272,6 @@ a{
   border: none;
 }
 
-/* cards da listagem de eventos */
-
 .listagem_eventos {
   width: 100%;
   height: fit-content;
@@ -296,9 +292,6 @@ a{
   background-color: #ffffff;
 }
 
-/* .imagem_evento{
-
-} */
 
 .desc_evento {
   width: 60%;

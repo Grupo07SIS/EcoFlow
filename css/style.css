@@ -106,7 +106,6 @@ body {
     }
 }
 
-/* CARDS */
 .cardEventos {
     display: flex;
     width: 100%;
@@ -142,7 +141,7 @@ body {
 
     i {
         font-size: 2rem;
-        color: white; /* Ensures the icon is white by default */
+        color: white; 
     }
     
     i::after {
@@ -150,24 +149,24 @@ body {
     }
 
     &:hover i {
-        color: white; /* Keeps the icon white on hover */
+        color: white;
     }
 }
 
 .cards {
     display: flex;
-    overflow-x: auto; /* Scroll lateral */
+    overflow-x: auto; 
     padding: 8px 0px 30px 0px;
-    scroll-behavior: smooth; /* Scroll suave */
-    cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
+    scroll-behavior: smooth; 
+    cursor: grab;
 }
 
 .cardsColaborador {
     display: flex;
-    overflow-x: auto; /* Scroll lateral */
+    overflow-x: auto;
     padding: 8px 0px 50px 0px;
-    scroll-behavior: smooth; /* Scroll suave */
-    cursor: grab; /* Cursor de mão para indicar que pode ser arrastado */
+    scroll-behavior: smooth; 
+    cursor: grab; 
 }
 
 .cardItem {
@@ -179,10 +178,10 @@ body {
     width: 280px;
     box-shadow: 0 4px 8px rgb(0 0 0 / 23%);
     color: black;
-    position: relative; /* Mantém os elementos internos posicionados relativamente ao card */
+    position: relative;
     transition: transform 0.2s;
-    word-wrap: break-word; /* Quebra de palavras longas */
-    overflow-wrap: break-word; /* Quebra de palavras longas */
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
     height: 300px;
 }
 
@@ -197,23 +196,23 @@ body {
     font-size: 18px;
     font-weight: bold;
     margin: 0%;
-    display: block; /* Faz com que os spans se comportem como blocos para quebra de linha */
-    word-wrap: break-word; /* Quebra de palavras longas */
-    overflow-wrap: break-word; /* Quebra de palavras longas */
+    display: block;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
 }
 
 .titulo span {
-    display: block; /* Faz o texto quebrar de linha */
+    display: block; 
     font-size: 18px;
     font-weight: bold;
     color: #163915;
-    margin-bottom: 10px; /* Espaço abaixo do título */
+    margin-bottom: 10px; 
 }
 
 .organizedDtas {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Garante que o conteúdo se ajuste ao card */
+    width: 100%; 
     word-wrap: break-word;
     overflow-wrap: break-word;
     font-size: 16px;
@@ -222,18 +221,18 @@ body {
 .dataEvento, .dataLocal {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* Espaço entre as linhas */
-    overflow: hidden; /* Impede o conteúdo de extrapolar */
-    text-overflow: ellipsis; /* Adiciona reticências se o texto for muito longo */
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dataEvento img, .dataLocal img {
-    margin-right: 8px; /* Espaço entre o ícone e o texto */
+    margin-right: 8px;
 }
 
 .dataEvento span, .dataLocal span {
-    display: block; /* Faz o texto quebrar de linha */
-    max-width: 100%; /* Garante que o texto não ultrapasse o contêiner */
+    display: block;
+    max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -247,15 +246,15 @@ body {
 .dataCalendarioEvento {
     padding: 9px;
     background-color: #ffffffba;
-    position: absolute; /* Permite que o calendário seja posicionado sobre a imagem */
-    top: 10px; /* Posiciona a data no topo do card */
-    left: 10px; /* Posiciona a data à esquerda */
+    position: absolute;
+    top: 10px;
+    left: 10px;
     border-radius: 4px;
     color: #163915;
     font-size: 18px;
     font-weight: bold;
-    z-index: 2; /* Garante que a data fique acima da imagem */
-    max-width: calc(100% - 20px); /* Garante que a data não ultrapasse o card */
+    z-index: 2;
+    max-width: calc(100% - 20px);
 }
 
 .card-link {

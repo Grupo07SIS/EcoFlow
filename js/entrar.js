@@ -3,7 +3,6 @@ async function entrar() {
     var senhaVar = document.getElementById('senha').value;
 
     try {
-        // Step 1: Check if the user is an organizador
         const organizadorResponse = await fetch("http://localhost:8080/organizador", {
             method: 'GET',
             headers: {
@@ -12,19 +11,15 @@ async function entrar() {
         });
 
         if (organizadorResponse.status === 204) {
-            // No organizer found, proceed to check colaborador
             console.log("No organizer found (status 204), checking colaborador...");
-            checkColaborador(emailVar, senhaVar); // Call colaborador check function
+            checkColaborador(emailVar, senhaVar); 
         } else if (organizadorResponse.ok) {
             const organizadorData = await organizadorResponse.json();
             const organizadorUser = organizadorData.find(user => user.email === emailVar && user.senha === senhaVar);
 
-            // If an organizador is found, log in as organizador
             if (organizadorUser) {
                 console.log("Organizador found: ", organizadorUser);
 
-                // Save organizador details in sessionStorage
-                // Save organizador details in sessionStorage
                 sessionStorage.setItem('ID_ORGANIZADOR', organizadorUser.id_organizador);
                 sessionStorage.setItem('EMAIL_ORGANIZADOR', organizadorUser.email);
                 sessionStorage.setItem('CNPJ_ORGANIZADOR', organizadorUser.cnpj);
@@ -33,9 +28,8 @@ async function entrar() {
                 sessionStorage.setItem('CPF_RESP_ORGANIZADOR', organizadorUser.cpf_resp);
                 sessionStorage.setItem('TELEFONE_ORGANIZADOR', organizadorUser.telefone);
                 sessionStorage.setItem('IMAGEM_PERFIL_ORGANIZADOR', organizadorUser.imagemPerfil);
-                sessionStorage.setItem('PERMISSAO_ORGANIZADOR', organizadorUser.permissao);  // Corrected to use organizadorUser.permissao
+                sessionStorage.setItem('PERMISSAO_ORGANIZADOR', organizadorUser.permissao);  
 
-                // Save address (endereco) details in sessionStorage
                 const endereco = organizadorUser.endereco;  
                     sessionStorage.setItem('ID_ENDERECO_ORGANIZADOR', endereco.id_endereco_usuario);
                     sessionStorage.setItem('LOGRADOURO_ORGANIZADOR', endereco.logradouro);
@@ -46,7 +40,6 @@ async function entrar() {
                     sessionStorage.setItem('CEP_ORGANIZADOR', endereco.cep);
 
 
-                // Proceed to the login endpoint for organizador
                 const loginResponse = await fetch("http://localhost:8080/organizador/login", {
                     method: 'POST',
                     headers: {
@@ -62,7 +55,7 @@ async function entrar() {
                     window.location.href = 'index.html';
                 } else {
                     alert("Erro ao tentar login como organizador.");
-                    return; // Early return on error
+                    return;
                 }
             } else {
                 checkColaborador(emailVar, senhaVar);
@@ -76,7 +69,6 @@ async function entrar() {
     }
 }
 
-// Function to check colaborador if no organizer is found
 async function checkColaborador(emailVar, senhaVar) {
     try {
         const colaboradorResponse = await fetch("http://localhost:8080/colaborador", {
@@ -93,7 +85,6 @@ async function checkColaborador(emailVar, senhaVar) {
             if (colaboradorUser) {
                 console.log("Colaborador found: ", colaboradorUser);
 
-                // Save colaborador details in sessionStorage
                 sessionStorage.setItem('ID_COLABORADOR', colaboradorUser.idColaborador);
                 sessionStorage.setItem('EMAIL_COLABORADOR', colaboradorUser.email);
                 sessionStorage.setItem('SENHA_COLABORADOR', colaboradorUser.senha);
@@ -111,9 +102,8 @@ async function checkColaborador(emailVar, senhaVar) {
                 sessionStorage.setItem('WPP_COMERCIAL_COLABORADOR', colaboradorUser.wppComercial);
                 sessionStorage.setItem('PROPOSITO_COLABORADOR', colaboradorUser.proposito);
 
-                // Store address data
                 const endereco = colaboradorUser.endereco;
-                sessionStorage.setItem('ID_ENDERECO_COLABORADOR', endereco.id_endereco_usuario); // Storing address ID
+                sessionStorage.setItem('ID_ENDERECO_COLABORADOR', endereco.id_endereco_usuario);
                 sessionStorage.setItem('LOGRADOURO_COLABORADOR', endereco.logradouro);
                 sessionStorage.setItem('NUMERO_COLABORADOR', endereco.numero);
                 sessionStorage.setItem('COMPLEMENTO_COLABORADOR', endereco.complemento);
@@ -121,19 +111,16 @@ async function checkColaborador(emailVar, senhaVar) {
                 sessionStorage.setItem('ESTADO_COLABORADOR', endereco.estado);
                 sessionStorage.setItem('CEP_COLABORADOR', endereco.cep);
 
-                // Store product type data
                 const tipoProduto = colaboradorUser.tipoProduto;
-                sessionStorage.setItem('ID_TIPO_PRODUTO_COLABORADOR', tipoProduto.id_tipo_produto); // Storing product type ID
+                sessionStorage.setItem('ID_TIPO_PRODUTO_COLABORADOR', tipoProduto.id_tipo_produto);
                 sessionStorage.setItem('TIPO_PRODUTO_COLABORADOR', tipoProduto.tipo);
 
-                // Store social media data
                 const midiasSociais = colaboradorUser.midiasSociais;
-                sessionStorage.setItem('ID_MIDIAS_SOCIAIS_COLABORADOR', midiasSociais.id_midias_sociais); // Storing social media ID
+                sessionStorage.setItem('ID_MIDIAS_SOCIAIS_COLABORADOR', midiasSociais.id_midias_sociais); 
                 sessionStorage.setItem('INSTAGRAM_COLABORADOR', midiasSociais.instagram);
                 sessionStorage.setItem('FACEBOOK_COLABORADOR', midiasSociais.facebook);
                 sessionStorage.setItem('SITE_COLABORADOR', midiasSociais.site);
 
-                // Proceed to the login endpoint for colaborador
                 const loginColabResponse = await fetch("http://localhost:8080/colaborador/login", {
                     method: 'POST',
                     headers: {

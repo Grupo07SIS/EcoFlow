@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
-    <!-- Leaflet (for maps) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -43,10 +42,8 @@
         <img id="event_image" src="../assets/image 7.png" alt="Event Image">
     </div>
 
-    <!-- Edit and Delete Buttons -->
     <div class="btns_Styles">
-        <!-- Add an onclick to call the function with event ID -->
-        <button class="main_Btns" onclick="editarEvento()">Editar</button> <!-- Example Event ID -->
+        <button class="main_Btns" onclick="editarEvento()">Editar</button> 
         <button class="main_Btns" onclick="deletarEvento()">Deletar</button>
     </div>
 
@@ -106,7 +103,6 @@
             window.history.back();
         }
 
-        // Function to load default user information
         window.onload = function () {
             const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
             const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');

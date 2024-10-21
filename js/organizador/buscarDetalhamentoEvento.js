@@ -1,6 +1,6 @@
 function editarEvento() {
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');  // Get the event ID from the URL
+    const eventId = urlParams.get('id');  
 
     if (eventId) {
         window.location.href = `evento-update.html?id=${eventId}`;
@@ -85,15 +85,12 @@ function geocode(address) {
 }
 
 async function deletarEvento() {
-    // Mostrar o popup de confirmação
     document.getElementById('popup').style.display = 'block';
     document.getElementById('popup-message').innerText = "Você realmente quer apagar este evento?";
 
-    // Pegar o ID do evento da URL
     const urlParams = new URLSearchParams(window.location.search);
     const eventId = urlParams.get('id');
 
-    // Evento para confirmar a exclusão
     document.getElementById('confirm').onclick = async function () {
         try {
             const eventDeleteUrl = `http://localhost:8080/evento?id=${eventId}`;
@@ -118,7 +115,6 @@ async function deletarEvento() {
         }
     };
 
-    // Evento para cancelar a exclusão
     document.getElementById('cancel').onclick = function () {
         document.getElementById('popup').style.display = 'none';
         console.log('A exclusão foi cancelada pelo usuário');
@@ -127,7 +123,6 @@ async function deletarEvento() {
 
 
 
-// Função para desfazer a deleção do evento
 async function desfazerDelecao(eventId) {
     try {
         const undoDeleteUrl = `http://localhost:8080/evento/desfazer`;
@@ -141,7 +136,7 @@ async function desfazerDelecao(eventId) {
 
         if (response.ok) {
             alert('Deleção cancelada.');
-            buscarDetalhesEvento();  // Recarregar os detalhes do evento
+            buscarDetalhesEvento();  
         } else {
             console.error('Erro ao desfazer a exclusão do evento');
             alert('Erro ao desfazer a exclusão. Por favor, tente novamente.');

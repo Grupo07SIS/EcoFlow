@@ -55,7 +55,6 @@
             </div>
 
             <div id="productContainer">
-                <!-- Product cards will be appended here -->
             </div>
         </div>
     </div>
@@ -93,13 +92,11 @@
     </div>
 
     <script>
-        // Function to toggle the visibility of the stand details except for the "Nome do stand"
         function toggleStandDetails(element) {
             const parentForm = element.closest('.info_form');
             const inputs = parentForm.querySelectorAll('.toggleable');
             const icon = element.querySelector('i');
 
-            // Toggle the visibility of all fields except the "Nome do stand"
             inputs.forEach(input => {
                 if (input.style.display === "none" || input.style.display === "") {
                     input.style.display = "block";
@@ -108,7 +105,6 @@
                 }
             });
 
-            // Rotate the icon
             if (icon.style.transform === "rotate(180deg)") {
                 icon.style.transform = "rotate(0deg)";
             } else {
@@ -116,7 +112,6 @@
             }
         }
 
-        // Function to add a new stand/mesa card
         function addProdutoCard() {
             const container = document.getElementById('productContainer');
             const productMessage = document.getElementById('productMessage');
@@ -183,7 +178,6 @@
             container.appendChild(newCard);
         }
 
-        // Function to remove a stand/mesa card
         function removeProdutoCard(button) {
             const container = document.getElementById('productContainer');
             button.closest('.info_card').remove();
@@ -193,11 +187,9 @@
             }
         }
 
-        // Function to collect form data and send POST request
         async function salvarDadosPag2() {
             const stands = [];
 
-            // Obtenha todos os produtos/stands adicionados
             const standElements = document.querySelectorAll('.info_card');
 
             standElements.forEach(card => {
@@ -223,16 +215,13 @@
                 stands.push(standData);
             });
 
-            // Salvar todos os stands como um array no sessionStorage
             sessionStorage.setItem('dadosStand', JSON.stringify(stands));
             window.location.href = 'atracao.html';
         }
 
 
-        // Add event listener to the add product button
         document.getElementById('addProdutoCard').addEventListener('click', addProdutoCard);
 
-        // Show the message if no products are added on page load
         window.onload = function () {
             const storedStands = JSON.parse(sessionStorage.getItem('dadosStand')) || [];
 
@@ -241,7 +230,6 @@
             } else {
                 document.getElementById('productMessage').style.display = 'none';
 
-                // Recriar cada stand salvo
                 storedStands.forEach(stand => {
                     addProdutoCard();
 

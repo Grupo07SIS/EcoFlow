@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Get the collaborator ID from the URL
   const urlParams = new URLSearchParams(window.location.search);
   const collaboratorId = urlParams.get('id');
 
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Function to fetch collaborator data by ID
 async function fetchCollaboratorData(id) {
   try {
       const response = await fetch(`http://localhost:8080/colaborador/id?id=${id}`);
@@ -25,9 +23,7 @@ async function fetchCollaboratorData(id) {
   }
 }
 
-// Function to populate the collaborator's details into the HTML
 function populateCollaboratorDetails(collaborator) {
-  // Store elements in constants
   const nomeFantasiaElement = document.getElementById('nomeFantasia');
   const nomeRespElement = document.getElementById('nomeResp');
   const cpfRespElement = document.getElementById('cpfResp');
@@ -49,7 +45,6 @@ function populateCollaboratorDetails(collaborator) {
   const siteElement = document.getElementById('site');
   const imagemMarcaElement = document.getElementById('imagem_marca');
 
-  // Assign values to the elements
   nomeFantasiaElement.innerHTML = collaborator.nomeFantasia || 'Nome Fantasia não disponível';
   nomeRespElement.innerHTML = collaborator.nomeResp || 'Nome do Responsável não disponível';
   cpfRespElement.innerHTML = collaborator.cpfResp || 'CPF não disponível';
@@ -70,7 +65,6 @@ function populateCollaboratorDetails(collaborator) {
   wppComercialElement.innerHTML = collaborator.wppComercial || 'Whatsapp não disponível';
   siteElement.innerHTML = collaborator.midiasSociais?.site || 'Site não disponível';
 
-  // Set image if available
   if (collaborator.bannerImg) {
       imagemMarcaElement.src = `data:image/png;base64,${collaborator.bannerImg}`;
   }

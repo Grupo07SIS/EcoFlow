@@ -138,7 +138,6 @@
         const eventId = urlParams.get('id');
         const nichoValue = document.getElementById('nichoSelect').value;
 
-        // Save nicho in sessionStorage
         sessionStorage.setItem('nicho', nichoValue);
 
         const productContainer = document.getElementById('productContainer');
@@ -149,8 +148,6 @@
             document.getElementById('productMessage').style.display = 'block';
             return;
         }
-
-        // Collect product details from each card
         for (let card of productCards) {
             const productName = card.querySelector('.product-name').value;
             const productIngredients = card.querySelector('.product-ingredients').value;
@@ -165,19 +162,15 @@
                 ingredientes: productIngredients
             });
         }
-
-        // Save the products in sessionStorage
         sessionStorage.setItem('produtos', JSON.stringify(products));
 
-        // Redirect to the next page (add team members)
         window.location.href = `dados_equipes-colaborador.html?id=${eventId}`;
     }
 
-    // On page load, restore the saved products and nicho from sessionStorage
     window.onload = function () {
         const container = document.getElementById('productContainer');
         const savedProducts = JSON.parse(sessionStorage.getItem('produtos') || '[]');
-        const savedNicho = sessionStorage.getItem('nicho') || 'Moda';  // Default to 'Moda'
+        const savedNicho = sessionStorage.getItem('nicho') || 'Moda'; 
 
         document.getElementById('nichoSelect').value = savedNicho;
 

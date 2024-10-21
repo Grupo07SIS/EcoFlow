@@ -70,14 +70,12 @@
 </body>
 
 <script>
-    // Function to go back to the previous page
     function voltar() {
         const urlParams = new URLSearchParams(window.location.search);
         const eventId = urlParams.get('id');
         window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
     }
 
-    // Function to toggle the visibility of ingredients and rotate the icon
     function toggleIngredients(element) {
         const ingredientesDiv = element.parentNode.nextElementSibling.nextElementSibling;
         const icon = element.querySelector('i');
@@ -90,12 +88,10 @@
         }
     }
 
-    // Function to add a new team member card (limit to one member)
     function addEquipeCard() {
         const container = document.getElementById('productContainer');
         const productMessage = document.getElementById('productMessage');
         
-        // If there is already one member, prevent adding another
         if (container.children.length >= 1) {
             alert("Você só pode adicionar um membro.");
             return;
@@ -133,8 +129,6 @@
 
         container.appendChild(newCard);
     }
-
-    // Function to remove a team member card
     function removeEquipeCard(button) {
         const container = document.getElementById('productContainer');
         button.closest('.info_card').remove();
@@ -144,10 +138,8 @@
         }
     }
 
-    // Add event listener to the add team member button
     document.getElementById('addProdutoCard').addEventListener('click', addEquipeCard);
 
-    // Save team data and redirect to the next page
     async function salvarDadosPag2() {
         const urlParams = new URLSearchParams(window.location.search);
         const eventId = urlParams.get('id');
@@ -168,7 +160,6 @@
             return;
         }
 
-        // Save the single team member to sessionStorage
         const teamMember = {
             nome: memberName,
             telefone: memberPhone,
@@ -177,23 +168,17 @@
 
         sessionStorage.setItem('equipe', JSON.stringify(teamMember));
 
-        // Redirect to the next page (choose a stand)
         window.location.href = `stand-colaborador.html?id=${eventId}`;
     }
 
-    // On page load, restore the saved team member from sessionStorage
-    // On page load, restore the saved team member from sessionStorage
 window.onload = function () {
     const container = document.getElementById('productContainer');
     const savedTeamData = sessionStorage.getItem('equipe');
 
-    // Check if equipe data is present in sessionStorage
     if (savedTeamData) {
-        // Try to parse the savedTeam data
         try {
             const savedTeam = JSON.parse(savedTeamData);
 
-            // Check if savedTeam contains valid properties
             if (savedTeam && savedTeam.nome && savedTeam.telefone && savedTeam.email) {
                 const newCard = document.createElement('div');
                 newCard.classList.add('info_card');

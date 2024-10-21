@@ -18,7 +18,6 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
@@ -183,7 +182,6 @@
     }
 
     window.onload = function () {
-        // Load stored event data if present
         const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
 
         if (dadosEvento) {
@@ -206,11 +204,10 @@
         const nomeEvento = document.getElementById('nome').value;
         const temaEvento = document.getElementById('tema').value;
         const descricaoEvento = document.getElementById('desc').value;
-        const dataEvento = document.getElementById('data').value;  // YYYY-MM-DD
-        const horaInicio = document.getElementById('horaInicio').value; // HH:mm
-        const horaFim = document.getElementById('horaFim').value; // HH:mm
+        const dataEvento = document.getElementById('data').value;  
+        const horaInicio = document.getElementById('horaInicio').value; 
+        const horaFim = document.getElementById('horaFim').value; 
 
-        // Capturar valores de endereço
         const logradouro = document.getElementById('logradouro').value;
         const numero = document.getElementById('numero').value;
         const complemento = document.getElementById('complemento').value;
@@ -218,17 +215,14 @@
         const estado = document.getElementById('UF').value;
         const cep = document.getElementById('cep').value;
 
-        // Validar campos obrigatórios
         if (!nomeEvento || !temaEvento || !dataEvento || !horaInicio || !horaFim || !logradouro || !cidade || !estado || !cep) {
             alert("Por favor, preencha todos os campos obrigatórios.");
             return;
         }
 
-        // Combine data and horaInicio into a full datetime
         const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
         const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
 
-        // Convert the datetimes to ISO strings to include time zone (in UTC)
         const horaInicioISO = inicioDateTime.toISOString();
         const horaFimISO = fimDateTime.toISOString();
 
@@ -236,9 +230,9 @@
             nome: nomeEvento,
             tema: temaEvento,
             descricao: descricaoEvento,
-            dataEvento: dataEvento, // keep as date
-            hora_inicio: horaInicioISO, // ISO format with timezone
-            hora_fim: horaFimISO, // ISO format with timezone
+            dataEvento: dataEvento, 
+            hora_inicio: horaInicioISO, 
+            hora_fim: horaFimISO, 
             enderecoEvento: {
                 logradouro: logradouro,
                 numero: numero,

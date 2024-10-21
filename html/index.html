@@ -17,7 +17,6 @@
 
 <body>
     <div id="mySidenav" class="sidenav">
-        <!-- <a href="javascript:void(0)" </a> -->
         <i class="bi bi-list closebtn" onclick="closeNav()"></i>
         <div class="user_info">
             <i class="bi bi-person-circle"></i>
@@ -34,7 +33,6 @@
         <i class="bi bi-list openBar" onclick="openNav()"></i>
     </div>
 
-    <!-- Carrossel -->
     <div class="carrossel">
         <div id="carouselExampleIndicators" class="carousel slide content" data-ride="carousel">
             <div class="carousel-inner">
@@ -190,10 +188,10 @@
     });
 
     cardsContainer.addEventListener('mousemove', (e) => {
-        if (!isDown) return; // parar a função se o mouse não estiver pressionado
+        if (!isDown) return; 
         e.preventDefault();
         const x = e.pageX - cardsContainer.offsetLeft;
-        const walk = (x - startX) * 2; // quanto mais arrastar, mais longe vai
+        const walk = (x - startX) * 2; 
         cardsContainer.scrollLeft = scrollLeft - walk;
     });
 
@@ -203,7 +201,7 @@
     document.querySelectorAll('.cardItem').forEach(card => {
         card.addEventListener('click', function () {
             const url = this.getAttribute('data-url');
-            window.location.href = url; // Redireciona para a página definida no atributo data-url
+            window.location.href = url; 
         });
     });
 

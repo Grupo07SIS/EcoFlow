@@ -91,22 +91,19 @@ async function buscarDados() {
 
         console.log("Resposta: ", evento);
 
-        // Extracting data
         const [year, month, day] = evento.data;
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
 
         const fullAddress = `${evento.fkEndereco.logradouro}, ${evento.fkEndereco.numero} - ${evento.fkEndereco.cidade}`;
 
-        // Updating DOM elements
         document.getElementById('event_name').textContent = evento.nome;
         document.getElementById('event_date').textContent = formattedDate;
         document.getElementById('event_location').textContent = fullAddress;
         document.getElementById('event_description').textContent = evento.descricao;
 
-        // Update collaborator info if available
         if (evento.colaboradores && evento.colaboradores.length > 0) {
-            const collaborator = evento.colaboradores[0]; // Example, assuming you want to display the first collaborator
+            const collaborator = evento.colaboradores[0]; 
             document.getElementById('collaborator_name').textContent = collaborator.nome;
             document.getElementById('collaborator_phone').textContent = collaborator.telefone;
             document.getElementById('collaborator_email').textContent = collaborator.email;
@@ -130,14 +127,12 @@ function geocode(address) {
                 var lat = data[0].lat;
                 var lon = data[0].lon;
 
-                // Initialize Leaflet map
                 var map = L.map('map').setView([lat, lon], 13);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-                // Add a marker to the map
                 var marker = L.marker([lat, lon]).addTo(map);
                 marker.bindPopup("Localização encontrada: " + address).openPopup();
             } else {
@@ -221,21 +216,17 @@ async function alterarEvento() {
         if (respostaCadastro.status === 200) {
             console.log("Alterado com sucesso");
 
-            // Update popup message for success
             popupMessage.textContent = "Evento alterado com sucesso!";
             popup.style.backgroundColor = "green";
         } else {
             console.error('Erro ao alterar o evento:', respostaCadastro.status);
 
-            // Update popup message for error
             popupMessage.textContent = "Erro ao alterar o evento.";
             popup.style.backgroundColor = "red";
         }
 
-        // Show popup
         popup.classList.add('show');
 
-        // Hide popup after 3 seconds and redirect to index.html on success
         setTimeout(() => {
             popup.classList.remove('show');
             if (respostaCadastro.status === 200) {
@@ -246,14 +237,12 @@ async function alterarEvento() {
     } catch (error) {
         console.error('Erro na requisição:', error);
 
-        // Update popup message for exception
         const popup = document.getElementById('popup');
         const popupMessage = document.getElementById('popup-message');
         popupMessage.textContent = "Erro na requisição.";
         popup.style.backgroundColor = "red";
         popup.classList.add('show');
 
-        // Hide popup after 3 seconds
         setTimeout(() => {
             popup.classList.remove('show');
         }, 3000);
@@ -280,27 +269,22 @@ async function deletarEvento() {
         if (deletar.status === 204) {
             console.log("Evento excluído com sucesso!");
 
-            // Update popup message for success
             popupMessage.textContent = "Evento excluído com sucesso!";
             popup.style.backgroundColor = "green";
         } else if (deletar.status === 404) {
             console.error("Evento não encontrado:", deletar.status);
 
-            // Update popup message for error
             popupMessage.textContent = "EEvento excluído com sucesso!";
             popup.style.backgroundColor = "green";
         } else if (deletar.status === 500) {
             console.error("Erro ao excluir evento:", deletar.status);
 
-            // Update popup message for error
             popupMessage.textContent = "Erro ao excluir o evento.";
             popup.style.backgroundColor = "red";
         }
 
-        // Show popup
         popup.classList.add('show');
 
-        // Hide popup after 3 seconds and redirect on success
         setTimeout(() => {
             popup.classList.remove('show');
             if (deletar.status === 204) {
@@ -311,14 +295,12 @@ async function deletarEvento() {
     } catch (error) {
         console.error('Erro na requisição:', error);
 
-        // Update popup message for exception
         const popup = document.getElementById('popup');
         const popupMessage = document.getElementById('popup-message');
         popupMessage.textContent = "Erro na requisição.";
         popup.style.backgroundColor = "red";
         popup.classList.add('show');
 
-        // Hide popup after 3 seconds
         setTimeout(() => {
             popup.classList.remove('show');
         }, 3000);

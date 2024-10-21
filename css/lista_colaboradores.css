@@ -119,12 +119,10 @@ body {
   position: absolute;
   top: 50%;
   right: 18px;
-  /* Position the icon inside the input */
   transform: translateY(-50%);
   font-size: 20px;
   color: gray;
   pointer-events: none;
-  /* Make sure the icon doesn't block interaction with the input */
 }
 
 .orgs {

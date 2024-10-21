@@ -27,7 +27,6 @@
     </div>
 
     <div class="bloco_botoes">
-        <!-- botão de filtrar e suas filtragens -->
         <div class="bloco_filtros">
             <div class="buttons_search_filter">
                 <div class="filtrar_local">
@@ -118,12 +117,11 @@
     const searchQuery = this.value;
 
     try {
-        // Properly use backticks for the template literal URL
         const response = await fetch(`http://localhost:8080/evento/searchBar?search=${encodeURIComponent(searchQuery)}`);
         const searchResults = await response.json();
 
         const cards = document.getElementById("listagem_eventos");
-        cards.innerHTML = ''; // Clear current events
+        cards.innerHTML = '';
 
         cards.innerHTML = searchResults.map((itemEvento) => {
             const [year, month, day] = itemEvento.dataEvento;
@@ -134,7 +132,6 @@
             const titulo = truncateText(itemEvento.nome, 15);
             const truncatedAddress = truncateText(fullAddress, 40);
 
-            // Properly wrap the returned HTML inside backticks
             return `
             <a href="detalhamento-evento-colaborador.html?id=${itemEvento.id_evento}" style="text-decoration:none a:hover:none" class="card-link" data-id="${itemEvento.id_evento}">
                 <div class="card_evento">

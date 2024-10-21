@@ -22,7 +22,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
 
         const searchResults = await response.json();
         const cards = document.getElementById("listagem_eventos");
-        cards.innerHTML = '';  // Clear current cards
+        cards.innerHTML = ''; 
 
         if (searchResults.length === 0) {
             cards.innerHTML = '<p>Nenhum evento encontrado com os critérios selecionados.</p>';
@@ -30,7 +30,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
         }
 
         cards.innerHTML = searchResults.map((itemEvento) => {
-            const [year, month, day] = itemEvento.dataEvento // Split date string
+            const [year, month, day] = itemEvento.dataEvento 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             const formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
@@ -56,7 +56,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
                 </div>
             </a>
             `;
-        }).join('');  // Join the mapped items into a single string
+        }).join(''); 
 
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {
@@ -81,10 +81,10 @@ async function buscarEventos() {
         console.log("Resposta: ", respostaDadosEventos);
 
         const cards = document.getElementById("listagem_eventos");
-        cards.innerHTML = '';  // Clear current events
+        cards.innerHTML = ''; 
 
         cards.innerHTML = respostaDadosEventos.map((itemEvento) => {
-            const [year, month, day] = itemEvento.dataEvento; // Ensure correct date parsing
+            const [year, month, day] = itemEvento.dataEvento; 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
@@ -110,7 +110,7 @@ async function buscarEventos() {
                 </div>
             </a>
             `;
-        }).join('');  // Join the mapped items into a string
+        }).join('');  
 
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {
@@ -127,24 +127,20 @@ async function buscarEventos() {
     }
 }
 
-// Function to apply the filters when "Apply Filter" button is clicked
 function applyFilters() {
     const startDate = document.querySelector('#dataInicio').value;
     const endDate = document.querySelector('#dataFim').value;
 
-    buscarEventosFiltrados(startDate, endDate);  // Corrected call
+    buscarEventosFiltrados(startDate, endDate); 
 }
 
-// Function to clear the filters and fetch all events when "Clear Filter" button is clicked
 function clearFilters() {
     document.querySelector('#dataInicio').value = '';
     document.querySelector('#dataFim').value = '';
 
-    buscarEventos();  // Call function to fetch all events when filters are cleared
+    buscarEventos(); 
 }
 
-
-// Initially fetch all events on page load
 console.log("Antes de buscar");
 buscarEventos();
 console.log("Depois de buscar");

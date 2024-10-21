@@ -88,7 +88,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
 
         const searchResults = await response.json();
         const cards = document.getElementById("listagem_eventos");
-        cards.innerHTML = '';  // Clear current cards
+        cards.innerHTML = '';  
 
         if (searchResults.length === 0) {
             cards.innerHTML = '<p>Nenhum evento encontrado com os critérios selecionados.</p>';
@@ -96,7 +96,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
         }
 
         cards.innerHTML = searchResults.map((itemEvento) => {
-            const [year, month, day] = itemEvento.dataEvento // Split date string
+            const [year, month, day] = itemEvento.dataEvento 
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                                 "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
             const formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
@@ -122,7 +122,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
                 </div>
             </a>
             `;
-        }).join('');  // Join the mapped items into a single string
+        }).join('');  
 
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {

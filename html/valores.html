@@ -128,25 +128,19 @@
     </div>
 
     <script>
-        // Função para formatar o valor monetário enquanto o usuário digita
         function formatCurrencyInput(input) {
-            // Remove todos os caracteres que não sejam dígitos
             let value = input.value.replace(/\D/g, '');
 
-            // Se o valor estiver vazio, retorna
             if (value === '') {
                 input.value = '';
                 return;
             }
 
-            // Adiciona o símbolo de moeda e formata para duas casas decimais
             let formattedValue = 'R$ ' + (parseFloat(value) / 100).toFixed(2);
 
-            // Seta o valor formatado no campo
             input.value = formattedValue;
         }
 
-        // Eventos para formatar valor enquanto digita
         document.querySelectorAll('.form-control-currency').forEach(input => {
             input.addEventListener('input', function (e) {
                 formatCurrencyInput(this);
@@ -158,7 +152,6 @@
         }
 
         window.onload = function () {
-            // Load stored event data if present
             const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
 
             if (dadosEvento) {

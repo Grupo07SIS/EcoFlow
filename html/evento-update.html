@@ -140,7 +140,6 @@
     </div>
 
     <script>
-        // Exibe as imagens pré-visualizadas
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
 
@@ -164,17 +163,15 @@
             }
         }
 
-        // Função para buscar detalhes do evento e separar em grupos no sessionStorage
         async function buscarDetalhesEvento() {
             const urlParams = new URLSearchParams(window.location.search);
-            const eventId = urlParams.get('id'); // Get event ID
+            const eventId = urlParams.get('id'); 
             console.log('Evento ID:', eventId);
 
             try {
                 const response = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
                 const evento = await response.json();
 
-                // Separar dados em grupos e salvar no sessionStorage
                 const dadosBasicos = {
                     id: evento.id_evento,
                     nome: evento.nome,
@@ -217,15 +214,12 @@
                 };
                 sessionStorage.setItem('atracao', JSON.stringify(atracao));
 
-                // Preencher o formulário com os dados do evento
                 document.getElementById('nome').value = evento.nome;
                 document.getElementById('tema').value = evento.tema;
                 document.getElementById('data').value = formatDate(evento.dataEvento);
                 document.getElementById('horaInicio').value = formatTime(evento.hora_inicio);
                 document.getElementById('horaFim').value = formatTime(evento.hora_fim);
                 document.getElementById('desc').value = evento.descricao;
-
-                // Preencher os dados do endereço
                 document.getElementById('logradouro').value = evento.enderecoEvento.logradouro;
                 document.getElementById('numero').value = evento.enderecoEvento.numero;
                 document.getElementById('cep').value = evento.enderecoEvento.cep;
@@ -240,7 +234,6 @@
             }
         }
 
-        // Função auxiliar para formatar a data
         function formatDate(dateString) {
             const date = new Date(dateString);
             const year = date.getFullYear();
@@ -249,14 +242,12 @@
             return `${year}-${month}-${day}`;
         }
 
-        // Função auxiliar para formatar a hora
         function formatTime(timeArray) {
             const hours = ('0' + timeArray[3]).slice(-2);
             const minutes = ('0' + timeArray[4]).slice(-2);
             return `${hours}:${minutes}`;
         }
 
-        // Função para salvar os dados e passar para a próxima página
         function salvarDadosPag1() {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get('id');
@@ -266,23 +257,20 @@
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFim = document.getElementById('horaFim').value;
 
-            // Converter data e hora para o formato ISO 8601 com timezone
-            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`); // Combina data e hora de início
-            const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`); // Combina data e hora de fim
+            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`); 
+            const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`); 
 
-            // Convertendo para ISO 8601 (que inclui fuso horário, ex.: 2024-10-16T14:51:30.881Z)
             const horaInicioISO = inicioDateTime.toISOString();
             const horaFimISO = fimDateTime.toISOString();
 
-            // Coletar os dados básicos do evento e endereço
             const dadosBasicos = {
                 id: eventId,
                 nome: document.getElementById('nome').value,
                 tema: document.getElementById('tema').value,
                 data: document.getElementById('data').value,
                 descricao: document.getElementById('desc').value,
-                horaInicio: horaInicioISO, // Salvar horaInicio em formato ISO
-                horaFim: horaFimISO, // Salvar horaFim em formato ISO
+                horaInicio: horaInicioISO, 
+                horaFim: horaFimISO, 
                 logradouro: document.getElementById('logradouro').value,
                 numero: document.getElementById('numero').value,
                 cep: document.getElementById('cep').value,
@@ -291,15 +279,12 @@
                 estado: document.getElementById('UF').value
             };
 
-            // Salvar os dados no sessionStorage
             sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dadosBasicos));
 
-            // Redirecionar para a próxima página
             window.location.href = 'valores-update.html';
         }
 
 
-        // Chama as funções ao carregar a página
         window.onload = function () {
             valorPadrao();
             buscarDetalhesEvento();

@@ -135,19 +135,19 @@ async function selectStand(standData) {
 function submitFormStep(step) {
     switch (step) {
         case 'general':
-            const generalData = { /* collect data from form */ };
+            const generalData = {};
             registerForEvent(generalData);
             break;
         case 'product':
-            const productData = { /* collect product details from form */ };
+            const productData = {};
             addProduct(productData);
             break;
         case 'team':
-            const teamData = { /* collect team details from form */ };
+            const teamData = {};
             addTeamMember(teamData);
             break;
         case 'stand':
-            const standData = { /* collect stand selection */ };
+            const standData = {};
             selectStand(standData);
             break;
     }

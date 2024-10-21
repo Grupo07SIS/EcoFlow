@@ -99,7 +99,6 @@ async function gerarGrafico(startDate = '1999-01-01', endDate = new Date().toISO
     const respostaDados_aprovados = await resposta_aprovados.json();
     document.getElementById("colab_aprovados").innerHTML = respostaDados_aprovados;
 
-    // Call your bubble size adjustment function
     ajustarTamanhoDasBolhas();
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -107,14 +106,12 @@ async function gerarGrafico(startDate = '1999-01-01', endDate = new Date().toISO
 }
 
 function resetChart() {
-  // If a chart exists, destroy it before creating a new one
   if (chartInstance) {
     chartInstance.destroy();
   }
 }
 
 function clearKPI() {
-  // Reset all the KPI values to a default state (e.g., empty strings or "0")
   document.getElementById("valor_gasto").innerHTML = '0';
   document.getElementById("orcamento").innerHTML = '0';
   document.getElementById("valor_lucro").innerHTML = '0';
@@ -131,18 +128,16 @@ function closeFilter() {
   offcanvas.hide();
 }
 
-// Clear filter inputs and reset the graph
 function limpar() {
   document.getElementById('start').value = '';
   document.getElementById('end').value = '';
 
-  gerarGrafico(); // Reset to default graph with no filters
+  gerarGrafico(); 
 
-  closeFilter(); // Close the filter panel
+  closeFilter(); 
 }
 
 async function ajustarTamanhoDasBolhas() {
-  // Fetch data for each category
   const resposta_alimento_colab = await fetch(`http://localhost:8080/alimento/fila`);
   const respostaDados_alimento_colab = await resposta_alimento_colab.json();
   const totalColaboradoresNaFilaAlimento = respostaDados_alimento_colab.length || 0;
@@ -159,7 +154,6 @@ async function ajustarTamanhoDasBolhas() {
   const respostaDados_pets_colab = await resposta_pets_colab.json();
   const totalColaboradoresNaFilaPets = respostaDados_pets_colab.length || 0;
 
-  // Create an array to sort the categories by number of collaborators
   const categories = [
     { id: "bolha_alimento", count: totalColaboradoresNaFilaAlimento, labelId: "dado_bolha_alimento" },
     { id: "bolha_moda", count: totalColaboradoresNaFilaModa, labelId: "dado_bolha_moda" },
@@ -167,30 +161,25 @@ async function ajustarTamanhoDasBolhas() {
     { id: "bolha_pets", count: totalColaboradoresNaFilaPets, labelId: "dado_bolha_pets" }
   ];
 
-  // Sort categories by count in descending order
   categories.sort((a, b) => b.count - a.count);
 
-  // Define colors for each bolha and their darkness (true means dark background)
   const colors = [
-    { color: 'rgba(22, 57, 21, 1)', isDark: true },   // Dark green
-    { color: 'rgba(15, 147, 51, 1)', isDark: true },   // Darker green
-    { color: 'rgba(140, 204, 157, 1)', isDark: false },// Lighter green
-    { color: 'rgba(200, 150, 100, 1)', isDark: false } // Brownish light
+    { color: 'rgba(22, 57, 21, 1)', isDark: true },  
+    { color: 'rgba(15, 147, 51, 1)', isDark: true },   
+    { color: 'rgba(140, 204, 157, 1)', isDark: false },
+    { color: 'rgba(200, 150, 100, 1)', isDark: false } 
   ];
 
-  // Apply styles dynamically based on their order and check for duplicates
   let previousCount = null;
   let previousClass = null;
 
   categories.forEach((category, index) => {
-    // Update the count in the bubble and apply bold font
     const labelElement = document.getElementById(category.labelId);
     labelElement.innerText = category.count;
     labelElement.style.fontWeight = 'bold';
 
-    // Get the bubble element and remove any existing size class
     const bubbleElement = document.getElementById(category.id);
-    bubbleElement.classList.remove('bolha_geral_1', 'bolha_geral_2', 'bolha_geral_3', 'bolha_geral_4'); // Remove old size classes
+    bubbleElement.classList.remove('bolha_geral_1', 'bolha_geral_2', 'bolha_geral_3', 'bolha_geral_4');
 
     if (category.count === 0) {
       bubbleElement.classList.add('bolha_geral_4');
@@ -198,7 +187,7 @@ async function ajustarTamanhoDasBolhas() {
       bubbleElement.classList.add(previousClass);
     } else {
       if (index === 0) {
-        bubbleElement.classList.add('bolha_geral_1'); // Largest
+        bubbleElement.classList.add('bolha_geral_1'); 
         previousClass = 'bolha_geral_1';
       } else if (index === 1) {
         bubbleElement.classList.add('bolha_geral_2');
@@ -207,21 +196,19 @@ async function ajustarTamanhoDasBolhas() {
         bubbleElement.classList.add('bolha_geral_3');
         previousClass = 'bolha_geral_3';
       } else {
-        bubbleElement.classList.add('bolha_geral_4'); // Smallest
+        bubbleElement.classList.add('bolha_geral_4'); 
         previousClass = 'bolha_geral_4';
       }
     }
 
-    // Save the current count for comparison with the next one
     previousCount = category.count;
 
-    // Apply the background color to the bubble
     bubbleElement.style.backgroundColor = colors[index].color;
 
     if (colors[index].isDark) {
       labelElement.style.color = 'white';
     } else {
-      labelElement.style.color = 'black';  // Black font for light background
+      labelElement.style.color = 'black';  
     }
   });
 }

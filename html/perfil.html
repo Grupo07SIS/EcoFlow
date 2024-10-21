@@ -90,7 +90,6 @@
             </a>
         </div>
 
-        <!-- Popup for success or error messages -->
         <div id="popup" class="popup">
             <span id="popup-message"></span>
         </div>
@@ -118,7 +117,6 @@
     const isOrganizador = sessionStorage.getItem('ID_ORGANIZADOR') !== null;
     let originalData = {};
 
-    // Function to get user data from sessionStorage
     function obterDados() {
         return {
             id_organizador: parseInt(sessionStorage.getItem('ID_ORGANIZADOR')),
@@ -131,7 +129,6 @@
             imagemPerfil: sessionStorage.getItem('IMAGEM_PERFIL_ORGANIZADOR'),
             permissao: parseInt(sessionStorage.getItem('PERMISSAO_ORGANIZADOR')),
 
-            // Address details
             endereco: {
                 id_endereco_usuario: parseInt(sessionStorage.getItem('ID_ENDERECO_ORGANIZADOR')),
                 logradouro: sessionStorage.getItem('LOGRADOURO_ORGANIZADOR'),
@@ -146,7 +143,6 @@
 
 
 
-    // Function to load profile data into the form fields
     async function carregarPerfil() {
         const dados = obterDados();
         const nomePerfil = document.getElementById('nomeUsuario');
@@ -161,20 +157,18 @@
             email: dados.email,
         };
 
-        // Fill fields with session data
         nomePerfil.innerHTML = dados.nome_resp;
         telefoneCampo.value = dados.telefone;
         cnpjCampo.value = dados.cnpj;
         emailCampo.value = dados.email;
     }
 
-    // Function to enable editing
     function editarPerfil() {
         document.getElementById('telefone').disabled = false;
         document.getElementById('email').disabled = false;
 
-        document.getElementById('salvar-btn').style.display = 'inline';   // Show 'Salvar'
-        document.getElementById('editar-btn').style.display = 'none';     // Hide 'Editar'
+        document.getElementById('salvar-btn').style.display = 'inline';   
+        document.getElementById('editar-btn').style.display = 'none';     
     }
 
     // Function to save profile
@@ -184,7 +178,6 @@
         const email = document.getElementById('email').value;
 
 
-        // Construct the data to be sent in the PATCH request
         const data = {
             id_organizador: dados.id_organizador,
             email: email,
@@ -231,13 +224,12 @@
         }
     }
 
-    // Function to cancel the edit and disable fields
     function cancelarEdicao() {
         document.getElementById('telefone').disabled = true;
         document.getElementById('email').disabled = true;
 
-        document.getElementById('salvar-btn').style.display = 'none';     // Hide 'Salvar'
-        document.getElementById('editar-btn').style.display = 'inline';   // Show 'Editar'
+        document.getElementById('salvar-btn').style.display = 'none';   
+        document.getElementById('editar-btn').style.display = 'inline';   
     }
 
 </script>

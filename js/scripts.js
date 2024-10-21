@@ -10,6 +10,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Inicia a transição após 3 segundos
     setTimeout(showNextScreen, 3000);
 });

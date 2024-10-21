@@ -1,4 +1,3 @@
-// Mock de dados dos participantes
 const participants = [
     {
         name: 'EcoFood',
@@ -14,10 +13,8 @@ const participants = [
         amountPaid: 'R$ 0000.00',
         imgSrc: '../assets/Ellipse 58.png'
     }
-    // Adicione mais participantes conforme necessário
 ];
 
-// Função para criar HTML dos participantes
 function createParticipantHTML(participant) {
     return `
         <div class="participante_separation_div">
@@ -40,13 +37,11 @@ function createParticipantHTML(participant) {
     `;
 }
 
-// Função para renderizar todos os participantes
 function renderParticipants() {
     const participantContainer = document.getElementById('participantsContainer');
     participantContainer.innerHTML = participants.map(createParticipantHTML).join('');
 }
 
-// Inicializar quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
     renderParticipants();
 });

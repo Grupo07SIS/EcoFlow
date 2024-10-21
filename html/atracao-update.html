@@ -45,7 +45,6 @@
     </div>
 
     <div id="attractionContainer">
-        <!-- Attraction cards will be appended here -->
         <p id="noAttractionsMessage" class="alert alert-warning" role="alert">Não tem atração adicionada</p>
     </div>
 
@@ -84,13 +83,11 @@
     </div>
 
     <script>
-        // Ao carregar a página, verifica se há atrações e carrega-as
         window.onload = function () {
             valorPadrao();
-            loadAttractionsFromStorage(); // Carregar atrações do sessionStorage
+            loadAttractionsFromStorage(); 
         }
 
-        // Função para carregar dados do organizador na navbar
         async function valorPadrao() {
             const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
             const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
@@ -100,14 +97,11 @@
             emailNavBar.innerHTML = emailSS;
         }
 
-
-        // Função para adicionar um novo card de atração
         function addAttractionCard(attraction = {}) {
             const container = document.getElementById('attractionContainer');
             const newCard = document.createElement('div');
             newCard.classList.add('background-box');
 
-            // Add hidden field for id_atracao to track existing attractions
             newCard.innerHTML = `
         <input type="hidden" class="idAtracao" value="${attraction.atracaoId || 0}">
         <div class="group-box">
@@ -144,14 +138,11 @@
             console.log(dadosBasicos);
             console.log(financeiro);
             console.log(enderecoEvento);
-
-            // Coletar dados da única atração
             const attractionCard = document.querySelector('.background-box');
             const id = parseInt(attractionCard.querySelector('.idAtracao').value, 10) || 0;
             const tipo = attractionCard.querySelector('.tipoAtracao').value;
             const valor = parseFloat(attractionCard.querySelector('.valorAtracao').value.replace('R$', '').replace(',', '.')) || 0;
 
-            // Primeiro, patch para /endereco/evento
             const enderecoPayload = {
                 "id_endereco_evento": enderecoEvento.id_endereco,
                 "logradouro": dadosBasicos.logradouro,
@@ -171,19 +162,17 @@
                     body: JSON.stringify(enderecoPayload)
                 });
 
-                // Check if the address update was successful
                 if (!enderecoResponse.ok) {
                     mostrarPopup("Erro ao atualizar o endereço.", "error");
-                    return; // Stop the process if updating the address fails
+                    return; 
                 }
 
             } catch (error) {
                 console.error('Erro ao fazer o PATCH do endereço:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar o endereço.", "error");
-                return; // Stop the process if an error occurs
+                return; 
             }
 
-            // Em seguida, patch para /financeiro
             const financeiroPayload = {
                 "id_financeiro": financeiro.financeiroId,
                 "orcamento_total": dadosBasicos.orcamentoTotal,
@@ -204,19 +193,17 @@
                     body: JSON.stringify(financeiroPayload)
                 });
 
-                // Check if the financial update was successful
                 if (!financeiroResponse.ok) {
                     mostrarPopup("Erro ao atualizar o financeiro.", "error");
-                    return; // Stop the process if updating the financial part fails
+                    return; 
                 }
 
             } catch (error) {
                 console.error('Erro ao fazer o PATCH do financeiro:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar o financeiro.", "error");
-                return; // Stop the process if an error occurs
+                return;
             }
 
-            // Em seguida, patch para /atracao
             const atracaoPayload = {
                 "id_atracao": id,
                 "tipo_atracao": tipo,
@@ -232,19 +219,17 @@
                     body: JSON.stringify(atracaoPayload)
                 });
 
-                // Check if the attraction update was successful
                 if (!atracaoResponse.ok) {
                     mostrarPopup("Erro ao atualizar a atração.", "error");
-                    return; // Stop the process if updating the attraction fails
+                    return; 
                 }
 
             } catch (error) {
                 console.error('Erro ao fazer o PATCH da atração:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar a atração.", "error");
-                return; // Stop the process if an error occurs
+                return; 
             }
 
-            // Finally, patch para /evento/update if all previous updates were successful
             const eventoPayload = {
                 "id_evento": dadosBasicos.id,
                 "nome": dadosBasicos.nome,
@@ -293,7 +278,7 @@
                 if (response.ok) {
                     mostrarPopup("Evento atualizado com sucesso!", "success");
                     setTimeout(() => {
-                        window.location.href = 'meus-eventos.html';  // Redireciona para a página de eventos após 3 segundos
+                        window.location.href = 'meus-eventos.html';  
                     }, 3000);
                 } else {
                     mostrarPopup("Erro ao atualizar o evento.", "error");
@@ -308,57 +293,43 @@
             }
         }
 
-        // Função para exibir o pop-up
         function mostrarPopup(mensagem, tipo) {
             const popup = document.getElementById('popup');
             const popupMessage = document.getElementById('popup-message');
 
-            // Adicionar a mensagem ao pop-up
             popupMessage.innerHTML = mensagem;
 
-            // Define a cor de fundo dependendo do tipo de mensagem (sucesso ou erro)
             if (tipo === 'success') {
-                popup.style.backgroundColor = '#4CAF50'; // Verde para sucesso
+                popup.style.backgroundColor = '#4CAF50'; 
             } else if (tipo === 'error') {
-                popup.style.backgroundColor = '#f44336'; // Vermelho para erro
+                popup.style.backgroundColor = '#f44336'; 
             }
 
-            // Exibir o pop-up
             popup.style.display = 'block';
 
-            // Ocultar automaticamente o pop-up após 3 segundos
             setTimeout(() => {
                 popup.style.display = 'none';
             }, 3000);
         }
 
-        // Função para exibir o pop-up
         function mostrarPopup(mensagem, tipo) {
             const popup = document.getElementById('popup');
             const popupMessage = document.getElementById('popup-message');
-
-            // Adicionar a mensagem ao pop-up
             popupMessage.innerHTML = mensagem;
 
-            // Define a cor de fundo dependendo do tipo de mensagem (sucesso ou erro)
             if (tipo === 'success') {
-                popup.style.backgroundColor = '#4CAF50'; // Verde para sucesso
+                popup.style.backgroundColor = '#4CAF50'; 
             } else if (tipo === 'error') {
-                popup.style.backgroundColor = '#f44336'; // Vermelho para erro
+                popup.style.backgroundColor = '#f44336'; 
             }
 
-            // Exibir o pop-up
             popup.style.display = 'block';
 
-            // Ocultar automaticamente o pop-up após 3 segundos
             setTimeout(() => {
                 popup.style.display = 'none';
             }, 3000);
         }
 
-
-
-        // Função para formatar o input de valor da atração
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, '');
             if (value === '') {
@@ -369,15 +340,13 @@
             input.value = formattedValue;
         }
 
-        // Função para carregar as atrações do sessionStorage e exibir
         function loadAttractionsFromStorage() {
             let attraction = sessionStorage.getItem('atracao');
 
-            // Se for um objeto e não um array, converte para array
             try {
                 attraction = JSON.parse(attraction);
                 if (!Array.isArray(attraction)) {
-                    attraction = [attraction]; // Converte para array de um item se não for array
+                    attraction = [attraction]; 
                 }
             } catch (error) {
                 console.error('Erro ao analisar JSON: ', error);
@@ -386,20 +355,17 @@
 
             const container = document.getElementById('attractionContainer');
 
-            // Limpa o container antes de carregar as atrações
             container.innerHTML = '';
 
             if (attraction.length > 0) {
                 attraction.forEach(attraction => {
-                    addAttractionCard(attraction); // Adiciona cada atração existente
+                    addAttractionCard(attraction); 
                 });
             } else {
-                // Se não houver atrações, exibe a mensagem
                 toggleNoAttractionsMessage();
             }
         }
 
-        // Função para mostrar/ocultar a mensagem "sem atrações"
         function toggleNoAttractionsMessage() {
             const container = document.getElementById('attractionContainer');
             const message = document.getElementById('noAttractionsMessage');
@@ -410,7 +376,6 @@
             }
         }
 
-        // Função para remover um card de atração
         function removeAttractionCard(button) {
             button.closest('.background-box').remove();
             toggleNoAttractionsMessage();

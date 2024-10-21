@@ -1,13 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     buscarListaDeEspera();
 
-    // Apply filters on "Aplicar Filtro" button click
     document.querySelector('.primary_btn').addEventListener('click', () => {
         applyFilters();
         closeFilter();
     });
 
-    // Clear filters on "Limpar Filtro" button click
     document.querySelector('.secondary_btn').addEventListener('click', () => {
         clearFilters();
         closeFilter();
@@ -20,7 +18,6 @@ function truncateText(description, maxLength) {
     }
 }
 
-// Fetch and render participants "Aguardando"
 async function buscarListaDeEspera() {
     try {
         const resposta = await fetch("http://localhost:8080/inscricao/aguardando");
@@ -34,15 +31,13 @@ async function buscarListaDeEspera() {
             return;
         }
 
-        // Render participants and attach click event listeners
         cards.innerHTML = respostaDadosEventos.map(itemEvento => renderParticipantAguardando(itemEvento)).join('');
-        attachCardClickEvent();  // Attach event listeners after rendering cards
+        attachCardClickEvent();
     } catch (error) {
         console.error('Erro ao buscar participantes:', error);
     }
 }
 
-// Fetch and render participants "Reprovados"
 async function buscarListaDeEsperaReprovados() {
     try {
         const resposta = await fetch("http://localhost:8080/inscricao/reprovado");
@@ -57,13 +52,12 @@ async function buscarListaDeEsperaReprovados() {
         }
 
         cards.innerHTML = respostaDadosEventos.map(itemEvento => renderParticipant(itemEvento)).join('');
-        attachCardClickEvent();  // Attach event listeners after rendering cards
+        attachCardClickEvent();  
     } catch (error) {
         console.error('Erro ao buscar participantes reprovados:', error);
     }
 }
 
-// Fetch and render participants "Aprovados"
 async function buscarListaDeEsperaAprovados() {
     try {
         const resposta = await fetch("http://localhost:8080/inscricao/aprovado");
@@ -78,13 +72,12 @@ async function buscarListaDeEsperaAprovados() {
         }
 
         cards.innerHTML = respostaDadosEventos.map(itemEvento => renderParticipant(itemEvento)).join('');
-        attachCardClickEvent();  // Attach event listeners after rendering cards
+        attachCardClickEvent();
     } catch (error) {
         console.error('Erro ao buscar participantes aprovados:', error);
     }
 }
 
-// Render participants waiting for approval
 function renderParticipantAguardando(itemEvento) {
     const { fkUsuario, evento, tipo_stand, id_inscricao } = itemEvento;
 
@@ -92,11 +85,9 @@ function renderParticipantAguardando(itemEvento) {
     const participantPhone = fkUsuario?.telefone || "Telefone não disponível";
     const participantNiche = evento?.nome || "Evento não informado";
 
-    // Pegando o valor da inscrição e do stand corretamente
     const valorInscricao = evento?.financeiro?.valor_inscricao ?? 0;
     const valorStand = tipo_stand?.valor ?? 0;
 
-    // Soma dos valores da inscrição e do stand
     const participantAmountPaid = (valorInscricao + valorStand) || "Valor não disponível";
 
     const participantImgSrc = fkUsuario?.bannerImg ? `data:image/png;base64,${fkUsuario.bannerImg}` : "../assets/default-image.png";
@@ -159,10 +150,8 @@ function renderParticipant(itemEvento) {
     `;
 }
 
-// Função para atualizar o status da inscrição
 async function atualizarStatusInscricao(idInscricao, novoStatus) {
     try {
-      // Passo 1: Buscar a inscrição pelo ID
       const getUrl = `http://localhost:8080/inscricao/buscar-por-id?id=${idInscricao}`;
       const getResponse = await fetch(getUrl);
   
@@ -171,16 +160,13 @@ async function atualizarStatusInscricao(idInscricao, novoStatus) {
         return;
       }
   
-      // Obter os dados da inscrição
       const inscricao = await getResponse.json();
   
-      // Passo 2: Atualizar o status
       inscricao.status = {
-        id_Status: novoStatus, // 4 para "aprovado", 5 para "reprovado"
+        id_Status: novoStatus, 
         status: novoStatus === 4 ? 'aprovado' : 'reprovado'
       };
   
-      // Passo 3: Fazer o PATCH com os dados atualizados
       const patchUrl = `http://localhost:8080/inscricao/update-status?id=${idInscricao}`;
       const patchResponse = await fetch(patchUrl, {
         method: 'PATCH',
@@ -190,7 +176,6 @@ async function atualizarStatusInscricao(idInscricao, novoStatus) {
   
       if (patchResponse.ok) {
         console.log('Status atualizado com sucesso!');
-        // Atualiza a lista para refletir as mudanças
         buscarListaDeEspera();
       } else {
         console.error('Erro ao atualizar o status da inscrição.');
@@ -202,20 +187,18 @@ async function atualizarStatusInscricao(idInscricao, novoStatus) {
   
 
 
-// Attach click event listeners to the rendered cards
 function attachCardClickEvent() {
     const cardLinks = document.querySelectorAll('.card-link');
     cardLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
             const collaboratorId = link.getAttribute('data-id');
-            sessionStorage.setItem('currentCollaboratorId', collaboratorId); // Store collaborator ID in session storage
-            window.location.href = link.getAttribute('href'); // Navigate to the next page
+            sessionStorage.setItem('currentCollaboratorId', collaboratorId); 
+            window.location.href = link.getAttribute('href'); 
         });
     });
 }
 
-// Apply selected filter based on user input
 function applyFilters() {
     const statusSelect = document.getElementById('statusSelect').value;
 
@@ -228,18 +211,15 @@ function applyFilters() {
     }
 }
 
-// Clear filters and reset to default state
 function clearFilters() {
     document.getElementById('statusSelect').value = '1';
     buscarListaDeEspera();
 }
 
-// Close the filter panel
 function closeFilter() {
     document.getElementById('filterMain').style.display = 'none';
 }
 
-// Open the filter panel
 function openFilter() {
     document.getElementById('filterMain').style.display = 'block';
 }

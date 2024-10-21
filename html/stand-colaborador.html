@@ -53,14 +53,12 @@
     </div>
 
     <script>
-        // Function to go back to the previous page
         function voltar() {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get('id');
             window.location.href = `dados_equipes-colaborador.html?id=${eventId}`;
         }
 
-        // Function to retrieve user data from sessionStorage
         function buscardados() {
             return {
                 idColaborador: parseInt(sessionStorage.getItem('ID_COLABORADOR')),
@@ -101,7 +99,6 @@
             };
         }
 
-        // Function to fetch event details
         async function buscarDetalhesEvento() {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get('id');
@@ -115,13 +112,12 @@
             }
         }
 
-        // Function to fetch stands and render them on the page
         async function fetchStands() {
             try {
                 const response = await fetch('http://localhost:8080/tipoStand');
                 const stands = await response.json();
                 const standContainer = document.getElementById('standContainer');
-                standContainer.innerHTML = ''; // Clear the container
+                standContainer.innerHTML = ''; 
 
                 stands.forEach(stand => {
                     const standHtml = `
@@ -143,7 +139,6 @@
             }
         }
 
-        // Event listener to handle stand selection
         let selectedStandId = null;
         document.addEventListener('change', function (event) {
             if (event.target.name === 'standOption') {
@@ -151,7 +146,6 @@
             }
         });
 
-        // Finalize registration data
         async function salvarDadosPag3() {
             const colaboradorData = buscardados();
             const urlParams = new URLSearchParams(window.location.search);
@@ -159,7 +153,7 @@
             const evento = await buscarDetalhesEvento();
             const savedProducts = JSON.parse(sessionStorage.getItem('produtos') || '[]');
             const savedTeam = JSON.parse(sessionStorage.getItem('equipe'));
-            console.log(savedTeam) // Handle as an object
+            console.log(savedTeam) 
 
             if (!selectedStandId) {
                 alert("Por favor, escolha um stand.");
@@ -171,7 +165,6 @@
                 return;
             }
 
-            // Post the team data to /equipe endpoint (only once)
             const equipeId = await postTeam(savedTeam);
 
             const standResponse = await fetch(`http://localhost:8080/tipoStand/id?id=${selectedStandId}`);
@@ -233,7 +226,7 @@
                     "status": "aguardando"
                 },
                 "equipe": {
-                    "id_equipe": equipeId || 0, // Use the ID returned from the POST request
+                    "id_equipe": equipeId || 0, 
                     "nome": savedTeam.nome || "",
                     "telefone": savedTeam.telefone || "",
                     "email": savedTeam.email || ""
@@ -305,10 +298,8 @@
             }
         }
 
-        // Function to submit the team (equipe) to /equipe endpoint
         async function postTeam(savedTeam) {
             try {
-                // Primeiro, faz o POST da equipe
                 const postResponse = await fetch('http://localhost:8080/equipe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -318,7 +309,6 @@
                 if (postResponse.ok) {
                     console.log('Equipe criada com sucesso, buscando a última equipe cadastrada...');
 
-                    // Agora faz um GET para buscar todas as equipes
                     const getResponse = await fetch('http://localhost:8080/equipe', {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' }
@@ -370,7 +360,6 @@
             }
         }
 
-        // On page load, fetch stands and event details
         window.onload = function () {
             fetchStands();
             buscarDetalhesEvento();

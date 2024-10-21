@@ -53,7 +53,6 @@
             </div>
 
             <div id="productContainer">
-                <!-- Product cards will be appended here -->
             </div>
         </div>
     </div>
@@ -94,7 +93,6 @@
 <script>
     const eventId = sessionStorage.getItem('eventoID');
 
-    // Função para buscar tipos de stands (GET)
     async function buscarTiposStands() {
         try {
             const response = await fetch(`http://localhost:8080/tipoStand`);
@@ -113,7 +111,6 @@
         }
     }
 
-    // Função para adicionar um novo stand/mesa
     function addProdutoCard(stand = {}) {
         const container = document.getElementById('productContainer');
         const productMessage = document.getElementById('productMessage');
@@ -179,7 +176,6 @@
         container.appendChild(newCard);
     }
 
-    // Função para salvar as alterações de um stand (PATCH)
     async function salvarDadosPag2() {
         const container = document.getElementById('productContainer');
         const stands = container.querySelectorAll('.info_form');
@@ -234,7 +230,6 @@
         window.location.href = 'atracao-update.html';
     }
 
-    // Função para alternar detalhes de um stand
     function toggleStandDetails(element) {
         const parentForm = element.closest('.info_form');
         const inputs = parentForm.querySelectorAll('.toggleable');
@@ -255,7 +250,6 @@
         }
     }
 
-    // Função para remover um stand/mesa
     function removeProdutoCard(button) {
         const container = document.getElementById('productContainer');
         button.closest('.info_card').remove();
@@ -265,7 +259,6 @@
         }
     }
 
-    // Inicializar ao carregar a página
     window.onload = function () {
         valorPadrao();
         buscarTiposStands();

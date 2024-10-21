@@ -10,11 +10,11 @@
 
 }
 #popup {
-    display: none; /* Inicialmente escondido */
+    display: none;
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #4CAF50; /* Cor padrão de sucesso */
+    background-color: #4CAF50;
     color: white;
     padding: 15px;
     border-radius: 8px;
@@ -27,7 +27,7 @@
 }
 
 #popup.error {
-    background-color: #f44336; /* Vermelho para erros */
+    background-color: #f44336;
 }
 
 /* h5 {

@@ -165,16 +165,14 @@ async function buscarEventosIncricao() {
             return;
         }
 
-        cards.innerHTML = ''; // Limpa o conteúdo anterior
+        cards.innerHTML = '';
 
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        // Mapeia os eventos futuros e os insere na página
         cards.innerHTML = inscricoes.map(inscricao => {
             const evento = inscricao.evento;
             if (evento) {
-                // Converte a data para um objeto Date
                 const eventDate = new Date(evento.dataEvento); 
                 const formattedDate = `${eventDate.getDate()} de ${monthNames[eventDate.getMonth()]} de ${eventDate.getFullYear()}`;
                 
@@ -201,9 +199,8 @@ async function buscarEventosIncricao() {
                     </div>
                 </a>`;
             }
-        }).join(''); // Junta todos os eventos em uma única string
+        }).join(''); 
 
-        // Adiciona eventos de clique para os links dos eventos
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {
             link.addEventListener('click', (event) => {
@@ -237,7 +234,7 @@ async function buscarEventosIncricaoPassados() {
             return;
         }
 
-        cards.innerHTML = ''; // Limpa o conteúdo anterior
+        cards.innerHTML = ''; 
 
         if (!inscricoes || inscricoes.length === 0) {
             console.log("Nenhum evento passado encontrado.");
@@ -248,7 +245,6 @@ async function buscarEventosIncricaoPassados() {
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
                             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        // Mapeia os eventos passados e os insere na página
         cards.innerHTML = inscricoes.map(inscricao => {
             const evento = inscricao.evento;
             if (evento) {
@@ -278,9 +274,8 @@ async function buscarEventosIncricaoPassados() {
                     </div>
                 </a>`;
             }
-        }).join(''); // Junta todos os eventos em uma única string
+        }).join('');
 
-        // Adiciona eventos de clique para os links dos eventos
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {
             link.addEventListener('click', (event) => {
