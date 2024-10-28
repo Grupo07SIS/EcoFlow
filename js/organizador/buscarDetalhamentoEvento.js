@@ -47,8 +47,8 @@ async function buscarDetalhesEvento() {
         console.log(eventoHorario);
 
 
-        // document.getElementById('event_image').src = evento.banner_evento || "../../assets/Rectangle 20.png"; 
-        document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
+        document.getElementById('event_image').src = evento.banner_evento || "../../assets/Rectangle 20.png"; 
+        // document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
 
         geocode(fullAddress);
     } catch (error) {

@@ -158,6 +158,9 @@
         nomeNavBar.innerHTML = nomeSS
         emailNavBar.innerHTML = emailSS
     }
+    let bannerImageBase64 = '';  
+    
+
     const fileInput = document.getElementById('fileInput');
     const previewContainer = document.getElementById('previewContainer');
 
@@ -166,6 +169,7 @@
     function handleFiles(event) {
         const files = event.target.files;
         previewFiles(files);
+        convertImageToBase64(files[0]); 
     }
 
     function previewFiles(files) {
@@ -175,14 +179,25 @@
             reader.onload = function (e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
+                img.id = 'imagem';
                 previewContainer.appendChild(img);
             };
             reader.readAsDataURL(file);
         }
     }
 
+
+    function convertImageToBase64(file) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            bannerImageBase64 = reader.result.split(',')[1]; 
+        };
+        reader.readAsDataURL(file);
+    }
+
     window.onload = function () {
         const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
+        console.log(bannerImageBase64);
 
         if (dadosEvento) {
             document.getElementById('nome').value = dadosEvento.nome || '';
@@ -204,9 +219,12 @@
         const nomeEvento = document.getElementById('nome').value;
         const temaEvento = document.getElementById('tema').value;
         const descricaoEvento = document.getElementById('desc').value;
-        const dataEvento = document.getElementById('data').value;  
-        const horaInicio = document.getElementById('horaInicio').value; 
-        const horaFim = document.getElementById('horaFim').value; 
+        const dataEvento = document.getElementById('data').value;
+        const horaInicio = document.getElementById('horaInicio').value;
+        const horaFim = document.getElementById('horaFim').value;
+        const bannerImage = document.getElementById('imagem').src;
+
+        const bannerImageBase64 = bannerImage.split(',')[1];
 
         const logradouro = document.getElementById('logradouro').value;
         const numero = document.getElementById('numero').value;
@@ -229,10 +247,11 @@
         const dadosEvento = {
             nome: nomeEvento,
             tema: temaEvento,
+            banner_img: bannerImageBase64,
             descricao: descricaoEvento,
-            dataEvento: dataEvento, 
-            hora_inicio: horaInicioISO, 
-            hora_fim: horaFimISO, 
+            dataEvento: dataEvento,
+            hora_inicio: horaInicioISO,
+            hora_fim: horaFimISO,
             enderecoEvento: {
                 logradouro: logradouro,
                 numero: numero,
