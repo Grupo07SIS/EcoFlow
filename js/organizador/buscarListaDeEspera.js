@@ -52,7 +52,7 @@ async function buscarListaDeEsperaReprovados() {
         }
 
         cards.innerHTML = respostaDadosEventos.map(itemEvento => renderParticipant(itemEvento)).join('');
-        attachCardClickEvent();  
+        attachCardClickEvent();
     } catch (error) {
         console.error('Erro ao buscar participantes reprovados:', error);
     }
@@ -84,23 +84,22 @@ function renderParticipantAguardando(itemEvento) {
     const participantName = fkUsuario?.nomeResp || "Nome não disponível";
     const participantPhone = fkUsuario?.telefone || "Telefone não disponível";
     const participantNiche = evento?.nome || "Evento não informado";
+    const participantNomeFantasia = fkUsuario?.nomeFantasia || "Nome fantasia não informado";
 
     const valorInscricao = evento?.financeiro?.valor_inscricao ?? 0;
     const valorStand = tipo_stand?.valor ?? 0;
 
     const participantAmountPaid = (valorInscricao + valorStand) || "Valor não disponível";
 
-    const participantImgSrc = fkUsuario?.bannerImg ? `data:image/png;base64,${fkUsuario.bannerImg}` : "../assets/default-image.png";
 
     return `
     <div class="participante_separation_div">
     <a href="dadosColaborador.html?id=${fkUsuario.idColaborador}" class="card-link" data-id="${fkUsuario.idColaborador}">
     <div class="participante_div">
             <div class="participante_img">
-                <img src="${participantImgSrc}" alt="Imagem do participante">
+                <span>${participantName}</span> <span>${participantNomeFantasia}</span>
             </div>
             <div class="participante_info">
-                <span>${participantName}</span>
                 <p><b>Telefone:</b> ${participantPhone}</p>
                 <p><b>Evento:</b> ${participantNiche}</p>
                 <p><b>Valor a pagar:</b> R$ ${participantAmountPaid}</p>
@@ -123,23 +122,23 @@ function renderParticipant(itemEvento) {
     const participantName = fkUsuario?.nomeResp || "Nome não disponível";
     const participantPhone = fkUsuario?.telefone || "Telefone não disponível";
     const participantNiche = evento?.nome || "Evento não informado";
+    const participantNomeFantasia = fkUsuario?.nomeFantasia || "Nome fantasia não informado";
 
     const valorInscricao = evento?.financeiro?.valor_inscricao ?? 0;
-    const valorStand = tipo_stand?.valor ?? 0; 
+    const valorStand = tipo_stand?.valor ?? 0;
 
     const participantAmountPaid = (valorInscricao + valorStand) || "Valor não disponível";
 
-    const participantImgSrc = fkUsuario?.bannerImg ? `data:image/png;base64,${fkUsuario.bannerImg}` : "../assets/default-image.png";
 
     return `
     <a href="dadosColaborador.html?id=${fkUsuario.idColaborador}" class="card-link" data-id="${fkUsuario.idColaborador}">
     <div class="participante_separation_div">
         <div class="participante_div">
+            
             <div class="participante_img">
-                <img src="${participantImgSrc}" alt="Imagem do participante">
+                <span>${participantName}</span> <span>${participantNomeFantasia}</span>
             </div>
             <div class="participante_info">
-                <span>${participantName}</span>
                 <p><b>Telefone:</b> ${participantPhone}</p>
                 <p><b>Evento:</b> ${participantNiche}</p>
                 <p><b>Valor pago:</b> R$ ${participantAmountPaid}</p>
@@ -152,39 +151,39 @@ function renderParticipant(itemEvento) {
 
 async function atualizarStatusInscricao(idInscricao, novoStatus) {
     try {
-      const getUrl = `http://localhost:8080/inscricao/buscar-por-id?id=${idInscricao}`;
-      const getResponse = await fetch(getUrl);
-  
-      if (!getResponse.ok) {
-        console.error('Erro ao buscar inscrição.');
-        return;
-      }
-  
-      const inscricao = await getResponse.json();
-  
-      inscricao.status = {
-        id_Status: novoStatus, 
-        status: novoStatus === 4 ? 'aprovado' : 'reprovado'
-      };
-  
-      const patchUrl = `http://localhost:8080/inscricao/update-status?id=${idInscricao}`;
-      const patchResponse = await fetch(patchUrl, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(inscricao)
-      });
-  
-      if (patchResponse.ok) {
-        console.log('Status atualizado com sucesso!');
-        buscarListaDeEspera();
-      } else {
-        console.error('Erro ao atualizar o status da inscrição.');
-      }
+        const getUrl = `http://localhost:8080/inscricao/buscar-por-id?id=${idInscricao}`;
+        const getResponse = await fetch(getUrl);
+
+        if (!getResponse.ok) {
+            console.error('Erro ao buscar inscrição.');
+            return;
+        }
+
+        const inscricao = await getResponse.json();
+
+        inscricao.status = {
+            id_Status: novoStatus,
+            status: novoStatus === 4 ? 'aprovado' : 'reprovado'
+        };
+
+        const patchUrl = `http://localhost:8080/inscricao/update-status?id=${idInscricao}`;
+        const patchResponse = await fetch(patchUrl, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inscricao)
+        });
+
+        if (patchResponse.ok) {
+            console.log('Status atualizado com sucesso!');
+            buscarListaDeEspera();
+        } else {
+            console.error('Erro ao atualizar o status da inscrição.');
+        }
     } catch (error) {
-      console.error('Erro ao fazer a requisição PATCH:', error);
+        console.error('Erro ao fazer a requisição PATCH:', error);
     }
-  }
-  
+}
+
 
 
 function attachCardClickEvent() {
@@ -193,8 +192,8 @@ function attachCardClickEvent() {
         link.addEventListener('click', (event) => {
             event.preventDefault();
             const collaboratorId = link.getAttribute('data-id');
-            sessionStorage.setItem('currentCollaboratorId', collaboratorId); 
-            window.location.href = link.getAttribute('href'); 
+            sessionStorage.setItem('currentCollaboratorId', collaboratorId);
+            window.location.href = link.getAttribute('href');
         });
     });
 }

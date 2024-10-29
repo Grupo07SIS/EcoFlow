@@ -18,10 +18,15 @@ async function buscarEventos() {
 
             const truncatedAddress = truncateText(fullAddress, 40);
 
+            let imagem = "../../assets/Rectangle 20.png";
+            if (itemEvento.banner_evento && itemEvento.banner_evento !== "YmFubmVyMS5qcGc=" && itemEvento.banner_evento !== "YmFubmVyMi5qcGc=") {
+                imagem = `data:image/png;base64,${itemEvento.banner_evento}`;
+            }
+
             return `
             <a href="detalhamentoEvento.html?id=${itemEvento.id_evento}" class="card-link" data-id="${itemEvento.id_evento}">
                 <div class="cardItem">
-                    <img class="img-background" src="../assets/Mask Group.png" alt="">
+                    <img class="img-background" src="${imagem}" alt="">
                     <div class="titulo">
                         <span>${titulo}</span>
                     </div>

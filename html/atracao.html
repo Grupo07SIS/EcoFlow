@@ -383,21 +383,18 @@
                 }, eventosJson[0]);
 
                 const eventoId = latestEvent.id_evento;
+                const bannerBlob = dataURItoBlob(`data:image/png;base64,${banner_img}`);
 
-                console.log('Evento criado com sucesso:', banner_img);
                 const formData = new FormData();
-                formData.append('file', banner_img);  
+                formData.append('file', bannerBlob, 'banner_image.png');
 
-                const headers = new Headers();
-                headers.contentType = 'image/png';
-
-                const postImagem = await fetch(`http://localhost:8080/evento/imagem/${eventoId}`, {
-                    headers,
+                const response = await fetch(`http://localhost:8080/evento/imagem?id=${eventoId}`, {
                     method: 'POST',
-                    body: formData
+                    body: formData  
                 });
 
-                if (postImagem.ok) {
+
+                if (response.ok) {
                     console.log('Imagem enviada com sucesso!');
                     sessionStorage.removeItem('dadosEvento');
                     sessionStorage.removeItem('atracao');
@@ -412,6 +409,18 @@
                 alert('Erro: ' + error.message);
             }
         }
+
+        function dataURItoBlob(dataURI) {
+            const byteString = atob(dataURI.split(',')[1]);
+            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+
     </script>
 </body>
 

@@ -188,6 +188,7 @@ body {
 .cardItem img.img-background {
     width: 100%;
     border-radius: 5px;
+    height: 141px;
 }
 
 .titulo {

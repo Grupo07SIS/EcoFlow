@@ -85,7 +85,7 @@
     <script>
         window.onload = function () {
             valorPadrao();
-            loadAttractionsFromStorage(); 
+            loadAttractionsFromStorage();
         }
 
         async function valorPadrao() {
@@ -164,13 +164,13 @@
 
                 if (!enderecoResponse.ok) {
                     mostrarPopup("Erro ao atualizar o endereço.", "error");
-                    return; 
+                    return;
                 }
 
             } catch (error) {
                 console.error('Erro ao fazer o PATCH do endereço:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar o endereço.", "error");
-                return; 
+                return;
             }
 
             const financeiroPayload = {
@@ -195,7 +195,7 @@
 
                 if (!financeiroResponse.ok) {
                     mostrarPopup("Erro ao atualizar o financeiro.", "error");
-                    return; 
+                    return;
                 }
 
             } catch (error) {
@@ -221,21 +221,23 @@
 
                 if (!atracaoResponse.ok) {
                     mostrarPopup("Erro ao atualizar a atração.", "error");
-                    return; 
+                    return;
                 }
 
             } catch (error) {
                 console.error('Erro ao fazer o PATCH da atração:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar a atração.", "error");
-                return; 
+                return;
             }
+
+            const imagemDoEvento = sessionStorage.getItem('banner_evento');
 
             const eventoPayload = {
                 "id_evento": dadosBasicos.id,
                 "nome": dadosBasicos.nome,
                 "tema": dadosBasicos.tema,
                 "descricao": dadosBasicos.descricao,
-                "banner_evento": dadosBasicos.banner || 'YmFubmVyMS5qcGc=',
+                "banner_evento": dadosBasicos.imagemDoEvento || 'YmFubmVyMS5qcGc=',
                 "dataEvento": dadosBasicos.data,
                 "hora_inicio": dadosBasicos.horaInicio,
                 "hora_fim": dadosBasicos.horaFim,
@@ -276,23 +278,57 @@
                 });
 
                 if (response.ok) {
+                    await atualizarImagemBanner(dadosBasicos.id, imagemDoEvento);
                     mostrarPopup("Evento atualizado com sucesso!", "success");
                     setTimeout(() => {
-                        window.location.href = 'meus-eventos.html';  
+                        window.location.href = 'meus-eventos.html';
                     }, 3000);
                 } else {
                     mostrarPopup("Erro ao atualizar o evento.", "error");
                 }
-                sessionStorage.removeItem('dadosEventoUpdate');
-                sessionStorage.removeItem('financeiro');
-                sessionStorage.removeItem('endereco');
-                sessionStorage.removeItem('atracao');
             } catch (error) {
                 console.error('Erro ao fazer o PATCH do evento:', error);
                 mostrarPopup("Erro ao conectar com o servidor ao atualizar o evento.", "error");
             }
-        }
 
+            sessionStorage.removeItem('dadosEventoUpdate');
+            sessionStorage.removeItem('financeiro');
+            sessionStorage.removeItem('endereco');
+            sessionStorage.removeItem('atracao');
+        }
+        async function atualizarImagemBanner(eventoId, imagemBase64) {
+            if (!imagemBase64) return;
+
+            const bannerBlob = dataURItoBlob(`data:image/png;base64,${imagemBase64}`);
+            const formData = new FormData();
+            formData.append('file', bannerBlob, 'banner_image.png');
+
+            try {
+                const uploadResponse = await fetch(`http://localhost:8080/evento/imagem?id=${eventoId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!uploadResponse.ok) {
+                    mostrarPopup("Erro ao atualizar a imagem do banner.", "error");
+                }
+            } catch (error) {
+                console.error('Erro ao fazer o POST da imagem do banner:', error);
+                mostrarPopup("Erro ao conectar com o servidor para atualizar a imagem do banner.", "error");
+            }
+        }
+        function dataURItoBlob(dataURI) {
+            const byteString = atob(dataURI.split(',')[1]);
+            const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([ab], { type: mimeString });
+        }
         function mostrarPopup(mensagem, tipo) {
             const popup = document.getElementById('popup');
             const popupMessage = document.getElementById('popup-message');
@@ -300,9 +336,9 @@
             popupMessage.innerHTML = mensagem;
 
             if (tipo === 'success') {
-                popup.style.backgroundColor = '#4CAF50'; 
+                popup.style.backgroundColor = '#4CAF50';
             } else if (tipo === 'error') {
-                popup.style.backgroundColor = '#f44336'; 
+                popup.style.backgroundColor = '#f44336';
             }
 
             popup.style.display = 'block';
@@ -318,9 +354,9 @@
             popupMessage.innerHTML = mensagem;
 
             if (tipo === 'success') {
-                popup.style.backgroundColor = '#4CAF50'; 
+                popup.style.backgroundColor = '#4CAF50';
             } else if (tipo === 'error') {
-                popup.style.backgroundColor = '#f44336'; 
+                popup.style.backgroundColor = '#f44336';
             }
 
             popup.style.display = 'block';
@@ -346,7 +382,7 @@
             try {
                 attraction = JSON.parse(attraction);
                 if (!Array.isArray(attraction)) {
-                    attraction = [attraction]; 
+                    attraction = [attraction];
                 }
             } catch (error) {
                 console.error('Erro ao analisar JSON: ', error);
@@ -359,7 +395,7 @@
 
             if (attraction.length > 0) {
                 attraction.forEach(attraction => {
-                    addAttractionCard(attraction); 
+                    addAttractionCard(attraction);
                 });
             } else {
                 toggleNoAttractionsMessage();

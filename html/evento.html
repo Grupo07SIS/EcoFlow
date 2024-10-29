@@ -41,10 +41,10 @@
         <img src="../assets/Upload to the Cloud.png" alt="">
         <h5>Upload de Imagens</h5>
         <form id="uploadForm">
-            <input type="file" id="fileInput" accept="image/*" multiple>
+            <input type="file" id="fileInput" accept="image/*">
             <label for="fileInput">Escolher Imagem</label>
         </form>
-        <div class="preview-container" id="previewContainer"></div>
+        <div id="imageContainer"></div>
     </div>
 
     <form>
@@ -159,61 +159,31 @@
         emailNavBar.innerHTML = emailSS
     }
     let bannerImageBase64 = '';  
-    
 
-    const fileInput = document.getElementById('fileInput');
-    const previewContainer = document.getElementById('previewContainer');
+    function renderizarImagem() { 
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0]; 
 
-    fileInput.addEventListener('change', handleFiles);
-
-    function handleFiles(event) {
-        const files = event.target.files;
-        previewFiles(files);
-        convertImageToBase64(files[0]); 
-    }
-
-    function previewFiles(files) {
-        previewContainer.innerHTML = '';
-        for (const file of files) {
+        if (file) {
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.id = 'imagem';
-                previewContainer.appendChild(img);
+                img.alt = 'Imagem selecionada';
+                img.width = 300;
+                img.height = 200;
+
+                const imageContainer = document.getElementById('imageContainer');
+                imageContainer.innerHTML = ''; 
+                imageContainer.appendChild(img);
+
+                bannerImageBase64 = e.target.result.split(',')[1];
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); 
         }
     }
 
-
-    function convertImageToBase64(file) {
-        const reader = new FileReader();
-        reader.onload = function () {
-            bannerImageBase64 = reader.result.split(',')[1]; 
-        };
-        reader.readAsDataURL(file);
-    }
-
-    window.onload = function () {
-        const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
-        console.log(bannerImageBase64);
-
-        if (dadosEvento) {
-            document.getElementById('nome').value = dadosEvento.nome || '';
-            document.getElementById('tema').value = dadosEvento.tema || '';
-            document.getElementById('desc').value = dadosEvento.descricao || '';
-            document.getElementById('data').value = dadosEvento.dataEvento || '';
-            document.getElementById('horaInicio').value = dadosEvento.hora_inicio || '';
-            document.getElementById('horaFim').value = dadosEvento.hora_fim || '';
-            document.getElementById('logradouro').value = dadosEvento.enderecoEvento.logradouro || '';
-            document.getElementById('numero').value = dadosEvento.enderecoEvento.numero || '';
-            document.getElementById('complemento').value = dadosEvento.enderecoEvento.complemento || '';
-            document.getElementById('cidade').value = dadosEvento.enderecoEvento.cidade || '';
-            document.getElementById('UF').value = dadosEvento.enderecoEvento.estado || '';
-            document.getElementById('cep').value = dadosEvento.enderecoEvento.cep || '';
-        }
-    }
+    document.getElementById('fileInput').addEventListener('change', renderizarImagem);
 
     async function salvarDadosPag1() {
         const nomeEvento = document.getElementById('nome').value;
@@ -222,9 +192,6 @@
         const dataEvento = document.getElementById('data').value;
         const horaInicio = document.getElementById('horaInicio').value;
         const horaFim = document.getElementById('horaFim').value;
-        const bannerImage = document.getElementById('imagem').src;
-
-        const bannerImageBase64 = bannerImage.split(',')[1];
 
         const logradouro = document.getElementById('logradouro').value;
         const numero = document.getElementById('numero').value;
@@ -240,14 +207,13 @@
 
         const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
         const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
-
         const horaInicioISO = inicioDateTime.toISOString();
         const horaFimISO = fimDateTime.toISOString();
 
         const dadosEvento = {
             nome: nomeEvento,
             tema: temaEvento,
-            banner_img: bannerImageBase64,
+            banner_img: bannerImageBase64, 
             descricao: descricaoEvento,
             dataEvento: dataEvento,
             hora_inicio: horaInicioISO,
@@ -267,5 +233,22 @@
         window.location.href = `valores.html`;
     }
 
+    window.onload = function () {
+        const dadosEvento = JSON.parse(sessionStorage.getItem('dadosEvento'));
+        if (dadosEvento) {
+            document.getElementById('nome').value = dadosEvento.nome || '';
+            document.getElementById('tema').value = dadosEvento.tema || '';
+            document.getElementById('desc').value = dadosEvento.descricao || '';
+            document.getElementById('data').value = dadosEvento.dataEvento || '';
+            document.getElementById('horaInicio').value = dadosEvento.hora_inicio || '';
+            document.getElementById('horaFim').value = dadosEvento.hora_fim || '';
+            document.getElementById('logradouro').value = dadosEvento.enderecoEvento.logradouro || '';
+            document.getElementById('numero').value = dadosEvento.enderecoEvento.numero || '';
+            document.getElementById('complemento').value = dadosEvento.enderecoEvento.complemento || '';
+            document.getElementById('cidade').value = dadosEvento.enderecoEvento.cidade || '';
+            document.getElementById('UF').value = dadosEvento.enderecoEvento.estado || '';
+            document.getElementById('cep').value = dadosEvento.enderecoEvento.cep || '';
+        }
+    }
 
 </script>

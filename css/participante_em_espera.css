@@ -37,6 +37,7 @@ body{
 a.card-link {
     text-decoration: none;
     color: inherit; 
+    width: 100%;
   }
   
   a.card-link:hover {
@@ -70,11 +71,10 @@ a.card-link {
 
 .participante_div{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    padding: 16px;
     gap: 10px;
     p{
         margin: 0%;
@@ -87,19 +87,27 @@ a.card-link {
 }
 
 .participante_img{
-    width: 25%;
-
-    img{
-        display: flex;
-        width: 100%;
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #0f93324f;
+    padding: 16px;
 }
 
+.line{
+    width: 2px;
+    height: 100%;
+    background-color: #555555;
+}
 .participante_info{
     display: flex;
     flex-direction: column;
-    width: 78%;
+    width: 100%;
     word-break: break-all;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .grp_btn{

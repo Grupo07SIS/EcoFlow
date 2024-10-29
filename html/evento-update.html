@@ -40,10 +40,10 @@
         <img src="../assets/Upload to the Cloud.png" alt="">
         <h5>Upload de Imagens</h5>
         <form id="uploadForm">
-            <input type="file" id="fileInput" accept="image/*" multiple>
+            <input type="file" id="fileInput" accept="image/*">
             <label for="fileInput">Escolher Imagem</label>
         </form>
-        <div class="preview-container" id="previewContainer"></div>
+        <div id="imageContainer"></div>
     </div>
 
     <form>
@@ -140,50 +140,55 @@
     </div>
 
     <script>
-        const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-
-        fileInput.addEventListener('change', handleFiles);
-
-        function handleFiles(event) {
-            const files = event.target.files;
-            previewFiles(files);
-        }
-
-        function previewFiles(files) {
-            previewContainer.innerHTML = '';
-            for (const file of files) {
+        let bannerImageBase64 = '';
+    
+        function renderizarImagem() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+    
+            if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    previewContainer.appendChild(img);
+                    img.alt = 'Imagem selecionada';
+                    img.width = 300;
+                    img.height = 200;
+    
+                    const imageContainer = document.getElementById('imageContainer');
+                    imageContainer.innerHTML = '';
+                    imageContainer.appendChild(img);
+    
+                    bannerImageBase64 = e.target.result.split(',')[1];
+                    sessionStorage.setItem('banner_evento', bannerImageBase64);
                 };
                 reader.readAsDataURL(file);
             }
         }
-
+    
+        document.getElementById('fileInput').addEventListener('change', renderizarImagem);
+    
         async function buscarDetalhesEvento() {
             const urlParams = new URLSearchParams(window.location.search);
-            const eventId = urlParams.get('id'); 
+            const eventId = urlParams.get('id');
             console.log('Evento ID:', eventId);
-
+    
             try {
                 const response = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
                 const evento = await response.json();
-
+    
                 const dadosBasicos = {
                     id: evento.id_evento,
                     nome: evento.nome,
+                    banner_evento: evento.banner_evento,
                     tema: evento.tema,
                     data: evento.dataEvento,
                     horaInicio: evento.hora_inicio,
                     horaFim: evento.hora_fim,
                     descricao: evento.descricao,
-                    banner_evento: evento.banner_evento,
                     deletado: evento.deletado
                 };
-
+    
                 const endereco = {
                     id_endereco: evento.enderecoEvento.id_endereco_evento,
                     logradouro: evento.enderecoEvento.logradouro,
@@ -195,6 +200,7 @@
                 };
                 sessionStorage.setItem('endereco', JSON.stringify(endereco));
 
+                sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dadosBasicos));
                 const financeiro = {
                     financeiroId: evento.financeiro.id_financeiro,
                     aluguelLocal: evento.financeiro.aluguel_local,
@@ -213,7 +219,7 @@
                     valorAtracao: evento.atracao.valor_atracao,
                 };
                 sessionStorage.setItem('atracao', JSON.stringify(atracao));
-
+    
                 document.getElementById('nome').value = evento.nome;
                 document.getElementById('tema').value = evento.tema;
                 document.getElementById('data').value = formatDate(evento.dataEvento);
@@ -226,14 +232,34 @@
                 document.getElementById('complemento').value = evento.enderecoEvento.complemento;
                 document.getElementById('cidade').value = evento.enderecoEvento.cidade;
                 document.getElementById('UF').value = evento.enderecoEvento.estado;
-
+    
+                const imageContainer = document.getElementById('imageContainer');
+                if (evento.banner_evento && evento.banner_evento !== "YmFubmVyMS5qcGc=") {
+                    const img = document.createElement('img');
+                    img.src = `data:image/png;base64,${evento.banner_evento}`;
+                    img.alt = 'Imagem do Evento';
+                    img.width = 300;
+                    img.height = 200;
+                    imageContainer.innerHTML = '';
+                    imageContainer.appendChild(img);
+                    sessionStorage.setItem('banner_evento', evento.banner_evento);
+                } else {
+                    const img = document.createElement('img');
+                    img.src = "../../assets/Rectangle 20.png";
+                    img.alt = 'Imagem Padrão';
+                    img.width = 300;
+                    img.height = 200;
+                    imageContainer.innerHTML = '';
+                    imageContainer.appendChild(img);
+                }
+    
                 console.log('Detalhes do evento:', evento);
-
+    
             } catch (error) {
                 console.error('Erro ao buscar os detalhes do evento:', error);
             }
         }
-
+    
         function formatDate(dateString) {
             const date = new Date(dateString);
             const year = date.getFullYear();
@@ -241,55 +267,54 @@
             const day = ('0' + date.getDate()).slice(-2);
             return `${year}-${month}-${day}`;
         }
-
+    
         function formatTime(timeArray) {
             const hours = ('0' + timeArray[3]).slice(-2);
             const minutes = ('0' + timeArray[4]).slice(-2);
             return `${hours}:${minutes}`;
         }
-
+    
         function salvarDadosPag1() {
             const urlParams = new URLSearchParams(window.location.search);
             const eventId = urlParams.get('id');
-
-            // Obter os valores dos campos
+    
             const dataEvento = document.getElementById('data').value;
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFim = document.getElementById('horaFim').value;
-
-            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`); 
-            const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`); 
-
+    
+            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
+            const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
+    
             const horaInicioISO = inicioDateTime.toISOString();
             const horaFimISO = fimDateTime.toISOString();
-
+    
             const dadosBasicos = {
                 id: eventId,
                 nome: document.getElementById('nome').value,
                 tema: document.getElementById('tema').value,
                 data: document.getElementById('data').value,
                 descricao: document.getElementById('desc').value,
-                horaInicio: horaInicioISO, 
-                horaFim: horaFimISO, 
+                horaInicio: horaInicioISO,
+                horaFim: horaFimISO,
                 logradouro: document.getElementById('logradouro').value,
                 numero: document.getElementById('numero').value,
                 cep: document.getElementById('cep').value,
                 complemento: document.getElementById('complemento').value,
                 cidade: document.getElementById('cidade').value,
-                estado: document.getElementById('UF').value
+                estado: document.getElementById('UF').value,
+                banner_evento: sessionStorage.getItem('banner_evento') 
             };
-
+    
             sessionStorage.setItem('dadosEventoUpdate', JSON.stringify(dadosBasicos));
-
+    
             window.location.href = 'valores-update.html';
         }
-
-
+    
         window.onload = function () {
             valorPadrao();
             buscarDetalhesEvento();
         };
-
+    
         async function valorPadrao() {
             const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
             const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
@@ -299,6 +324,7 @@
             emailNavBar.innerHTML = emailSS;
         }
     </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

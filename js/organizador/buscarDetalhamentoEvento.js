@@ -18,7 +18,31 @@ async function buscarDetalhesEvento() {
         const resposta = await fetch(`http://localhost:8080/evento/id?id=${eventId}`);
         const evento = await resposta.json();
 
+        // const buscarImagem = await fetch(`http://localhost:8080/evento/${eventId}/imagem`);
+        
+        // if (buscarImagem.ok) {
+        //     const imagemBlob = await buscarImagem.blob();
+        //     const reader = new FileReader();
+            
+        //     reader.onloadend = function() {
+        //         const base64Data = reader.result;
+        //         console.log(base64Data);
+        //         // document.getElementById('event_image').src = base64Data;
+        //     };
+            
+        //     reader.readAsDataURL(imagemBlob);
+        // } else {
+        //     console.log("Imagem não encontrada; usando imagem padrão.");
+        //     document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
+        // }
+
         console.log("Resposta: ", evento);
+        //document.getElementById('event_image').src = 'data:image/png;base64,' + evento.banner_evento;
+        if(evento.banner_evento == null || evento.banner_evento == "") {
+            document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
+        } else {
+            document.getElementById('event_image').src = 'data:image/png;base64,' + evento.banner_evento;
+        }
 
         const eventDate = new Date(evento.dataEvento);
         const day = eventDate.getDate();
@@ -27,8 +51,14 @@ async function buscarDetalhesEvento() {
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         const formattedDate = `${day} de ${monthNames[month]} de ${year}`;
 
-        const horaInicio = new Date(evento.hora_inicio);
-        const horaFim = new Date(evento.hora_fim);
+        const [yearInicio, monthInicio, dayInicio, hourInicio, minuteInicio] = evento.hora_inicio;
+        const [yearFim, monthFim, dayFim, hourFim, minuteFim] = evento.hora_fim;
+
+        const horaInicio = new Date(yearInicio, monthInicio - 1, dayInicio, hourInicio, minuteInicio);
+        const horaFim = new Date(yearFim, monthFim - 1, dayFim, hourFim, minuteFim);
+
+        console.log(horaInicio);
+
         const formattedHoraInicio = horaInicio.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const formattedHoraFim = horaFim.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -43,11 +73,11 @@ async function buscarDetalhesEvento() {
         eventoDescricao.innerHTML = evento.descricao;
         eventoData.innerHTML = formattedDate.toString();
         eventoLocal.innerHTML = fullAddress.toString();
-        eventoHorario = `De ${formattedHoraInicio} até ${formattedHoraFim}`;
+        eventoHorario.innerHTML = `De ${formattedHoraInicio} até ${formattedHoraFim}`;
         console.log(eventoHorario);
 
 
-        document.getElementById('event_image').src = evento.banner_evento || "../../assets/Rectangle 20.png"; 
+        //document.getElementById('event_image').src = evento.banner_evento || "../../assets/Rectangle 20.png"; 
         // document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
 
         geocode(fullAddress);

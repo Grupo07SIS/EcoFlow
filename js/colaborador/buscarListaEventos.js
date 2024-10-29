@@ -38,6 +38,11 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
             const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
             const titulo = truncateText(itemEvento.nome, 15);
             const truncatedAddress = truncateText(fullAddress, 40);
+            let imagem = "../../assets/Rectangle 20.png";
+            if (itemEvento.banner_evento && itemEvento.banner_evento !== "YmFubmVyMS5qcGc=" && itemEvento.banner_evento !== "YmFubmVyMi5qcGc=") {
+                imagem = `data:image/png;base64,${itemEvento.banner_evento}`;
+            }
+
 
             return `
             <a href="detalhamento-evento-colaborador.html?id=${itemEvento.id_evento}" 
@@ -46,7 +51,7 @@ async function buscarEventosFiltrados(dataInicio, dataFim) {
                data-id="${itemEvento.id_evento}">
                 <div class="card_evento">
                     <div class="imagem_evento">
-                        <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                        <img src="${imagem}" alt="Imagem do Evento">
                     </div>
                     <div class="desc_evento">
                         <h5>${titulo}</h5>
@@ -92,6 +97,11 @@ async function buscarEventos() {
             const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
             const titulo = truncateText(itemEvento.nome, 15);
             const truncatedAddress = truncateText(fullAddress, 40);
+            let imagem = "../../assets/Rectangle 20.png";
+            if (itemEvento.banner_evento && itemEvento.banner_evento !== "YmFubmVyMS5qcGc=" && itemEvento.banner_evento !== "YmFubmVyMi5qcGc=") {
+                imagem = `data:image/png;base64,${itemEvento.banner_evento}`;
+            }
+
 
             return `
             <a href="detalhamento-evento-colaborador.html?id=${itemEvento.id_evento}" 
@@ -100,7 +110,7 @@ async function buscarEventos() {
                data-id="${itemEvento.id_evento}">
                 <div class="card_evento">
                     <div class="imagem_evento">
-                        <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                        <img src="${imagem}" alt="Imagem do Evento">
                     </div>
                     <div class="desc_evento">
                         <h5>${titulo}</h5>

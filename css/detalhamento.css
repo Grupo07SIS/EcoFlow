@@ -68,6 +68,11 @@ body {
     height: auto;
 }
 
+.line{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 .arrow_back {
     width: 95%;
     height: 33px;
