@@ -11,8 +11,9 @@
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="../css/lista_colaboradores.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
+    <script src="../js/organizador/buscarColaboradores.js"></script>
     <script src="../js/organizador/buscarDetalhamentoEvento.js"></script>
 </head>
 
@@ -43,7 +44,7 @@
     </div>
 
     <div class="btns_Styles">
-        <button class="main_Btns" onclick="editarEvento()">Editar</button> 
+        <button class="main_Btns" onclick="editarEvento()">Editar</button>
         <button class="main_Btns" onclick="deletarEvento()">Deletar</button>
     </div>
 
@@ -51,7 +52,7 @@
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
             <i class="bi bi-calendar"></i>
-            <p id="event_date">Domingo, 6 Dec 2024</p> 
+            <p id="event_date">Domingo, 6 Dec 2024</p>
         </div>
         <div class="style_info">
             <i class="bi bi-geo-alt"></i>
@@ -62,54 +63,101 @@
             <h2>Descrição do Evento</h2>
             <p id="event_description">Lorem ipsum dolor sit amet...</p>
         </div>
-    </div>
 
-    <div class="menu">
-        <a href="index.html" class="opcoes">
-            <img src="../assets/Vector 3 (1).png" alt="Inicio">
-            <p>Inicio</p>
-        </a>
-        <a href="meus-eventos.html" class="opcoes">
-            <img src="../assets/Calendar icon.png" alt="Eventos">
-            <p>Eventos</p>
-        </a>
-        <a href="evento.html" class="opcoes">
-            <img src="../assets/Group 2.png" alt="Criar Evento">
-            <p>Criar Evento</p>
-        </a>
-        <a href="lista_de_espera.html" class="opcoes">
-            <img src="../assets/Group 4.png" alt="Participantes">
-            <p>Participantes</p>
-        </a>
-        <a href="perfil.html" class="opcoes">
-            <img src="../assets/Group 3.png" alt="Perfil">
-            <p>Perfil</p>
-        </a>
-    </div>
+        <div id="totalCollaborators"></div>
 
-    <div id="popup" class="popup" style="display:none;">
-        <div class="inside_pop">
-            <p id="popup-message"></p>
-            <div class="btnspop">
-                <button id="confirm" class="btn-confirm">Confirmar</button>
-                <button id="cancel" class="btn-cancel">Cancelar</button>
-            </div>
+
+        <div class="allOrgs" id="collaboratorContainer"></div>
+
+
+        <div class="menu">
+            <a href="index.html" class="opcoes">
+                <img src="../assets/Vector 3 (1).png" alt="Inicio">
+                <p>Inicio</p>
+            </a>
+            <a href="meus-eventos.html" class="opcoes">
+                <img src="../assets/Calendar icon.png" alt="Eventos">
+                <p>Eventos</p>
+            </a>
+            <a href="evento.html" class="opcoes">
+                <img src="../assets/Group 2.png" alt="Criar Evento">
+                <p>Criar Evento</p>
+            </a>
+            <a href="lista_de_espera.html" class="opcoes">
+                <img src="../assets/Group 4.png" alt="Participantes">
+                <p>Participantes</p>
+            </a>
+            <a href="perfil.html" class="opcoes">
+                <img src="../assets/Group 3.png" alt="Perfil">
+                <p>Perfil</p>
+            </a>
         </div>
-        
-    </div>
 
-    <script>
-        function backpage() {
-            window.history.back();
-        }
+        <div id="popup" class="popup" style="display:none;">
+            <div class="inside_pop">
+                <p id="popup-message"></p>
+                <div class="btnspop">
+                    <button id="confirm" class="btn-confirm">Confirmar</button>
+                    <button id="cancel" class="btn-cancel">Cancelar</button>
+                </div>
+            </div>
 
-        window.onload = function () {
-            const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
-            const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
-            document.getElementById('userName').innerHTML = nomeSS;
-            document.getElementById('nomeEmpresa').innerHTML = emailSS;
-        };
-    </script>
+        </div>
+
+        <script>
+            function backpage() {
+                window.history.back();
+            }
+
+            window.onload = function () {
+                const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR');
+                const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR');
+                document.getElementById('userName').innerHTML = nomeSS;
+                document.getElementById('nomeEmpresa').innerHTML = emailSS;
+            };
+
+
+            function getInscricoesPorEvento(eventoId) {
+    const url = `http://localhost:8080/inscricao/evento/${eventoId}`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(inscricoes => {
+            const container = document.getElementById("collaboratorContainer");
+            container.innerHTML = ""; // Limpa o conteúdo anterior
+
+            inscricoes.forEach(inscricao => {
+                const colaborador = inscricao.fkUsuario;
+                const cardHTML = `
+                    <div class="orgs">
+                        <img class="photo0" src="${colaborador.image}" alt="Imagem de ${colaborador.nomeFantasia}" />
+                        <div class="allCards">
+                            <div class="cards1">
+                                <span><b>Nome da Marca:</b> ${colaborador.nomeFantasia}</span>
+                                <span><b>Telefone:</b> ${colaborador.telefone}</span>
+                                <span><b>Email:</b> ${colaborador.email}</span>
+                                <span><b>Nicho:</b> ${inscricao.nicho}</span>
+                            </div>
+                        </div>
+                        <a href="dadosColaborador.html?id=${colaborador.idColaborador}">ver_mais</a>
+                    </div>
+                `;
+
+                // Adiciona o HTML do colaborador ao contêiner
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        })
+        .catch(error => {
+            console.error("Erro ao buscar inscrições:", error);
+        });
+}
+
+        </script>
 </body>
 
 </html>

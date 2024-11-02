@@ -51,9 +51,59 @@ async function buscarDetalhesEvento() {
         document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
 
         geocode(fullAddress);
+        
+        // Busca as inscrições aprovadas
+        const respostaInscricao = await fetch(`http://localhost:8080/inscricao/aprovado`);
+        const inscricoes = await respostaInscricao.json();
+
+        // Filtra as inscrições que correspondem ao evento atual
+        const inscricoesFiltradas = inscricoes.filter(inscricao => inscricao.evento.id_evento === Number(eventId));
+        
+        // Exibe os colaboradores ou uma mensagem se não houver
+        displayCollaborators(inscricoesFiltradas.map(inscricao => inscricao.fkUsuario));
+
+        displayTotalCollaborators(inscricoesFiltradas);
+        
+
     } catch (error) {
         console.error('Erro ao buscar os detalhes do evento:', error);
     }
+}
+
+function displayCollaborators(collaborators) {
+    const container = document.getElementById("collaboratorContainer");
+
+    if (collaborators.length === 0) {
+        container.innerHTML = "<p>Não há colaboradores cadastrados.</p>";
+    } else {
+        container.innerHTML = collaborators.map((collab) => {
+            const email = collab.email;
+            const image = collab.bannerImg ? `data:image/png;base64,${collab.bannerImg}` : '../assets/default-image.png';
+            const nomeFantasia = collab.nomeFantasia;
+            const telefone = collab.telefone;
+            
+            return `
+                <div class="orgs">
+                    <img class="photo0" src="${image}" />
+                    <div class="allCards">
+                        <div class="cards1">
+                            <span><b>Nome da Marca:</b> ${nomeFantasia}</span>
+                            <span><b>Telefone:</b> ${telefone}</span>
+                            <span><b>Email:</b> ${email}</span>
+                        </div>
+                    </div>
+                    <a href="dadosColaborador.html?id=${collab.idColaborador}">ver mais</a>
+                </div>
+            `;
+        }).join('');
+    }
+}
+
+function displayTotalCollaborators(inscricoesFiltradas) {
+    const totalColaboradores = inscricoesFiltradas.length;
+    const totalContainer = document.getElementById("totalCollaborators");
+
+    totalContainer.innerHTML = `<p>Total de Colaboradores: <b>${totalColaboradores}</b></p>`;
 }
 
 function geocode(address) {
