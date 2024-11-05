@@ -10,11 +10,23 @@ async function fetchUpcomingEvents() {
     try {
         const resposta = await fetch("http://localhost:8080/evento/futuros");
         const respostaDadosEventos = await resposta.json();
-        displayEvents(respostaDadosEventos);
+        
+        const today = new Date(); 
+        const futureDate = new Date();
+        futureDate.setMonth(today.getMonth() + 6); 
+
+        const filteredEvents = respostaDadosEventos.filter((event) => {
+            const eventDate = new Date(event.dataEvento);
+            return eventDate >= today && eventDate <= futureDate;
+        });
+
+        displayEvents(filteredEvents);
+        
     } catch (error) {
         console.error('Erro ao buscar eventos futuros:', error);
     }
 }
+
 
 async function fetchPastEvents() {
     try {

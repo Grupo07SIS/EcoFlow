@@ -6,16 +6,26 @@ async function buscarEventos() {
         console.log("Resposta: ", respostaDadosEventos);
 
         const cards = document.getElementById("cards_eventos");
+        const today = new Date(); 
+        const futureDate = new Date();
+        futureDate.setMonth(today.getMonth() + 6); 
 
-        cards.innerHTML = respostaDadosEventos.map((itemEvento) => {
-            const [year, month, day] = itemEvento.dataEvento; 
+        const filteredEventos = respostaDadosEventos.filter((itemEvento) => {
+            const eventDate = new Date(itemEvento.dataEvento);
+            return eventDate >= today && eventDate <= futureDate;
+        });
+
+        cards.innerHTML = filteredEventos.map((itemEvento) => {
+            const eventDate = new Date(itemEvento.dataEvento);
+            const day = eventDate.getDate();
+            const month = eventDate.getMonth();
+            const year = eventDate.getFullYear();
             const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-            const formattedDate = `${day} de ${monthNames[month - 1]} ${year}`;
+            const formattedDate = `${day} de ${monthNames[month]} de ${year}`;
 
             const fullAddress = `${itemEvento.enderecoEvento.logradouro}, ${itemEvento.enderecoEvento.numero} - ${itemEvento.enderecoEvento.cidade}`;
 
             const titulo = truncateText(itemEvento.nome, 15);
-
             const truncatedAddress = truncateText(fullAddress, 40);
 
             let imagem = "../../assets/Rectangle 20.png";

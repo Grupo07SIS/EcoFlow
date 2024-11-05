@@ -95,15 +95,21 @@
             return;
         }
 
-        const resposta = await fetch("http://localhost:8080/inscricao/futuro");
+        const [respostaFuturo, respostaPassado] = await Promise.all([
+            fetch("http://localhost:8080/inscricao/futuro"),
+            fetch("http://localhost:8080/inscricao/aprovado")
+        ]);
 
-        if (!resposta.ok) {
+        if (!respostaFuturo.ok || !respostaPassado.ok) {
             throw new Error("Erro ao buscar inscrições");
         }
 
-        const inscricoes = await resposta.json();
+        const inscricoesFuturas = await respostaFuturo.json();
+        const inscricoesPassadas = await respostaPassado.json();
 
-        const inscricao = inscricoes.find(inscricao => {
+        const allInscricoes = [...inscricoesFuturas, ...inscricoesPassadas];
+
+        const inscricao = allInscricoes.find(inscricao => {
             return inscricao.evento.id_evento == eventId && inscricao.fkUsuario.idColaborador == currentColaboradorId;
         });
 
@@ -113,7 +119,7 @@
             const status = inscricao.status.status;
 
             if (status === "Aprovado") {
-                button.style.display = "none";
+                button.style.display = "none"; 
             } else if (status === "Reprovado") {
                 button.style.display = "block";
                 button.textContent = "Participar";
@@ -131,6 +137,7 @@
         console.error("Erro ao buscar inscrições:", error);
     }
 }
+
 
 document.addEventListener("DOMContentLoaded", buscarInscricao);
 

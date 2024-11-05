@@ -159,8 +159,15 @@ async function buscarEventosIncricao() {
             return;
         }
 
+        const today = new Date();
+        const futureDate = new Date();
+        futureDate.setMonth(today.getMonth() + 6);
+
         const filteredInscricoes = inscricoes.filter(inscricao => {
-            return inscricao.fkUsuario && inscricao.fkUsuario.idColaborador == currentColaboradorId;
+            if (!inscricao.fkUsuario || inscricao.fkUsuario.idColaborador != currentColaboradorId) return false;
+
+            const eventDate = new Date(inscricao.evento.dataEvento);
+            return eventDate >= today && eventDate <= futureDate;
         });
 
         if (!filteredInscricoes || filteredInscricoes.length === 0) {
@@ -234,7 +241,7 @@ async function buscarEventosIncricao() {
 async function buscarEventosIncricaoPassados() {
     console.log("CHEGOU EVENTO");
     try {
-        const resposta = await fetch("http://localhost:8080/inscricao/passado");
+        const resposta = await fetch("http://localhost:8080/inscricao/aprovado");
 
         if (!resposta.ok) {
             throw new Error(`Erro no servidor: ${resposta.statusText}`);
@@ -248,8 +255,13 @@ async function buscarEventosIncricaoPassados() {
             return;
         }
 
+        const today = new Date();
+
         const filteredInscricoes = inscricoes.filter(inscricao => {
-            return inscricao.fkUsuario && inscricao.fkUsuario.idColaborador == currentColaboradorId;
+            if (!inscricao.fkUsuario || inscricao.fkUsuario.idColaborador != currentColaboradorId) return false;
+
+            const eventDate = new Date(inscricao.evento.dataEvento);
+            return eventDate < today;
         });
 
         const cards = document.querySelector(".listagem_evento");
@@ -280,6 +292,10 @@ async function buscarEventosIncricaoPassados() {
 
                 const titulo = truncateText(evento.nome, 15);
                 const truncatedAddress = truncateText(fullAddress, 40);
+                let imagem = "../../assets/Rectangle 20.png";
+                if (evento.banner_evento && evento.banner_evento !== "YmFubmVyMS5qcGc=" && evento.banner_evento !== "YmFubmVyMi5qcGc=") {
+                    imagem = `data:image/png;base64,${evento.banner_evento}`;
+                }
 
                 return `
                 <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
@@ -288,7 +304,7 @@ async function buscarEventosIncricaoPassados() {
                    data-id="${evento.id_evento}">
                     <div class="card_evento">
                         <div class="imagem_evento">
-                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
+                            <img src="${imagem}" alt="Imagem do Evento">
                         </div>
                         <div class="desc_evento">
                             <h5>${titulo}</h5>
