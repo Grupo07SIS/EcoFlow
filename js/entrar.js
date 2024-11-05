@@ -53,19 +53,20 @@ async function entrar() {
 
                 if (loginResponse.ok) {
                     window.location.href = 'index.html';
+                    
                 } else {
-                    alert("Erro ao tentar login como organizador.");
+                    showPopup("Erro ao tentar login como organizador.", true);
                     return;
                 }
             } else {
                 checkColaborador(emailVar, senhaVar);
             }
         } else {
-            alert("Erro ao verificar organizador.");
+            showPopup("Erro ao verificar organizador.", true);
         }
     } catch (error) {
         console.log("Erro ao tentar login: ", error);
-        alert("Erro ao tentar login. Por favor, tente novamente mais tarde.");
+        showPopup("Erro ao tentar login. Por favor, tente novamente mais tarde.", true);
     }
 }
 
@@ -136,17 +137,32 @@ async function checkColaborador(emailVar, senhaVar) {
                     console.log("Login as colaborador successful.");
                     window.location.href = 'index-colaborador.html';
                 } else {
-                    alert("Erro ao tentar login como colaborador.");
+                    showPopup("Erro ao tentar login como colaborador.", true);
                 }
             } else {
-                alert("Usuário colaborador não encontrado. Verifique suas credenciais.");
+                showPopup("Usuário colaborador não encontrado. Verifique suas credenciais.", true);
             }
         } else {
-            alert("Erro ao verificar colaborador.");
+            showPopup("Erro ao verificar colaborador.", true);
         }
     } catch (error) {
         console.log("Erro ao tentar login como colaborador: ", error);
-        alert("Erro ao tentar login como colaborador. Por favor, tente novamente mais tarde.");
+        showPopup("Erro ao tentar login como colaborador. Por favor, tente novamente mais tarde.", true);
     }
 }
+
+
+function showPopup(message, isError = false) {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+
+    popupMessage.textContent = message;
+    popup.classList.toggle("error", isError);
+    popup.style.display = "block";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 5000);
+}
+
 

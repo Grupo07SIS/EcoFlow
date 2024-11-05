@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <script src="../js/colaborador/detalheEventoParticipar.js"></script>
+    <link rel="stylesheet" href="../css/filtro_colab.css">
 </head>
 
 <body>
@@ -29,9 +30,10 @@
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
             <i class="bi bi-calendar"></i>
-            <p id="event_date">Data do Evento </p> 
-            <p class="line">-</p>
-            <p id="event_time"> Horário do evento</p>
+            <div class="add_event">
+                <p id="event_date">Data do Evento </p>
+                <p id="event_time"> Horário do evento</p>
+            </div>
         </div>
         <div class="style_info">
             <i class="bi bi-geo-alt"></i>
@@ -76,10 +78,61 @@
     }
 
     function participarEvento() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
 
-    window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
+        window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
+    }
+
+    async function buscarInscricao() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+
+        const currentColaboradorId = sessionStorage.getItem('ID_COLABORADOR');
+        if (!currentColaboradorId) {
+            console.error("Colaborador ID not found in session storage.");
+            return;
+        }
+
+        const resposta = await fetch("http://localhost:8080/inscricao/futuro");
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao buscar inscrições");
+        }
+
+        const inscricoes = await resposta.json();
+
+        const inscricao = inscricoes.find(inscricao => {
+            return inscricao.evento.id_evento == eventId && inscricao.fkUsuario.idColaborador == currentColaboradorId;
+        });
+
+        const button = document.querySelector(".main_Btns");
+
+        if (inscricao) {
+            const status = inscricao.status.status;
+
+            if (status === "Aprovado") {
+                button.style.display = "none";
+            } else if (status === "Reprovado") {
+                button.style.display = "block";
+                button.textContent = "Participar";
+            } else {
+                button.style.display = "block";
+                button.textContent = "Aguardando";
+                button.disabled = true; 
+            }
+        } else {
+            button.style.display = "block";
+            button.textContent = "Participar";
+        }
+
+    } catch (error) {
+        console.error("Erro ao buscar inscrições:", error);
+    }
 }
+
+document.addEventListener("DOMContentLoaded", buscarInscricao);
+
 
 </script>

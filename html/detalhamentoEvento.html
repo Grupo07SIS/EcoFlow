@@ -14,6 +14,9 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <script src="../js/organizador/buscarDetalhamentoEvento.js"></script>
+    <link rel="stylesheet" href="../css/filtro_colab.css">
+    <link rel="stylesheet" href="../css/participante_em_espera.css">
+
 </head>
 
 <body>
@@ -51,9 +54,10 @@
         <h1 id="event_name">Nome do Evento</h1>
         <div class="style_info">
             <i class="bi bi-calendar"></i>
-            <p id="event_date">Data do Evento </p> 
-            <p class="line">-</p>
-            <p id="event_time"> Horário do evento</p>
+            <div class="add_event">
+                <p id="event_date">Data do Evento </p>
+                <p id="event_time"> Horário do evento</p>
+            </div>
         </div>
         <div class="style_info">
             <i class="bi bi-geo-alt"></i>
@@ -64,6 +68,8 @@
             <h2>Descrição do Evento</h2>
             <p id="event_description">Lorem ipsum dolor sit amet...</p>
         </div>
+        <div id="totalCollaborators"></div>
+        <div class="allOrgs" id="collaboratorContainer"></div>
     </div>
 
     <div class="menu">

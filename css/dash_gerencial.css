@@ -212,8 +212,7 @@ cor frase, color: rgba(22, 57, 21, 1);
   margin: 4px;
 }
 
-.lucro_alcancado {
-  width: 0%;
+#lucro_alcancado {
   height: 24px;
   background-color: rgba(199, 83, 12, 1);
   border-radius: 1rem;

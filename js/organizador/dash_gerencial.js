@@ -1,4 +1,4 @@
-let chartInstance; 
+let chartInstance;
 
 window.onload = () => gerarGrafico();
 
@@ -9,12 +9,12 @@ function aplicar() {
   console.log('Start Date:', startDate);
   console.log('End Date:', endDate);
 
-  resetChart();  
-  clearKPI();   
+  resetChart();
+  clearKPI();
 
-  gerarGrafico(startDate, endDate); 
+  gerarGrafico(startDate, endDate);
 
-  closeFilter(); 
+  closeFilter();
 }
 
 async function gerarGrafico(startDate = '1999-01-01', endDate = new Date().toISOString().split('T')[0]) {
@@ -62,25 +62,27 @@ async function gerarGrafico(startDate = '1999-01-01', endDate = new Date().toISO
 
     const resposta_lucro_alcancado = await fetch(`http://localhost:8080/dashboard/kpi-lucro-alcancado${urlParams}`);
     const respostaDados_la = await resposta_lucro_alcancado.json();
-    const lucroAlcancado = parseFloat(respostaDados_la || 0); 
+    const lucroAlcancado = parseFloat(respostaDados_la || 0);
     console.log("Lucro Alcancado:", lucroAlcancado);
 
     const resposta_orcamento = await fetch(`http://localhost:8080/dashboard/kpi-orcamento${urlParams}`);
     const respostaDados_orcamento = await resposta_orcamento.json();
-    const orcamento = parseFloat(respostaDados_orcamento.orcamento || 0); 
     document.getElementById("orcamento").innerHTML = respostaDados_orcamento;
 
-    if (orcamento === 0 || lucroAlcancado > orcamento) {
+    if (respostaDados_orcamento === 0) {
       document.getElementById('alcando').innerText = '0%';
       document.getElementById('meta').innerHTML = '100%';
-    } else {
-      const porcentagemAlcancada = (lucroAlcancado / orcamento) * 100;
-
+      document.getElementById('lucro_alcancado').style.width = '0%';
+  } else {
+      const porcentagemAlcancada = (respostaDados_la / respostaDados_orcamento) * 100;
+      document.getElementById('meta').innerHTML = '100%';
+      document.getElementById('alcando').innerText = porcentagemAlcancada.toFixed() + '%';
+      
       const progressoElement = document.getElementById('lucro_alcancado');
       progressoElement.style.width = `${porcentagemAlcancada}%`;
-      document.getElementById('meta').innerHTML = '100%';
-      document.getElementById('alcando').innerText = porcentagemAlcancada.toFixed(2) + '%';
-    }
+      console.log("Porcentagem Alcancada:", porcentagemAlcancada);
+  }
+  
 
 
     const resposta_lucro = await fetch(`http://localhost:8080/dashboard/kpi-lucro${urlParams}`);
@@ -95,11 +97,13 @@ async function gerarGrafico(startDate = '1999-01-01', endDate = new Date().toISO
     const respostaDados_reprovados = await resposta_reprovados.json();
     document.getElementById("colab_reprovados").innerHTML = respostaDados_reprovados;
 
+    ajustarTamanhoDasBolhas();
+
     const resposta_aprovados = await fetch(`http://localhost:8080/dashboard/kpi-avaliacao${urlParams}`);
     const respostaDados_aprovados = await resposta_aprovados.json();
     document.getElementById("colab_aprovados").innerHTML = respostaDados_aprovados;
 
-    ajustarTamanhoDasBolhas();
+
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -132,9 +136,9 @@ function limpar() {
   document.getElementById('start').value = '';
   document.getElementById('end').value = '';
 
-  gerarGrafico(); 
+  gerarGrafico();
 
-  closeFilter(); 
+  closeFilter();
 }
 
 async function ajustarTamanhoDasBolhas() {
@@ -164,10 +168,10 @@ async function ajustarTamanhoDasBolhas() {
   categories.sort((a, b) => b.count - a.count);
 
   const colors = [
-    { color: 'rgba(22, 57, 21, 1)', isDark: true },  
-    { color: 'rgba(15, 147, 51, 1)', isDark: true },   
+    { color: 'rgba(22, 57, 21, 1)', isDark: true },
+    { color: 'rgba(15, 147, 51, 1)', isDark: true },
     { color: 'rgba(140, 204, 157, 1)', isDark: false },
-    { color: 'rgba(200, 150, 100, 1)', isDark: false } 
+    { color: 'rgba(200, 150, 100, 1)', isDark: false }
   ];
 
   let previousCount = null;
@@ -187,7 +191,7 @@ async function ajustarTamanhoDasBolhas() {
       bubbleElement.classList.add(previousClass);
     } else {
       if (index === 0) {
-        bubbleElement.classList.add('bolha_geral_1'); 
+        bubbleElement.classList.add('bolha_geral_1');
         previousClass = 'bolha_geral_1';
       } else if (index === 1) {
         bubbleElement.classList.add('bolha_geral_2');
@@ -196,7 +200,7 @@ async function ajustarTamanhoDasBolhas() {
         bubbleElement.classList.add('bolha_geral_3');
         previousClass = 'bolha_geral_3';
       } else {
-        bubbleElement.classList.add('bolha_geral_4'); 
+        bubbleElement.classList.add('bolha_geral_4');
         previousClass = 'bolha_geral_4';
       }
     }
@@ -208,7 +212,7 @@ async function ajustarTamanhoDasBolhas() {
     if (colors[index].isDark) {
       labelElement.style.color = 'white';
     } else {
-      labelElement.style.color = 'black';  
+      labelElement.style.color = 'black';
     }
   });
 }

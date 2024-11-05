@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../css/filterColabList.css">
   <script src="../js/filterColabList.js"></script>
   <script src="../js/organizador/listagemColaboradores.js"></script>
+  <link rel="stylesheet" href="../css/participante_em_espera.css">
 </head>
 
 <body>
@@ -45,7 +46,7 @@
     <div class="events0">
       <div class="filtrar_local">
         <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
-        <i class="bi bi-search search-icon"></i> 
+        <i class="bi bi-search search-icon"></i>
       </div>
     </div>
 
@@ -80,26 +81,89 @@
 
 </html>
 <script>
+  window.onload = () => {
+    valorPadrao();
+    const nicho = getNichoFromUrl();
+    console.log("Nicho recebido:", nicho);
+    if (nicho) {
+      fetchCollaboratorsByNiche(`/${nicho}/fila`);
+    } else {
+      console.error("Nenhum nicho foi encontrado na URL.");
+    }
+  };
 
-  window.onload = valorPadrao()
-
-  async function valorPadrao() {
-    const nomeSS = sessionStorage.getItem('NOME_RESP_ORGANIZADOR')
-    const emailSS = sessionStorage.getItem('EMAIL_ORGANIZADOR')
-    const nomeNavBar = document.getElementById('userName')
-    const emailNavBar = document.getElementById('nomeEmpresa')
-    nomeNavBar.innerHTML = nomeSS
-    emailNavBar.innerHTML = emailSS
+  function valorPadrao() {
+    const nomeSS = sessionStorage.getItem("NOME_RESP_ORGANIZADOR");
+    const emailSS = sessionStorage.getItem("EMAIL_ORGANIZADOR");
+    document.getElementById("userName").textContent = nomeSS || "Usuário";
+    document.getElementById("nomeEmpresa").textContent = emailSS || "Empresa";
   }
-  document.querySelector('.search-input').addEventListener('input', async function () {
+
+  function getNichoFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("nicho");
+  }
+
+  async function fetchCollaboratorsByNiche(endpoint) {
+    try {
+      const response = await fetch(`http://localhost:8080${endpoint}`);
+      if (!response.ok) throw new Error("Erro ao buscar colaboradores");
+
+      const collaboratorsData = await response.json();
+      console.log("Colaboradores:", collaboratorsData);
+      displayCollaborators(collaboratorsData);
+    } catch (error) {
+      console.error("Erro ao buscar colaboradores:", error);
+    }
+  }
+
+  function displayCollaborators(collaborators) {
+    const container = document.getElementById("collaboratorContainer");
+
+    if (!collaborators || collaborators.length === 0) {
+      container.innerHTML = "<p>Não há colaboradores cadastrados.</p>";
+      return;
+    }
+
+    container.innerHTML = collaborators
+      .map(collab => {
+        const email = collab.email || "Email não disponível";
+        const image = collab.bannerImg
+          ? `data:image/png;base64,${collab.bannerImg}`
+          : "../assets/default-image.png";
+        const participantName = collab.nomeResp || "Nome do Colaborador";
+        const niche = getNichoFromUrl();
+        const nomeFantasia = collab.nomeFantasia || "Nome da Marca";
+        const telefone = collab.telefone || "Telefone não disponível";
+
+        return `
+        <div class="participante_separation_div">
+    <a href="dadosColaborador.html?id=${collab.idColaborador}" class="card-link" data-id="${collab.idColaborador}">
+    <div class="participante_div">
+            <div class="participante_img">
+                <span>${participantName}</span> <span>${nomeFantasia}</span>
+            </div>
+            <div class="participante_info">
+                <p><b>Telefone:</b> ${telefone}</p>
+                <p><b>Evento:</b> ${email}</p>
+                <p><b>Nicho:</b> ${niche}</p>
+            </div>
+        </div>
+        </a>
+    </div>
+        `;
+      })
+      .join("");
+  }
+
+  document.querySelector(".search-input").addEventListener("input", async function () {
     const searchQuery = this.value.trim();
     const nicho = getNichoFromUrl();
 
     if (nicho) {
       fetchCollaboratorsByNiche(`/${nicho}/fila/busca?nome=${encodeURIComponent(searchQuery)}`);
     } else {
-      console.error('Nicho não encontrado na URL.');
+      console.error("Nicho não encontrado na URL.");
     }
   });
-
 </script>

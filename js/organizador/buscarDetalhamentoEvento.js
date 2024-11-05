@@ -1,6 +1,6 @@
 function editarEvento() {
     const urlParams = new URLSearchParams(window.location.search);
-    const eventId = urlParams.get('id');  
+    const eventId = urlParams.get('id');
 
     if (eventId) {
         window.location.href = `evento-update.html?id=${eventId}`;
@@ -19,17 +19,17 @@ async function buscarDetalhesEvento() {
         const evento = await resposta.json();
 
         // const buscarImagem = await fetch(`http://localhost:8080/evento/${eventId}/imagem`);
-        
+
         // if (buscarImagem.ok) {
         //     const imagemBlob = await buscarImagem.blob();
         //     const reader = new FileReader();
-            
+
         //     reader.onloadend = function() {
         //         const base64Data = reader.result;
         //         console.log(base64Data);
         //         // document.getElementById('event_image').src = base64Data;
         //     };
-            
+
         //     reader.readAsDataURL(imagemBlob);
         // } else {
         //     console.log("Imagem não encontrada; usando imagem padrão.");
@@ -38,7 +38,7 @@ async function buscarDetalhesEvento() {
 
         console.log("Resposta: ", evento);
         //document.getElementById('event_image').src = 'data:image/png;base64,' + evento.banner_evento;
-        if(evento.banner_evento == null || evento.banner_evento == "") {
+        if (evento.banner_evento == null || evento.banner_evento == "") {
             document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
         } else {
             document.getElementById('event_image').src = 'data:image/png;base64,' + evento.banner_evento;
@@ -81,10 +81,55 @@ async function buscarDetalhesEvento() {
         // document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
 
         geocode(fullAddress);
+
+        const respostaInscricao = await fetch(`http://localhost:8080/inscricao/aprovado`);
+        const inscricoes = await respostaInscricao.json();
+        const inscricoesFiltradas = inscricoes.filter(inscricao => inscricao.evento.id_evento === Number(eventId));
+
+        displayCollaborators(inscricoesFiltradas.map(inscricao => inscricao.fkUsuario));
+        displayTotalCollaborators(inscricoesFiltradas);
     } catch (error) {
         console.error('Erro ao buscar os detalhes do evento:', error);
     }
 }
+
+function displayCollaborators(collaborators) {
+    const container = document.getElementById("collaboratorContainer");
+    if (collaborators.length === 0) {
+        container.innerHTML = "<p>Não há colaboradores cadastrados.</p>";
+    } else {
+        container.innerHTML = collaborators.map((collab) => {
+            const email = collab.email;
+            const image = collab.bannerImg ? `data:image/png;base64,${collab.bannerImg}` : '../assets/default-image.png';
+            const nomeFantasia = collab.nomeFantasia;
+            const telefone = collab.telefone;
+            const participantName = collab.nomeResp;
+            const niche = collab.cnpj;
+            
+            return `
+    <div class="participante_div participante_separation_div">
+    <a href="dadosColaborador.html?id=${collab.idColaborador}" class="card-link" data-id="${collab.idColaborador}">
+            <div class="participante">
+                <span>${participantName}</span> <span>${nomeFantasia}</span>
+            </div>
+            </a>
+            <div class="participante2">
+                <p><b>Telefone:</b> ${telefone}</p>
+                <p><b>Evento:</b> ${email}</p>
+                <p><b>CNPJ:</b> ${niche}</p>
+            </div>
+        </div>
+            `;
+        }).join('');
+    }
+}
+
+function displayTotalCollaborators(inscricoesFiltradas) {
+    const totalColaboradores = inscricoesFiltradas.length;
+    const totalContainer = document.getElementById("totalCollaborators");
+    totalContainer.innerHTML = `<p>Total de Colaboradores: <b>${totalColaboradores}</b></p>`;
+}
+
 
 function geocode(address) {
     var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address);
@@ -166,7 +211,7 @@ async function desfazerDelecao(eventId) {
 
         if (response.ok) {
             alert('Deleção cancelada.');
-            buscarDetalhesEvento();  
+            buscarDetalhesEvento();
         } else {
             console.error('Erro ao desfazer a exclusão do evento');
             alert('Erro ao desfazer a exclusão. Por favor, tente novamente.');

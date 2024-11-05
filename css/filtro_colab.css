@@ -1,0 +1,12 @@
+#colab_search{
+   gap: 16px;
+}
+
+#src_icon{
+    top: 40%;
+}
+
+.add_event{
+    display: flex;
+    flex-direction: column;
+}

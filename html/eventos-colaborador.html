@@ -19,6 +19,7 @@
     <script src="../js/navbar.js"></script>
     <link rel="stylesheet" href="../css/menu.css">
     <script src="../js/colaborador/buscarListaEventos.js"></script>
+    <link rel="stylesheet" href="../css/filtro_colab.css">
 </head>
 
 <body>
@@ -28,10 +29,10 @@
 
     <div class="bloco_botoes">
         <div class="bloco_filtros">
-            <div class="buttons_search_filter">
+            <div class="buttons_search_filter" id="colab_search">
                 <div class="filtrar_local">
                     <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
-                    <i class="bi bi-search search-icon"></i>
+                    <i class="bi bi-search search-icon" id="src_icon"></i>
                 </div>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
                 aria-controls="offcanvasBottom"> <img src="../../assets/filter.png" alt=""> Filtrar</button>

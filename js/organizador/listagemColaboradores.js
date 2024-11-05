@@ -18,6 +18,7 @@ async function fetchCollaboratorsByNiche(endpoint) {
         const response = await fetch(`http://localhost:8080${endpoint}`);
         const collaboratorsData = await response.json();
         displayCollaborators(collaboratorsData);
+        console.log('Colaboradores:', collaboratorsData);
     } catch (error) {
         console.error('Erro ao buscar colaboradores:', error);
     }

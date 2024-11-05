@@ -57,7 +57,22 @@
     border-radius: 8px;
 }
 
+#totalCollaborators{
+    p{
+        font-size: 20px;
+        font-weight: bold;
+    }
+}
 
+.allOrgs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    p{
+        margin: 0%;
+        font-size: 18px;
+    }
+}
 body {
     display: flex;
     justify-content: center;
@@ -101,7 +116,7 @@ body {
     display: flex;
     flex-direction: row;
     padding: 2%;
-    width: 80%;
+    width: 100%;
     justify-content: space-between;
 
     .main_Btns {
@@ -136,7 +151,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: start;
-    width: 80%;
+    width: 100%;
 
     h1 {
         margin: 0%;
@@ -177,7 +192,7 @@ body {
 
     p {
         color: black;
-        margin-top: 0%;
+        margin: 0%;
         font-size: 18px;
         text-align: justify;
     }

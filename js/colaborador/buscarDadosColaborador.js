@@ -56,9 +56,9 @@ function editarPerfil() {
     document.getElementById('telefone').disabled = false;
     document.getElementById('email').disabled = false;
 
-    document.getElementById('cancelar-btn').style.display = 'inline';  
-    document.getElementById('salvar-btn').style.display = 'inline';   
-    document.getElementById('editar-btn').style.display = 'none';    
+    document.getElementById('cancelar-btn').style.display = 'inline';
+    document.getElementById('salvar-btn').style.display = 'inline';
+    document.getElementById('editar-btn').style.display = 'none';
 }
 
 async function salvarPerfil() {
@@ -134,7 +134,7 @@ function voltar() {
     document.getElementById('telefone').value = originalData.telefone;
     document.getElementById('email').value = originalData.email;
 
-    cancelarEdicao(); 
+    cancelarEdicao();
 }
 
 function cancelarEdicao() {
@@ -142,18 +142,28 @@ function cancelarEdicao() {
     document.getElementById('telefone').disabled = true;
     document.getElementById('email').disabled = true;
 
-    document.getElementById('cancelar-btn').style.display = 'none';   
-    document.getElementById('salvar-btn').style.display = 'none';     
-    document.getElementById('editar-btn').style.display = 'inline';   
+    document.getElementById('cancelar-btn').style.display = 'none';
+    document.getElementById('salvar-btn').style.display = 'none';
+    document.getElementById('editar-btn').style.display = 'inline';
 }
 
 
 async function buscarEventosIncricao() {
     try {
-        const resposta = await fetch("http://localhost:8080/inscricao/futuro");
+        const resposta = await fetch("http://localhost:8080/inscricao/aprovado");
         const inscricoes = await resposta.json();
 
-        if (!inscricoes || inscricoes.length === 0) {
+        const currentColaboradorId = sessionStorage.getItem('ID_COLABORADOR');
+        if (!currentColaboradorId) {
+            console.error("Colaborador ID not found in session storage.");
+            return;
+        }
+
+        const filteredInscricoes = inscricoes.filter(inscricao => {
+            return inscricao.fkUsuario && inscricao.fkUsuario.idColaborador == currentColaboradorId;
+        });
+
+        if (!filteredInscricoes || filteredInscricoes.length === 0) {
             console.log("Nenhum evento futuro encontrado.");
             document.querySelector(".listagem_evento").innerHTML = "<p>Nenhum evento futuro encontrado.</p>";
             return;
@@ -167,39 +177,43 @@ async function buscarEventosIncricao() {
 
         cards.innerHTML = '';
 
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        cards.innerHTML = inscricoes.map(inscricao => {
+        cards.innerHTML = filteredInscricoes.map(inscricao => {
             const evento = inscricao.evento;
             if (evento) {
-                const eventDate = new Date(evento.dataEvento); 
+                const eventDate = new Date(evento.dataEvento);
                 const formattedDate = `${eventDate.getDate()} de ${monthNames[eventDate.getMonth()]} de ${eventDate.getFullYear()}`;
-                
+
                 const enderecoEvento = evento.enderecoEvento || {};
                 const fullAddress = `${enderecoEvento.logradouro || 'Logradouro'}, ${enderecoEvento.numero || 'N°'} - ${enderecoEvento.cidade || 'Cidade'}`;
 
                 const titulo = truncateText(evento.nome, 15);
                 const truncatedAddress = truncateText(fullAddress, 40);
+                let imagem = "../../assets/Rectangle 20.png";
+                if (evento.banner_evento && evento.banner_evento !== "YmFubmVyMS5qcGc=" && evento.banner_evento !== "YmFubmVyMi5qcGc=") {
+                    imagem = `data:image/png;base64,${evento.banner_evento}`;
+                }
 
                 return `
-                <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
-                   style="text-decoration:none" 
-                   class="card-link" 
-                   data-id="${evento.id_evento}">
-                    <div class="card_evento">
-                        <div class="imagem_evento">
-                            <img src="../assets/listagem_evento.png" alt="Imagem do Evento">
-                        </div>
-                        <div class="desc_evento">
-                            <h5>${titulo}</h5>
-                            <span>${formattedDate}</span>
-                            <span>${truncatedAddress}</span>
-                        </div>
-                    </div>
-                </a>`;
+        <a href="detalhamento-evento-colaborador.html?id=${evento.id_evento}" 
+           style="text-decoration:none" 
+           class="card-link" 
+           data-id="${evento.id_evento}">
+            <div class="card_evento">
+                <div class="imagem_evento">
+                    <img src="${imagem}" alt="Imagem do Evento">
+                </div>
+                <div class="desc_evento">
+                    <h5>${titulo}</h5>
+                    <span>${formattedDate}</span>
+                    <span>${truncatedAddress}</span>
+                </div>
+            </div>
+        </a>`;
             }
-        }).join(''); 
+        }).join('');
 
         const cardLinks = document.querySelectorAll('.card-link');
         cardLinks.forEach(link => {
@@ -228,24 +242,34 @@ async function buscarEventosIncricaoPassados() {
 
         const inscricoes = await resposta.json();
 
+        const currentColaboradorId = sessionStorage.getItem('ID_COLABORADOR');
+        if (!currentColaboradorId) {
+            console.error("Colaborador ID not found in session storage.");
+            return;
+        }
+
+        const filteredInscricoes = inscricoes.filter(inscricao => {
+            return inscricao.fkUsuario && inscricao.fkUsuario.idColaborador == currentColaboradorId;
+        });
+
         const cards = document.querySelector(".listagem_evento");
         if (!cards) {
             console.error("Elemento '.listagem_evento' não encontrado!");
             return;
         }
 
-        cards.innerHTML = ''; 
+        cards.innerHTML = '';
 
-        if (!inscricoes || inscricoes.length === 0) {
+        if (!filteredInscricoes || filteredInscricoes.length === 0) {
             console.log("Nenhum evento passado encontrado.");
             cards.innerHTML = "<p>Você não participou de nenhum evento no momento.</p>";
             return;
         }
 
-        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
-                            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+            "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
-        cards.innerHTML = inscricoes.map(inscricao => {
+        cards.innerHTML = filteredInscricoes.map(inscricao => {
             const evento = inscricao.evento;
             if (evento) {
                 const eventDate = new Date(evento.dataEvento);
@@ -288,7 +312,7 @@ async function buscarEventosIncricaoPassados() {
 
     } catch (error) {
         console.error('Erro ao buscar eventos passados:', error.message);
-        document.querySelector(".listagem_evento").innerHTML = "<p>Erro ao carregar eventos passados. Tente novamente mais tarde.</p>";
+        document.querySelector(".listagem_evento").innerHTML = "<p>Você não participou de nenhum evento no momento.</p>";
     }
 }
 
@@ -299,7 +323,7 @@ function truncateText(description, maxLength) {
     return description;
 }
 
-window.onload = function() {
+window.onload = function () {
     buscarEventosIncricao();
     valorDados();
 };

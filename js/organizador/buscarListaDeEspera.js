@@ -163,7 +163,7 @@ async function atualizarStatusInscricao(idInscricao, novoStatus) {
 
         inscricao.status = {
             id_Status: novoStatus,
-            status: novoStatus === 4 ? 'aprovado' : 'reprovado'
+            status: novoStatus === 2 ? 'Aprovado' : 'Reprovado'
         };
 
         const patchUrl = `http://localhost:8080/inscricao/update-status?id=${idInscricao}`;
