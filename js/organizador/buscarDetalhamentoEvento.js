@@ -150,11 +150,11 @@ function geocode(address) {
                 var marker = L.marker([lat, lon]).addTo(map);
                 marker.bindPopup("Localização encontrada: " + address).openPopup();
             } else {
-                alert('Endereço não encontrado');
+                console.log('Endereço não encontrado');
             }
         })
         .catch(error => {
-            alert('Erro ao buscar o endereço');
+            console.log('Erro ao buscar o endereço');
             console.error(error);
         });
 }

@@ -133,7 +133,7 @@ body {
     display: flex;
     flex-direction: row;
     padding: 2%;
-    width: 80%;
+    width: 100%;
     justify-content: end;
 
     .main_Btns {
