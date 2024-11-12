@@ -18,6 +18,8 @@
   <script src="../js/filterColabList.js"></script>
   <script src="../js/organizador/listagemColaboradores.js"></script>
   <link rel="stylesheet" href="../css/participante_em_espera.css">
+  <link rel="stylesheet" href="../css/pop-up.css">
+  <link rel="stylesheet" href="../css/meus-eventos.css">
 </head>
 
 <body>
@@ -43,6 +45,10 @@
       <h4>COLABORADORES</h4>
     </div>
 
+    <div class="div_separator">
+      <button class="btn btn-primary btnBaixar" onclick="baixarRelatorio()"><i class="bi bi-cloud-arrow-down-fill"
+      style="font-size: 25px;"></i>Baixar Arquivo</button>
+    </div>
     <div class="events0">
       <div class="filtrar_local">
         <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
@@ -76,6 +82,15 @@
       </a>
     </div>
 
+  </div>
+
+  <div id="popup" class="popup" style="position: relative; top: -185px; width: 100%;">
+    <p id="popup-message"></p>
+  </div>
+
+  <div id="loading" style="display: none;">
+    <span class="loader"></span>
+    <p>Baixando... Por favor, aguarde.</p>
   </div>
 </body>
 
@@ -166,4 +181,81 @@
       console.error("Nicho não encontrado na URL.");
     }
   });
+
+  async function baixarRelatorio() {
+    const loadingElement = document.getElementById('loading');
+    loadingElement.style.display = 'flex'; 
+
+    try {
+        const resposta = await fetch("http://localhost:8080/colaborador/csv", {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/csv'
+            }
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar o arquivo: ' + resposta.statusText);
+        }
+
+        const blob = await resposta.blob();
+
+        if (window.showSaveFilePicker) {
+            try {
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: 'Colaboradores.csv',
+                    types: [
+                        {
+                            description: 'CSV Files',
+                            accept: {
+                                'text/csv': ['.csv']
+                            }
+                        }
+                    ]
+                });
+
+                const writable = await handle.createWritable();
+                await writable.write(blob);
+                await writable.close();
+
+                showPopup('Arquivo salvo com sucesso na pasta escolhida!', 'success');
+            } catch (cancelError) {
+                console.log('Salvamento cancelado pelo usuário.');
+            }
+        } else {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Colaboradores.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showPopup('Arquivo baixado!', 'success');
+        }
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            showPopup('Erro ao buscar ou salvar o arquivo: ' + error.message, 'error');
+            console.error('Erro ao buscar ou salvar o arquivo:', error);
+        } else {
+            console.log('A operação foi abortada pelo usuário.');
+        }
+    } finally {
+        loadingElement.style.display = 'none'; 
+    }
+}
+
+function showPopup(message, type) {
+    const popup = document.getElementById('popup'); 
+    const popupMessage = document.getElementById('popup-message');
+
+    popupMessage.innerText = message;
+    popup.className = type === 'error' ? 'popup error' : 'popup';
+    popup.style.display = 'block';
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000);
+}
+
 </script>

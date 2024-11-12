@@ -10,6 +10,18 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+#popup2{
+    display: none;
+    position: relative;
+    bottom: 426px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
 #popup-message {
     margin: 0;
 }
@@ -17,3 +29,49 @@
 #popup.error {
     background-color: #f44336;
 }
+#popup2.error {
+    background-color: #f44336;
+}
+
+#loading {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 40%;
+    left: 15%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 2000;
+}
+
+.loader {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: block;
+    margin:15px auto;
+    position: relative;
+    background: #FFF;
+    box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    box-sizing: border-box;
+    animation: shadowPulse 2s linear infinite;
+  }
+  
+  @keyframes shadowPulse {
+    33% {
+      background: #FFF;
+      box-shadow: -24px 0 #FF3D00, 24px 0 #FFF;
+    }
+    66% {
+      background: #FF3D00;
+      box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    }
+    100% {
+      background: #FFF;
+      box-shadow: -24px 0 #FFF, 24px 0 #FF3D00;
+    }
+  }

@@ -197,6 +197,83 @@ function clearFilters() {
     }
 }
 
+async function baixarRelatorio() {
+    const loadingElement = document.getElementById('loading');
+    loadingElement.style.display = 'flex'; 
+
+    try {
+        const resposta = await fetch("http://localhost:8080/evento/csv", {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/csv'
+            }
+        });
+
+        if (!resposta.ok) {
+            throw new Error('Erro ao buscar o arquivo: ' + resposta.statusText);
+        }
+
+        const blob = await resposta.blob();
+
+        if (window.showSaveFilePicker) {
+            try {
+                const handle = await window.showSaveFilePicker({
+                    suggestedName: 'Eventos.csv',
+                    types: [
+                        {
+                            description: 'CSV Files',
+                            accept: {
+                                'text/csv': ['.csv']
+                            }
+                        }
+                    ]
+                });
+
+                const writable = await handle.createWritable();
+                await writable.write(blob);
+                await writable.close();
+
+                showPopup('Arquivo salvo com sucesso na pasta escolhida!', 'success');
+            } catch (cancelError) {
+                console.log('Salvamento cancelado pelo usuário.');
+            }
+        } else {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Eventos.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showPopup('Arquivo baixado para a pasta padrão de downloads!', 'success');
+        }
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            showPopup('Erro ao buscar ou salvar o arquivo: ' + error.message, 'error');
+            console.error('Erro ao buscar ou salvar o arquivo:', error);
+        } else {
+            console.log('A operação foi abortada pelo usuário.');
+        }
+    } finally {
+        loadingElement.style.display = 'none'; 
+    }
+}
+
+function showPopup(message, type) {
+    const popup = document.getElementById('popup2');
+    const popupMessage = document.getElementById('popup-message');
+
+    popupMessage.innerText = message;
+    popup.className = type === 'error' ? 'popup error' : 'popup';
+    popup.style.display = 'block';
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000); 
+}
+
+
 
 
 window.onload = () => {

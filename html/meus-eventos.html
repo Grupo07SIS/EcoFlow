@@ -16,6 +16,7 @@
     <script src="../js/organizador/dash_gerencial.js" defer></script>
     <script src="../js/navbar.js" defer></script>
     <script src="../js/organizador/buscarMeusEventos.js" defer></script>
+    <link rel="stylesheet" href="../css/pop-up.css">
 </head>
 
 <body>
@@ -46,54 +47,55 @@
             <input type="text" class="form-control search-input" id="search-input" placeholder="Pesquisa aqui...">
             <i class="bi bi-search search-icon"></i>
         </div>
-
-        <div class="bloco_botoes">
-            <button type="button" class="btn btn-primary" onclick="meusEventos()">Criar novo Evento <i
-                    class="bi bi-plus-circle-fill"></i></button>
-
-            <div class="bloco_filtros">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
-                    <img src="../assets/filter.png" alt=""> Filtrar
-                </button>
-                <div style="height: 38%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
-                    aria-labelledby="offcanvasBottomLabel">
-                    <div class="offcanvas-header">
-                        <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtro</h2>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body small">
-                        <h4 class="titulo_filtro">Data</h4>
-                        <div class="filtrar_date">
-                            <div class="bloco_filtros">
-                                <div class="filtrar_dt_inicio">
-                                    <span>Inicio</span>
-                                    <div class="input-group flex-nowrap">
-                                        <input id="dataInicio" type="date" class="form-control">
+            <!-- <button type="button" class="btn btn-primary" onclick="meusEventos()">Criar novo Evento <i
+                    class="bi bi-plus-circle-fill"></i></button> -->
+            <div class="bloco_botoes">
+                <button class="btn btn-primary" onclick="baixarRelatorio()"><i class="bi bi-cloud-arrow-down-fill" style="font-size: 25px;"></i>Baixar Arquivo</button>
+                <div class="bloco_filtros">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                        <img src="../assets/filter.png" alt=""> Filtrar
+                    </button>
+                    <div style="height: 38%;" class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                        aria-labelledby="offcanvasBottomLabel">
+                        <div class="offcanvas-header">
+                            <h2 class="offcanvas-title" id="offcanvasBottomLabel">Filtro</h2>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body small">
+                            <h4 class="titulo_filtro">Data</h4>
+                            <div class="filtrar_date">
+                                <div class="bloco_filtros">
+                                    <div class="filtrar_dt_inicio">
+                                        <span>Inicio</span>
+                                        <div class="input-group flex-nowrap">
+                                            <input id="dataInicio" type="date" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="filtrar_dt_fim">
-                                    <span>Fim</span>
-                                    <div class="input-group flex-nowrap">
-                                        <input id="dataFim" type="date" class="form-control">
+                                    <div class="filtrar_dt_fim">
+                                        <span>Fim</span>
+                                        <div class="input-group flex-nowrap">
+                                            <input id="dataFim" type="date" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="grp_btn">
-                            <button class="secondary_btn" onclick="clearFilters()">
-                                Limpar Filtro
-                            </button>
-                            <button class="primary_btn" onclick="applyFilters()">
-                                Aplicar Filtro
-                            </button>
+                            <div class="grp_btn">
+                                <button class="secondary_btn" onclick="clearFilters()">
+                                    Limpar Filtro
+                                </button>
+                                <button class="primary_btn" onclick="applyFilters()">
+                                    Aplicar Filtro
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+
 
         <div class="filtrar">
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -132,6 +134,15 @@
         </div>
     </div>
 
+    <div id="popup2" class="popup2">
+        <p id="popup-message"></p>
+    </div>
+
+    <div id="loading" style="display: none;">
+        <span class="loader"></span>
+        <p>Baixando... Por favor, aguarde.</p>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -144,8 +155,8 @@
                 const response = await fetch(`http://localhost:8080/evento/searchBar?search=${encodeURIComponent(searchQuery)}`);
                 const searchResults = await response.json();
 
-                const listagem = document.getElementById("listagem_eventos"); 
-                listagem.innerHTML = ''; 
+                const listagem = document.getElementById("listagem_eventos");
+                listagem.innerHTML = '';
 
                 listagem.innerHTML = searchResults.map((itemEvento) => {
                     const [year, month, day] = itemEvento.dataEvento;
