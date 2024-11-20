@@ -152,6 +152,8 @@ body {
     flex-direction: column;
     align-items: start;
     width: 100%;
+    padding-left: 28px;
+
 
     h1 {
         margin: 0%;

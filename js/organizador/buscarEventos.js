@@ -15,7 +15,17 @@ async function buscarEventos() {
             return eventDate >= today && eventDate <= futureDate;
         });
 
-        cards.innerHTML = filteredEventos.map((itemEvento) => {
+        console.log("Filtered Events:", filteredEventos);
+
+        const sortedEventos = filteredEventos.sort((a, b) => {
+            const dateA = new Date(a.dataEvento);
+            const dateB = new Date(b.dataEvento);
+            return dateA - dateB;
+        });
+
+        const topFiveEventos = sortedEventos.slice(0, 5);
+
+        cards.innerHTML = topFiveEventos.map((itemEvento) => {
             const eventDate = new Date(itemEvento.dataEvento);
             const day = eventDate.getDate();
             const month = eventDate.getMonth();

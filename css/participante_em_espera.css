@@ -56,6 +56,7 @@ a.card-link {
     justify-content: center;
     width: 100%;
     gap: 20px;
+    padding-bottom: 62px;
 }
 
 .participante_separation_div{
