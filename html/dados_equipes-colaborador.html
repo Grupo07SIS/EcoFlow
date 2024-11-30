@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../css/colaboradorParticiparStyle/dados_gerais.css">
+    <link rel="stylesheet" href="../css/colaboradorParticiparStyle/dados_gerais.css">
     <link rel="stylesheet" href="../../css/atracao.css">
     <link rel="stylesheet" href="../../css/menu.css">
 </head>
@@ -26,6 +26,15 @@
         <div class="dados_produtos">
             <div>
                 <h5>EQUIPE</h5>
+                <div class="upload_section">
+                    <h6>Upload de Arquivo TXT</h6>
+                    <div class="upload_box">
+                        <label for="fileInput" class="custom_file_label">Escolher Arquivo</label>
+                        <input type="file" id="fileInput" accept=".txt" onchange="updateFileName()" />
+                        <span id="fileName">Nenhum arquivo selecionado</span>
+                        <button type="button" class="btn btn-primary" onclick="uploadFile()">Fazer Upload</button>
+                    </div>
+                </div>
                 <div class="adicionar_produto">
                     <h6>Adicionar pessoa na equipe</h6>
                     <button id="addProdutoCard"><i class="bi bi-plus-circle-fill adicionar_produto"></i></button>
@@ -70,6 +79,81 @@
 </body>
 
 <script>
+    function updateFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+
+        if (fileInput.files.length > 0) {
+            fileName.textContent = fileInput.files[0].name; // Show the selected file name
+        } else {
+            fileName.textContent = 'Nenhum arquivo selecionado'; // Default message
+        }
+    }
+
+    async function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const uploadMessage = document.getElementById('uploadMessage');
+        const productContainer = document.getElementById('productContainer');
+
+        if (!fileInput.files.length) {
+            uploadMessage.textContent = "Por favor, selecione um arquivo.";
+            uploadMessage.style.display = "block";
+            return;
+        }
+
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const response = await fetch('http://localhost:8080/equipe/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                uploadMessage.style.display = "none";
+
+                productContainer.innerHTML = '';
+
+                data.forEach((equipe) => {
+                    const newCard = document.createElement('div');
+                    newCard.classList.add('info_card');
+
+                    newCard.innerHTML = `
+                    <div class="info_form">
+                        <div class="drop_down">
+                            <label>Nome da Pessoa:</label>
+                            <div class="expandir_div" onclick="toggleIngredients(this)">
+                                Expandir
+                                <i class="bi bi-chevron-down"></i>
+                            </div>
+                        </div>
+                        <input type="text" class="team-name" value="${equipe.nome}" disabled>
+                        <div class="ingredientes" style="display: none;">
+                            <span>Telefone:</span>
+                            <input type="text" class="team-phone" value="${equipe.telefone}" disabled>
+                            <span>E-mail:</span>
+                            <input type="text" class="team-email" value="${equipe.email}" disabled>
+                        </div>
+                    </div>
+                `;
+
+                    productContainer.appendChild(newCard);
+                });
+            } else {
+                const error = await response.text();
+                uploadMessage.textContent = `Erro no upload: ${error}`;
+                uploadMessage.style.display = "block";
+            }
+        } catch (err) {
+            console.error("Erro ao fazer upload:", err);
+            uploadMessage.textContent = "Erro ao enviar o arquivo.";
+            uploadMessage.style.display = "block";
+        }
+    }
+
     function voltar() {
         const urlParams = new URLSearchParams(window.location.search);
         const eventId = urlParams.get('id');
@@ -91,11 +175,11 @@
     function addEquipeCard() {
         const container = document.getElementById('productContainer');
         const productMessage = document.getElementById('productMessage');
-        
-        if (container.children.length >= 1) {
-            alert("Você só pode adicionar um membro.");
-            return;
-        }
+
+        // if (container.children.length >= 1) {
+        //     alert("Você só pode adicionar um membro.");
+        //     return;
+        // }
 
         productMessage.style.display = 'none';
 
@@ -171,19 +255,19 @@
         window.location.href = `stand-colaborador.html?id=${eventId}`;
     }
 
-window.onload = function () {
-    const container = document.getElementById('productContainer');
-    const savedTeamData = sessionStorage.getItem('equipe');
+    window.onload = function () {
+        const container = document.getElementById('productContainer');
+        const savedTeamData = sessionStorage.getItem('equipe');
 
-    if (savedTeamData) {
-        try {
-            const savedTeam = JSON.parse(savedTeamData);
+        if (savedTeamData) {
+            try {
+                const savedTeam = JSON.parse(savedTeamData);
 
-            if (savedTeam && savedTeam.nome && savedTeam.telefone && savedTeam.email) {
-                const newCard = document.createElement('div');
-                newCard.classList.add('info_card');
+                if (savedTeam && savedTeam.nome && savedTeam.telefone && savedTeam.email) {
+                    const newCard = document.createElement('div');
+                    newCard.classList.add('info_card');
 
-                newCard.innerHTML = `
+                    newCard.innerHTML = `
                     <div class="info_form">
                         <div class="drop_down">
                             <label>Nome da Pessoa:</label>
@@ -208,19 +292,19 @@ window.onload = function () {
                     </div>
                 `;
 
-                container.appendChild(newCard);
-            } else {
-                console.error('Invalid equipe data in sessionStorage:', savedTeam);
+                    container.appendChild(newCard);
+                } else {
+                    console.error('Invalid equipe data in sessionStorage:', savedTeam);
+                    document.getElementById('productMessage').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error parsing equipe from sessionStorage:', error);
                 document.getElementById('productMessage').style.display = 'block';
             }
-        } catch (error) {
-            console.error('Error parsing equipe from sessionStorage:', error);
+        } else {
             document.getElementById('productMessage').style.display = 'block';
         }
-    } else {
-        document.getElementById('productMessage').style.display = 'block';
-    }
-};
+    };
 
 </script>
 

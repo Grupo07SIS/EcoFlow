@@ -127,7 +127,7 @@ function displayCollaborators(collaborators) {
 function displayTotalCollaborators(inscricoesFiltradas) {
     const totalColaboradores = inscricoesFiltradas.length;
     const totalContainer = document.getElementById("totalCollaborators");
-    totalContainer.innerHTML = `<p>Total de Colaboradores: <b>${totalColaboradores}</b></p>`;
+    totalContainer.innerHTML = `<p>Total de Expositores: <b>${totalColaboradores}</b></p>`;
 }
 
 

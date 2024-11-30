@@ -42,7 +42,7 @@
 
   <div class="main_div">
     <div class="names">
-      <h4>COLABORADORES</h4>
+      <h4>EXPOSITORES</h4>
     </div>
 
     <div class="div_separator">
@@ -136,7 +136,7 @@
     const container = document.getElementById("collaboratorContainer");
 
     if (!collaborators || collaborators.length === 0) {
-      container.innerHTML = "<p>Não há colaboradores cadastrados.</p>";
+      container.innerHTML = "<p>Não há expositores cadastrados.</p>";
       return;
     }
 
@@ -146,7 +146,7 @@
         const image = collab.bannerImg
           ? `data:image/png;base64,${collab.bannerImg}`
           : "../assets/default-image.png";
-        const participantName = collab.nomeResp || "Nome do Colaborador";
+        const participantName = collab.nomeResp || "Nome do Expositor";
         const niche = getNichoFromUrl();
         const nomeFantasia = collab.nomeFantasia || "Nome da Marca";
         const telefone = collab.telefone || "Telefone não disponível";
