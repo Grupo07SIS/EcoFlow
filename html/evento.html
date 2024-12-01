@@ -64,7 +64,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label>Hora Inicio</label>
+                <label>Hora Início</label>
                 <input type="time" class="form-control" id="horaInicio">
             </div>
             <div class="form-group col-md-2">
@@ -200,12 +200,23 @@
         const estado = document.getElementById('UF').value;
         const cep = document.getElementById('cep').value;
 
+        // validação da data escolhida
+        const hoje = new Date();
+        const hojeFormatada = hoje.toISOString().split("T")[0];
+        console.log("?---------------------------------------------", hojeFormatada)
+
         if (!nomeEvento || !temaEvento || !dataEvento || !horaInicio || !horaFim || !logradouro || !cidade || !estado || !cep) {
             alert("Por favor, preencha todos os campos obrigatórios.");
-            return;
-        }
+             
+        } else if(horaFim <= horaInicio) {
+            alert("Por favor, preencha a hora de início do evento corretamente.");
+            
+        } else if (dataEvento <= hojeFormatada) {
+            alert("Por favor, preencha a data do evento corretamente.");
+            
+        } else {
 
-        const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
+            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
         const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
         const horaInicioISO = inicioDateTime.toISOString();
         const horaFimISO = fimDateTime.toISOString();
@@ -231,6 +242,10 @@
         sessionStorage.setItem('dadosEvento', JSON.stringify(dadosEvento));
 
         window.location.href = `valores.html`;
+        }
+
+
+        
     }
 
     window.onload = function () {

@@ -163,9 +163,11 @@
                 document.getElementById('func').value = dadosEvento.valorFuncionarios || '';
                 document.getElementById('qtdColab').value = dadosEvento.qtdMaxColaboradores || '';
             }
+
         }
 
         function salvarDadosPag2() {
+
             const dados = JSON.parse(sessionStorage.getItem('dadosEvento')) || {};
             dados.orcamentoTotal = limparValor(document.getElementById('orcamento').value);
             dados.metaLucro = limparValor(document.getElementById('meta').value);
@@ -175,6 +177,12 @@
             dados.valorFuncionarios = limparValor(document.getElementById('func').value);
             dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
             sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
+
+            // extermamente confusa aqui
+            if (dados.qtdMaxColaboradores <= 0) {
+            alert("Por favor, preencha uma quantidade de colaboradores válida");
+             return;
+        }
 
             window.location.href = 'standEscolher.html';
         }

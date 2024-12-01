@@ -38,7 +38,7 @@ async function buscarEventos() {
             const titulo = truncateText(itemEvento.nome, 15);
             const truncatedAddress = truncateText(fullAddress, 40);
 
-            let imagem = "../../assets/Rectangle 20.png";
+            let imagem = "../../assets/sem_imagem.jfif";
             if (itemEvento.banner_evento && itemEvento.banner_evento !== "YmFubmVyMS5qcGc=" && itemEvento.banner_evento !== "YmFubmVyMi5qcGc=") {
                 imagem = `data:image/png;base64,${itemEvento.banner_evento}`;
             }
