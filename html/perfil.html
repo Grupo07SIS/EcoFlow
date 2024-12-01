@@ -53,6 +53,10 @@
                         <label for="email">Email:</label>
                         <input id="email" type="text" value="@gahsjjc.com" disabled />
                     </div>
+                    <div class="div_info">
+                        <label for="senha">Senha:</label>
+                        <input id="senha" type="text" value="*******" disabled />
+                    </div>
                 </div>
 
                 <div class="proximo-voltar">
@@ -149,23 +153,27 @@
         const telefoneCampo = document.getElementById('telefone');
         const cnpjCampo = document.getElementById('cnpj');
         const emailCampo = document.getElementById('email');
+        const senhaCampo = document.getElementById('senha');
         console.log(dados);
 
         originalData = {
             telefone: dados.telefone,
             cnpj: dados.cnpj,
             email: dados.email,
+            senha: dados.senha
         };
 
         nomePerfil.innerHTML = dados.nome_resp;
         telefoneCampo.value = dados.telefone;
         cnpjCampo.value = dados.cnpj;
         emailCampo.value = dados.email;
+        senhaCampo.value = dados.senha;
     }
 
     function editarPerfil() {
         document.getElementById('telefone').disabled = false;
         document.getElementById('email').disabled = false;
+        document.getElementById('senha').disabled = false;
 
         document.getElementById('salvar-btn').style.display = 'inline';   
         document.getElementById('editar-btn').style.display = 'none';     
@@ -176,12 +184,13 @@
         const dados = obterDados();
         const telefone = document.getElementById('telefone').value;
         const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
 
 
         const data = {
             id_organizador: dados.id_organizador,
             email: email,
-            senha: dados.senha,
+            senha: senha,
             cnpj: dados.cnpj,
             nome_resp: dados.nome_resp,
             cpf_resp: dados.cpf_resp,
@@ -217,6 +226,7 @@
                 console.log('Perfil atualizado com sucesso!');
                 sessionStorage.setItem('TELEFONE_ORGANIZADOR', telefone);
                 sessionStorage.setItem('EMAIL_ORGANIZADOR', email);
+                sessionStorage.setItem('SENHA_ORGANIZADOR', senha);
                 cancelarEdicao();
             }
         } catch (error) {
@@ -227,6 +237,7 @@
     function cancelarEdicao() {
         document.getElementById('telefone').disabled = true;
         document.getElementById('email').disabled = true;
+        document.getElementById('senha').disabled = true;
 
         document.getElementById('salvar-btn').style.display = 'none';   
         document.getElementById('editar-btn').style.display = 'inline';   
