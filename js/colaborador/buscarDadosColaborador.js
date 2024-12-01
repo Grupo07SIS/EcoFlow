@@ -33,28 +33,33 @@ async function valorDados() {
     const nomeColaborador = sessionStorage.getItem('NOME_RESP_COLABORADOR') || 'Nome do colaborador';
     const telefoneColaborador = sessionStorage.getItem('TELEFONE_COLABORADOR') || '0000000000';
     const emailColaborador = sessionStorage.getItem('EMAIL_COLABORADOR') || '@gahsjjc.com';
+    const senhaColaborador = sessionStorage.getItem('SENHA_COLABORADOR') || '@gahsjjc.com';
 
     const nomeColaboradorNavBar = document.getElementById('nomeDoColaborador');
     const nomeDaMarca = document.getElementById('nome');
     const telefoneDoColaborador = document.getElementById('telefone');
     const emailNavBar = document.getElementById('email');
+    const senhaDoColaborador = document.getElementById('senha');
 
     originalData = {
         nome: nomeColaborador,
         telefone: telefoneColaborador,
-        email: emailColaborador
+        email: emailColaborador,
+        senha: senhaColaborador
     };
 
     nomeColaboradorNavBar.innerText = nomeFantasia;
     nomeDaMarca.value = nomeColaborador;
     telefoneDoColaborador.value = telefoneColaborador;
     emailNavBar.value = emailColaborador;
+    senhaDoColaborador.value = senhaColaborador;
 }
 
 function editarPerfil() {
     document.getElementById('nome').disabled = false;
     document.getElementById('telefone').disabled = false;
     document.getElementById('email').disabled = false;
+    document.getElementById('senha').disabled = false;
 
     document.getElementById('cancelar-btn').style.display = 'inline';
     document.getElementById('salvar-btn').style.display = 'inline';
@@ -65,6 +70,7 @@ async function salvarPerfil() {
     const nomeResp = document.getElementById('nome').value;
     const telefone = document.getElementById('telefone').value;
     const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
 
     const data = {
         idColaborador: parseInt(idColaborador),
@@ -118,6 +124,7 @@ async function salvarPerfil() {
             sessionStorage.setItem('NOME_RESP_COLABORADOR', nomeResp);
             sessionStorage.setItem('TELEFONE_COLABORADOR', telefone);
             sessionStorage.setItem('EMAIL_COLABORADOR', email);
+            sessionStorage.setItem('SENHA_COLABORADOR', senha);
             cancelarEdicao();
         } else {
             const errorMessage = await response.text();
@@ -133,6 +140,7 @@ function voltar() {
     document.getElementById('nome').value = originalData.nome;
     document.getElementById('telefone').value = originalData.telefone;
     document.getElementById('email').value = originalData.email;
+    document.getElementById('senha').value = originalData.senha;
 
     cancelarEdicao();
 }
@@ -141,6 +149,7 @@ function cancelarEdicao() {
     document.getElementById('nome').disabled = true;
     document.getElementById('telefone').disabled = true;
     document.getElementById('email').disabled = true;
+    document.getElementById('senha').disabled = true;
 
     document.getElementById('cancelar-btn').style.display = 'none';
     document.getElementById('salvar-btn').style.display = 'none';

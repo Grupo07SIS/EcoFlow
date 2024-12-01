@@ -8,13 +8,100 @@
     <link rel="stylesheet" href="../css/detalhamento.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../css/menu.css">
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <script src="../js/colaborador/detalheEventoParticipar.js"></script>
     <link rel="stylesheet" href="../css/filtro_colab.css">
     <link rel="stylesheet" href="../css/cap.css">
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal{
+            label{
+                color: black;
+            }
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        .modal-content button{
+            background-color: #C7530C;
+            color: white;
+            padding: 8px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            color: black;
+            margin-bottom: 0%;
+        }
+
+        .modal-content form{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #likert-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        #likert-scale div {
+            text-align: center;
+        }
+
+        .main_Btns{
+            background-color: #C7530C;
+            color: white;
+            padding: 8px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,78 +156,197 @@
     <div id="popup" class="popup">
         <p id="popup-message"></p>
     </div>
+
+    <div id="avaliacaoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <h2>Avaliação do Evento</h2>
+            <form id="avaliacaoForm">
+                <label for="comentario">Comentário:</label>
+                <textarea id="comentario" name="comentario" rows="4" required></textarea>
+
+                <label for="nota">Nota:</label>
+                <div id="likert-scale">
+                    <div>
+                        <label>
+                            <input type="radio" name="nota" value="1" required>
+                            1
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="nota" value="2">
+                            2
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="nota" value="3">
+                            3
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="nota" value="4">
+                            4
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="nota" value="5">
+                            5
+                        </label>
+                    </div>
+                </div>
+                <button type="button" onclick="enviarAvaliacao()">Enviar Avaliação</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function backpage() {
+            window.history.back();
+        }
+
+        function participarEvento() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('id');
+
+            window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
+        }
+
+        async function buscarInscricao() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const eventId = urlParams.get("id");
+
+                const currentColaboradorId = sessionStorage.getItem("ID_COLABORADOR");
+                if (!currentColaboradorId) {
+                    console.error("Colaborador ID not found in session storage.");
+                    return;
+                }
+
+                const [respostaFuturo, respostaPassado] = await Promise.all([
+                    fetch("http://localhost:8080/inscricao/futuro"),
+                    fetch("http://localhost:8080/inscricao/aprovado"),
+                ]);
+
+                if (!respostaFuturo.ok || !respostaPassado.ok) {
+                    throw new Error("Erro ao buscar inscrições");
+                }
+
+                const inscricoesFuturas = await respostaFuturo.json();
+                const inscricoesPassadas = await respostaPassado.json();
+
+                const allInscricoes = [...inscricoesFuturas, ...inscricoesPassadas];
+
+                const inscricao = allInscricoes.find((inscricao) => {
+                    return (
+                        inscricao.evento.id_evento == eventId &&
+                        inscricao.fkUsuario.idColaborador == currentColaboradorId
+                    );
+                });
+
+                const button = document.querySelector(".main_Btns");
+
+                if (inscricao) {
+                    const status = inscricao.status.status;
+
+                    if (status === "Aprovado") {
+                        button.style.display = "none";
+                    } else if (status === "Reprovado") {
+                        button.style.display = "block";
+                        button.textContent = "Participar";
+                    } else {
+                        button.style.display = "block";
+                        button.textContent = "Aguardando";
+                        button.disabled = true;
+                    }
+
+                    if (inscricoesPassadas.includes(inscricao)) {
+                        criarBotaoAvaliacao(inscricao);
+                    }
+                } else {
+                    button.style.display = "block";
+                    button.textContent = "Participar";
+                }
+            } catch (error) {
+                console.error("Erro ao buscar inscrições:", error);
+            }
+        }
+
+        function criarBotaoAvaliacao(inscricao) {
+            const mainInfo = document.getElementById("main_info");
+            const botaoAvaliacao = document.createElement("button");
+
+            botaoAvaliacao.textContent = "Avaliar Evento";
+            botaoAvaliacao.className = "main_Btns";
+            botaoAvaliacao.onclick = () => abrirModal(inscricao);
+
+            mainInfo.appendChild(botaoAvaliacao);
+        }
+
+        function abrirModal(inscricao) {
+            const modal = document.getElementById("avaliacaoModal");
+            modal.style.display = "block";
+            modal.dataset.inscricaoId = inscricao.id_inscricao;
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById("avaliacaoModal");
+            modal.style.display = "none";
+        }
+
+        async function enviarAvaliacao() {
+            const modal = document.getElementById("avaliacaoModal");
+            const inscricaoId = modal.dataset.inscricaoId;
+
+            const comentario = document.getElementById("comentario").value;
+            const nota = document.querySelector("input[name='nota']:checked").value;
+
+            const inscricaoCompleta = await fetch(`http://localhost:8080/inscricao/buscar-por-id?id=${inscricaoId}`)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error("Erro ao buscar detalhes da inscrição:", error);
+                    alert("Erro ao buscar detalhes da inscrição. Tente novamente.");
+                    return null;
+                });
+
+            if (!inscricaoCompleta) {
+                return; 
+            }
+
+            const payload = {
+                id_avaliacao: 0,
+                comentario: comentario,
+                nota: parseInt(nota),
+                inscricao: inscricaoCompleta
+            };
+
+            try {
+                const response = await fetch("http://localhost:8080/avaliacao", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (response.ok) {
+                    alert("Avaliação enviada com sucesso!");
+                    fecharModal();
+                } else {
+                    throw new Error("Erro ao enviar avaliação");
+                }
+            } catch (error) {
+                console.error("Erro ao enviar avaliação:", error);
+                alert("Erro ao enviar avaliação. Tente novamente.");
+            }
+        }
+
+
+        document.addEventListener("DOMContentLoaded", buscarInscricao);
+    </script>
 </body>
 
 </html>
-
-<script>
-    function backpage() {
-        window.history.back();
-    }
-
-    function participarEvento() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const eventId = urlParams.get('id');
-
-        window.location.href = `dados_gerais-colaborador.html?id=${eventId}`;
-    }
-
-    async function buscarInscricao() {
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const eventId = urlParams.get('id');
-
-        const currentColaboradorId = sessionStorage.getItem('ID_COLABORADOR');
-        if (!currentColaboradorId) {
-            console.error("Colaborador ID not found in session storage.");
-            return;
-        }
-
-        const [respostaFuturo, respostaPassado] = await Promise.all([
-            fetch("http://localhost:8080/inscricao/futuro"),
-            fetch("http://localhost:8080/inscricao/aprovado")
-        ]);
-
-        if (!respostaFuturo.ok || !respostaPassado.ok) {
-            throw new Error("Erro ao buscar inscrições");
-        }
-
-        const inscricoesFuturas = await respostaFuturo.json();
-        const inscricoesPassadas = await respostaPassado.json();
-
-        const allInscricoes = [...inscricoesFuturas, ...inscricoesPassadas];
-
-        const inscricao = allInscricoes.find(inscricao => {
-            return inscricao.evento.id_evento == eventId && inscricao.fkUsuario.idColaborador == currentColaboradorId;
-        });
-
-        const button = document.querySelector(".main_Btns");
-
-        if (inscricao) {
-            const status = inscricao.status.status;
-
-            if (status === "Aprovado") {
-                button.style.display = "none"; 
-            } else if (status === "Reprovado") {
-                button.style.display = "block";
-                button.textContent = "Participar";
-            } else {
-                button.style.display = "block";
-                button.textContent = "Aguardando";
-                button.disabled = true; 
-            }
-        } else {
-            button.style.display = "block";
-            button.textContent = "Participar";
-        }
-
-    } catch (error) {
-        console.error("Erro ao buscar inscrições:", error);
-    }
-}
-
-
-document.addEventListener("DOMContentLoaded", buscarInscricao);
-
-
-</script>
