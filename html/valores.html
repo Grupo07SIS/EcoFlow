@@ -91,7 +91,7 @@
 
         <div class="form-group">
             <label>Quantidade Máxima de Colabores</label>
-            <input type="text" class="form-control" id="qtdColab">
+            <input type="number" min="0" class="form-control" id="qtdColab">
         </div>
     </form>
 
@@ -178,11 +178,6 @@
             dados.qtdMaxColaboradores = document.getElementById('qtdColab').value;
             sessionStorage.setItem('dadosEvento', JSON.stringify(dados));
 
-            // extermamente confusa aqui
-            if (dados.qtdMaxColaboradores <= 0) {
-            alert("Por favor, preencha uma quantidade de colaboradores válida");
-             return;
-        }
 
             window.location.href = 'standEscolher.html';
         }
