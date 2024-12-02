@@ -107,8 +107,8 @@ function renderParticipantAguardando(itemEvento) {
         </div>
         </a>
         <div class="separation_btns">
-            <button class="btn btn-danger" onclick="atualizarStatusInscricao(${id_inscricao}, 5)">Recusar</button>
-            <button class="btn btn-primary" onclick="atualizarStatusInscricao(${id_inscricao}, 4)">Aprovar</button>
+            <button class="btn btn-danger" onclick="atualizarStatusInscricao(${id_inscricao}, 3)">Recusar</button>
+            <button class="btn btn-primary" onclick="atualizarStatusInscricao(${id_inscricao}, 1)">Aprovar</button>
         </div>
     </div>
     `;

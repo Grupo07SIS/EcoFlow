@@ -308,7 +308,6 @@
                 .then(response => response.json())
                 .catch(error => {
                     console.error("Erro ao buscar detalhes da inscrição:", error);
-                    alert("Erro ao buscar detalhes da inscrição. Tente novamente.");
                     return null;
                 });
 
@@ -333,14 +332,12 @@
                 });
 
                 if (response.ok) {
-                    alert("Avaliação enviada com sucesso!");
                     fecharModal();
                 } else {
                     throw new Error("Erro ao enviar avaliação");
                 }
             } catch (error) {
                 console.error("Erro ao enviar avaliação:", error);
-                alert("Erro ao enviar avaliação. Tente novamente.");
             }
         }
 
