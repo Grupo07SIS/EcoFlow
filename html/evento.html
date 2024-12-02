@@ -49,22 +49,22 @@
 
     <form>
         <div class="form-group">
-            <label>Nome do Evento:</label>
+            <label>Nome do Evento</label>
             <input type="text" class="form-control" id="nome">
         </div>
         <div class="form-group">
-            <label>Tema do Evento:</label>
+            <label>Tema do Evento</label>
             <input type="text" class="form-control" id="tema">
         </div>
 
         <div class="form-group">
-            <label>Data:</label>
+            <label>Data</label>
             <input type="date" id="data" class="form-control" maxlength="10">
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label>Hora Inicio:</label>
+                <label>Hora Início</label>
                 <input type="time" class="form-control" id="horaInicio">
             </div>
             <div class="form-group col-md-2">
@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Descrição:</label>
+            <label>Descrição</label>
             <textarea class="form-control" id="desc" rows="3"></textarea>
         </div>
     </form>
@@ -81,12 +81,12 @@
     <h5>LOCAL DO EVENTO</h5>
     <form>
         <div class="form-group">
-            <label>Logradouro:</label>
+            <label>Logradouro</label>
             <input type="text" class="form-control" id="logradouro">
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label>Número:</label>
+                <label>Número</label>
                 <input type="number" class="form-control" id="numero">
             </div>
             <div class="form-group col-md-2">
@@ -95,16 +95,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Complemento:</label>
+            <label>Complemento</label>
             <input type="text" class="form-control" id="complemento">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label>Cidade:</label>
+                <label>Cidade</label>
                 <input type="text" class="form-control" id="cidade">
             </div>
             <div class="form-group col-md-6">
-                <label>UF:</label>
+                <label>UF</label>
                 <input type="text" class="form-control" id="UF">
             </div>
         </div>
@@ -112,7 +112,7 @@
 
     <div class="proximo">
         <button type="button" class="btn btn-secondary" , onclick="salvarDadosPag1()">
-            <a href="valores.html">Proximo</a>
+            <a>Próximo</a>
         </button>
     </div>
 
@@ -200,12 +200,23 @@
         const estado = document.getElementById('UF').value;
         const cep = document.getElementById('cep').value;
 
+        // validação da data escolhida
+        const hoje = new Date();
+        const hojeFormatada = hoje.toISOString().split("T")[0];
+        console.log("?---------------------------------------------", hojeFormatada)
+
         if (!nomeEvento || !temaEvento || !dataEvento || !horaInicio || !horaFim || !logradouro || !cidade || !estado || !cep) {
             alert("Por favor, preencha todos os campos obrigatórios.");
-            return;
-        }
+             
+        } else if(horaFim <= horaInicio) {
+            alert("Por favor, preencha a hora de início do evento corretamente.");
+            
+        } else if (dataEvento <= hojeFormatada) {
+            alert("Por favor, preencha a data do evento corretamente.");
+            
+        } else {
 
-        const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
+            const inicioDateTime = new Date(`${dataEvento}T${horaInicio}:00`);
         const fimDateTime = new Date(`${dataEvento}T${horaFim}:00`);
         const horaInicioISO = inicioDateTime.toISOString();
         const horaFimISO = fimDateTime.toISOString();
@@ -231,6 +242,10 @@
         sessionStorage.setItem('dadosEvento', JSON.stringify(dadosEvento));
 
         window.location.href = `valores.html`;
+        }
+
+
+        
     }
 
     window.onload = function () {

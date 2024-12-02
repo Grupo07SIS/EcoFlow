@@ -9,7 +9,7 @@ async function buscarDetalhesEvento() {
         console.log("Resposta: ", evento);
 
         if (evento.banner_evento == null || evento.banner_evento == "") {
-            document.getElementById('event_image').src = "../../assets/Rectangle 20.png";
+            document.getElementById('event_image').src = "../../assets/sem_imagem.jfif";
         } else {
             document.getElementById('event_image').src = 'data:image/png;base64,' + evento.banner_evento;
         }
