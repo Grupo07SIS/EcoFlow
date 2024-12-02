@@ -207,7 +207,7 @@ async function buscarEventosIncricao() {
 
                 const titulo = truncateText(evento.nome, 15);
                 const truncatedAddress = truncateText(fullAddress, 40);
-                let imagem = "../../assets/Rectangle 20.png";
+                let imagem = "../../assets/sem_imagem.jfif";
                 if (evento.banner_evento && evento.banner_evento !== "YmFubmVyMS5qcGc=" && evento.banner_evento !== "YmFubmVyMi5qcGc=") {
                     imagem = `data:image/png;base64,${evento.banner_evento}`;
                 }
@@ -301,7 +301,7 @@ async function buscarEventosIncricaoPassados() {
 
                 const titulo = truncateText(evento.nome, 15);
                 const truncatedAddress = truncateText(fullAddress, 40);
-                let imagem = "../../assets/Rectangle 20.png";
+                let imagem = "../../assets/sem_imagem.jfif";
                 if (evento.banner_evento && evento.banner_evento !== "YmFubmVyMS5qcGc=" && evento.banner_evento !== "YmFubmVyMi5qcGc=") {
                     imagem = `data:image/png;base64,${evento.banner_evento}`;
                 }

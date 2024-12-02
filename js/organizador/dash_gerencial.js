@@ -6,6 +6,12 @@ function aplicar() {
   const startDate = document.getElementById('start').value || '1999-01-01';
   const endDate = document.getElementById('end').value || new Date().toISOString().split('T')[0];
 
+ if(startDate > endDate) {
+    alert("Por favor, preencha uma data de filtro válida");
+    window.location.href = 'dash_gerencial.html';
+    
+ }
+
   console.log('Start Date:', startDate);
   console.log('End Date:', endDate);
 
